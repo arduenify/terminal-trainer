@@ -20,6 +20,7 @@
         2. [Exercises](./documentation/Components_And_Data_Models.md#412-exercises)  
         3. [User Progress](./documentation/Components_And_Data_Models.md#413-user-progress)  
         4. [Badges](./documentation/Components_And_Data_Models.md#414-badges)  
+        5. [Hints](./documentation/Components_And_Data_Models.md#415-hints)
     2. [Data Models and Relationships](./documentation/Components_And_Data_Models.md#42-data-models-and-relationships)  
 5. [Restful API Routes and WebSocket Events](./documentation/Restful_Routes_WebSocket_Events.md)  
     1. [User Routes](./documentation/Restful_Routes_WebSocket_Events.md#51-user-routes)  
