@@ -1,59 +1,8 @@
 # Terminal Trainer
 
-## Table of Contents
-
-1. [Terminal Trainer](./README.md)  
-    1. [Overview](#11-overview)  
-    2. [Purpose and Target Audience](#12-purpose-and-target-audience)  
-    3. [Core Features](#13-core-features)
-2. [User Stories](./documentation/User_Stories.md#2-user-stories)  
-    1. [New Learners](./documentation/User_Stories.md/#21-new-learners-unauthenticated-users)  
-    2. [Authenticated Users](./documentation/User_Stories.md/#22-authenticated-users)  
-    3. [Administrators](./documentation/User_Stories.md/#23-administrators)  
-3. [System Architecture](./documentation/System_Architecture.md)  
-    1. [Frontend Technologies and Libraries](./documentation/System_Architecture.md#31-frontend-technologies-and-libraries)  
-    2. [Backend Technologies and Libraries](./documentation/System_Architecture.md#32-backend-technologies-and-libraries)  
-    3. [Hosting and Deployment](./documentation/System_Architecture.md#33-hosting-and-deployment)  
-4. [Components And Data Models](./documentation/Components_And_Data_Models.md)  
-    1. [Components](./documentation/Components_And_Data_Models.md#41-components)  
-        1. [User Profiles](./documentation/Components_And_Data_Models.md#411-user-profiles)  
-        2. [Exercises](./documentation/Components_And_Data_Models.md#412-exercises)  
-        3. [User Progress](./documentation/Components_And_Data_Models.md#413-user-progress)  
-        4. [Badges](./documentation/Components_And_Data_Models.md#414-badges)  
-        5. [Hints](./documentation/Components_And_Data_Models.md#415-hints)
-    2. [Data Models and Relationships](./documentation/Components_And_Data_Models.md#42-data-models-and-relationships)  
-5. [Restful API Routes and WebSocket Events](./documentation/Restful_Routes_WebSocket_Events.md)  
-    1. [User Routes](./documentation/Restful_Routes_WebSocket_Events.md#51-user-routes)  
-        1. [Authentication](./documentation/Restful_Routes_WebSocket_Events.md#511-authentication)  
-        2. [Profiles](./documentation/Restful_Routes_WebSocket_Events.md#512-profiles)  
-        3. [Progress](./documentation/Restful_Routes_WebSocket_Events.md#513-progress)  
-    2. [Exercises](./documentation/Restful_Routes_WebSocket_Events.md#52-exercises)  
-        1. [Exercise Routes](./documentation/Restful_Routes_WebSocket_Events.md#521-exercise-routes)  
-    3. [Badges](./documentation/Restful_Routes_WebSocket_Events.md#53-badges)  
-        1. [Badges Routes](./documentation/Restful_Routes_WebSocket_Events.md#531-badges-routes)  
-    4. [Terminal Integration](./documentation/Restful_Routes_WebSocket_Events.md#54-terminal-integration)  
-        1. [WebSocket Events](./documentation/Restful_Routes_WebSocket_Events.md#541-websocket-events)  
-6. [Database Schema](./documentation/Database_Schema.md)  
-    1. [Schema Diagram](./documentation/Database_Schema.md#61-schema-diagram)  
-    2. [DBML](./documentation/Database_Schema.md#62-dbml)  
-    3. [PostgreSQL](./documentation/Database_Schema.md#63-postgresql)
-7. [Frontend Styling](./documentation/Frontend_Styling.md)
-    1. [Color Scheme](./documentation/Frontend_Styling.md#71-color-scheme)
-    2. [Typography](./documentation/Frontend_Styling.md#72-typography)
-    3. [Animations](./documentation/Frontend_Styling.md#73-animations)
-    4. [Icons](./documentation/Frontend_Styling.md#74-icons)
-    5. [Responsive Design](./documentation/Frontend_Styling.md#75-responsive-design)
-    6. [UI Components](./documentation/Frontend_Styling.md#76-ui-components)
-        1. [Buttons](./documentation/Frontend_Styling.md#761-buttons)
-        2. [Navigation bars](./documentation/Frontend_Styling.md#762-navigation-bars)
-        3. [Modals](./documentation/Frontend_Styling.md#763-modals)
-8. [Customization & Accessibility](./documentation/Accessibility.md)
-    1. [Keyboard Navigation](./documentation/Accessibility.md#81-keyboard-navigation)
-    2. [ARIA Support](./documentation/Accessibility.md#82-aria-support)
-
 ## 1.1 Overview
 
-*Terminal Trainer* is a browser-based web application that is designed to provide users an interactive and engaging learning platform for command-line skills. This application simulates a terminal environment within the browser, so that users can practice and re-inforce their command-line skills via challenging exercises. Knowledge level is kept in mind, as this app aims to tailor to all different skill levels.
+*Terminal Trainer* is a browser-based web application that is designed to provide users an interactive and engaging learning platform for command-line skills. This application simulates a terminal environment within the browser, so that users can practice and re-inforce their command-line skills via challenging exercises. Knowledge level is kept in mind, as this app aims to tailor to all different skill levels. If you're looking for extensive technical documentation, [please have a look around the wiki](wiki)!
 
 ## 1.2 Purpose and Target Audience
 
