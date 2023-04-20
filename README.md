@@ -6,7 +6,7 @@
 
 ## 1.2 Purpose and Target Audience
 
-As someone who loves to mentor others and help them learn, I developed this guide with targets of all skill levels in mind. Individuals who are brand new to command-line interfaces will become much more comfortable when navigating around a terminal. Intermediate and experienced users will also find challening exercises that test even their vast knowledge of a CLI. Educators are also a targeted audience, as they can act as administrators to create or manage exercises, track user progress, and manage award badges.
+As someone who loves to mentor others and help them learn, I developed this application with targets of all skill levels in mind. Individuals who are brand new to command-line interfaces will become much more comfortable when navigating around a terminal. Intermediate and experienced users will also find challening exercises that test even their vast knowledge of a CLI. Educators are also a targeted audience, as they can act as administrators to create or manage exercises, track user progress, and manage award badges.
 
 ## 1.3 Core Features
 
