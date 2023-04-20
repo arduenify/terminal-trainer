@@ -30,8 +30,6 @@ Exercises are the interactive challenges that users complete to improve their co
 - `description`: A brief explanation of the exercise's purpose and objectives
 - `category`: The command-line skill category to which the exercise belongs (e.g., navigation, file management, scripting)
 - `difficulty`: The difficulty level of the exercise (e.g., beginner, intermediate, advanced)
-- `prerequisites`: A list of prerequisite exercises or concepts that the user should complete before attempting the exercise
-- `hints`: A list of hints or suggestions to help users if they get stuck on the exercise
 - `solution`: The correct command or sequence of commands to complete the exercise
 - `createdAt`: Timestamp indicating when the exercise was created
 - `updatedAt`: Timestamp indicating when the exercise was last updated
@@ -61,6 +59,16 @@ Badges are awarded to users upon completing specific tasks or reaching milestone
 - `criteria`: A list of conditions or milestones that must be met for the user to earn the badge
 - `createdAt`: Timestamp indicating when the badge was created
 - `updatedAt`: Timestamp indicating when the badge was last updated
+
+### 4.1.5 Hints
+
+Hints are suggestions to help users when they are stuck on an exercise. The Hint component will have the following attributes:
+
+- `id`: Unique identifier for the hint
+- `exerciseId`: Unique identifier of the associated exercise
+- `hint`: The text content of the hint
+- `createdAt`: Timestamp indicating when the hint was created
+- `updatedAt`: Timestamp indicating when the hint was last updated
 
 ### 4.2 Data Models and Relationships
 
