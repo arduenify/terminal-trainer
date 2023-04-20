@@ -33,8 +33,6 @@
     4. [Terminal Integration](./documentation/Restful_Routes_WebSocket_Events.md#54-terminal-integration)  
         1. [WebSocket Events](./documentation/Restful_Routes_WebSocket_Events.md#541-websocket-events)  
 
-## 1 README
-
 ## 1.1 Overview
 
 *Terminal Trainer* is a browser-based web application that is designed to provide users an interactive and engaging learning platform for command-line skills. This application simulates a terminal environment within the browser, so that users can practice and re-inforce their command-line skills via challenging exercises. Knowledge level is kept in mind, as this app aims to tailor to all different skill levels.
