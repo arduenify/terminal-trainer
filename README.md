@@ -36,6 +36,19 @@
     1. [Schema Diagram](./documentation/Database_Schema.md#61-schema-diagram)  
     2. [DBML](./documentation/Database_Schema.md#62-dbml)  
     3. [PostgreSQL](./documentation/Database_Schema.md#63-postgresql)
+7. [Frontend Styling](./documentation/Frontend_Styling.md)
+    1. [Color Scheme](./documentation/Frontend_Styling.md#71-color-scheme)
+    2. [Typography](./documentation/Frontend_Styling.md#72-typography)
+    3. [Animations](./documentation/Frontend_Styling.md#73-animations)
+    4. [Icons](./documentation/Frontend_Styling.md#74-icons)
+    5. [Responsive Design](./documentation/Frontend_Styling.md#75-responsive-design)
+    6. [UI Components](./documentation/Frontend_Styling.md#76-ui-components)
+        1. [Buttons](./documentation/Frontend_Styling.md#761-buttons)
+        2. [Navigation bars](./documentation/Frontend_Styling.md#762-navigation-bars)
+        3. [Modals](./documentation/Frontend_Styling.md#763-modals)
+8. [Customization & Accessibility](./documentation/Accessibility.md)
+    1. [Keyboard Navigation](./documentation/Accessibility.md#81-keyboard-navigation)
+    2. [ARIA Support](./documentation/Accessibility.md#82-aria-support)
 
 ## 1.1 Overview
 
