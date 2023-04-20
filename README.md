@@ -47,10 +47,6 @@ As someone who loves to mentor others and help them learn, I developed this guid
 
 ## 1.3 Core Features
 
-### User Profiles
-
-Allows users to create, read, update, and delete their profiles, complete with progress tracking, achievements, and preferred terminal environment settings.
-
 ### Exercises
 
 Enables administrators to create, read, update, and delete interactive exercises, specifying the task, difficulty, and any necessary prerequisites.
@@ -58,6 +54,10 @@ Enables administrators to create, read, update, and delete interactive exercises
 ### User Progress
 
 Grants users the ability to track, view, update, and reset their progress in completing exercises, including their scores, hints used, and time spent.
+
+### User Profiles
+
+Allows users to create, read, update, and delete their profiles, complete with progress tracking, achievements, and preferred terminal environment settings.
 
 ### Badges
 
