@@ -32,6 +32,10 @@
         1. [Badges Routes](./documentation/Restful_Routes_WebSocket_Events.md#531-badges-routes)  
     4. [Terminal Integration](./documentation/Restful_Routes_WebSocket_Events.md#54-terminal-integration)  
         1. [WebSocket Events](./documentation/Restful_Routes_WebSocket_Events.md#541-websocket-events)  
+6. [Database Schema](./documentation/Database_Schema.md)  
+    1. [Schema Diagram](./documentation/Database_Schema.md#61-schema-diagram)  
+    2. [DBML](./documentation/Database_Schema.md#62-dbml)  
+    3. [PostgreSQL](./documentation/Database_Schema.md#63-postgresql)
 
 ## 1.1 Overview
 
