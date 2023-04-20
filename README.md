@@ -33,3 +33,5 @@ Provides users with options to customize the appearance of the terminal, enhanci
 ### Accessibility
 
 Ensures the application is usable by a diverse audience, taking into account various accessibility needs and preferences.
+
+Looking for more to read? Don't forget [the wiki!](https://github.com/AdamScoggins/terminal-trainer/wiki)
