@@ -1,0 +1,15 @@
+{
+  "name": "terminal-trainer-backend",
+  "version": "1.0.0",
+  "description": "The backend for Terminal Trainer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AdamScoggins/terminal-trainer/backend"
+  },
+  "author": "Adam Scoggins",
+  "license": "ISC"
+}
