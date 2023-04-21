@@ -11,5 +11,16 @@
     "url": "https://github.com/AdamScoggins/terminal-trainer/backend"
   },
   "author": "Adam Scoggins",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-pty": "^0.10.1",
+    "nodejs": "^0.0.0",
+    "sequelize": "^6.31.0",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.0",
+    "sqlite3": "^5.1.6"
+  }
 }
