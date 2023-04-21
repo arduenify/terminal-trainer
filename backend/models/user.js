@@ -1,9 +1,18 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
-module.exports = (sequelize) => {
-    const User = sequelize.define(
-        'User',
+module.exports = (sequelize, DataTypes) => {
+    class User extends Model {
+        static associate(models) {
+            User.hasMany(models.Badge, { foreignKey: 'userId', as: 'badges' });
+            User.hasMany(models.UserProgress, {
+                foreignKey: 'userId',
+                as: 'progress',
+            });
+        }
+    }
+
+    User.init(
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -51,16 +60,8 @@ module.exports = (sequelize) => {
                 defaultValue: 'user',
             },
         },
-        { timestamps: true, sync: { alter: true } }
+        { sequelize, modelName: 'User', timestamps: true, sync: { alter: true } }
     );
 
-    User.associate = (models) => {
-        User.hasMany(models.Badge, { foreignKey: 'userId', as: 'badges' });
-        User.hasMany(models.UserProgress, {
-            foreignKey: 'userId',
-            as: 'progress',
-        });
-    };
-
     return User;
-};
+}

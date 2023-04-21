@@ -29,6 +29,7 @@
         "ws": "^8.13.0"
     },
     "devDependencies": {
+        "nodemon": "^2.0.22",
         "sequelize-cli": "^6.6.0",
         "sqlite3": "^5.1.6"
     }
