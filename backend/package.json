@@ -13,9 +13,12 @@
   "author": "Adam Scoggins",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "express": "^4.18.2",
     "node-pty": "^0.10.1",
     "nodejs": "^0.0.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0",
     "sequelize": "^6.31.0",
     "ws": "^8.13.0"
   },
