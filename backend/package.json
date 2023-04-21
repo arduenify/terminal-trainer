@@ -12,6 +12,7 @@
         "type": "git",
         "url": "https://github.com/AdamScoggins/terminal-trainer/backend"
     },
+    "type": "module",
     "author": "Adam Scoggins",
     "license": "ISC",
     "dependencies": {
