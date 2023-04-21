@@ -1,6 +1,8 @@
 'use strict';
-
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
+
+const DEFAULT_SEED_PASSWORD = process.env.DEFAULT_SEED_PASSWORD;
 
 module.exports = {
     async up(queryInterface, Sequelize) {
@@ -8,7 +10,6 @@ module.exports = {
             {
                 username: 'AdamScoggins',
                 email: 'adam@aa.io',
-                password: '1234qwer',
                 firstName: 'Adam',
                 lastName: 'Scoggins',
                 terminalTheme: 'dark',
@@ -17,7 +18,6 @@ module.exports = {
             {
                 username: 'JaneDoe',
                 email: 'jane.doe@aa.io',
-                password: 'password123',
                 firstName: 'Jane',
                 lastName: 'Doe',
                 terminalTheme: 'light',
@@ -26,7 +26,6 @@ module.exports = {
             {
                 username: 'JohnDoe',
                 email: 'jane.does.husband@aa.io',
-                password: 'password1234',
                 firstName: 'John',
                 lastName: 'Doe',
                 terminalTheme: 'dark',
@@ -36,7 +35,7 @@ module.exports = {
 
         const hashedUsers = users.map((user) => ({
             ...user,
-            password: bcrypt.hashSync(user.password, 10),
+            password: bcrypt.hashSync(DEFAULT_SEED_PASSWORD),
             createdAt: new Date(),
             updatedAt: new Date(),
         }));
