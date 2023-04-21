@@ -1,9 +1,14 @@
-import express from 'express';
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('dotenv').config();
+const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
+
+app.use(
+    morgan(
+        '\x1b[36m:method :url :status :response-time ms - :res[content-length] \x1b[0m'
+    )
+);
 
 app.get('/ping', (req, res) => {
     res.send();
