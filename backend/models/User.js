@@ -1,14 +1,26 @@
-const { DataTypes, Model } = require('sequelize');
+'use strict';
+
+const { Model } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
     class User extends Model {
         static associate(models) {
-            User.hasMany(models.Badge, { foreignKey: 'userId', as: 'badges' });
+            User.belongsToMany(models.Badge, {
+                through: models.UserBadge,
+                foreignKey: 'userId',
+                otherKey: 'badgeId',
+                as: 'badges',
+            });
+
             User.hasMany(models.UserProgress, {
                 foreignKey: 'userId',
                 as: 'progress',
             });
+        }
+
+        async comparePassword(candidatePassword) {
+            return await bcrypt.compare(candidatePassword, this.password);
         }
     }
 
@@ -60,8 +72,21 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: 'user',
             },
         },
-        { sequelize, modelName: 'User', timestamps: true, sync: { alter: true } }
+        {
+            sequelize,
+            modelName: 'User',
+            timestamps: true,
+            sync: { alter: true },
+            defaultScope: {
+                attributes: { exclude: ['password'] },
+            },
+            scopes: {
+                withPassword: {
+                    attributes: { include: ['password'] },
+                },
+            },
+        },
     );
 
     return User;
-}
+};
