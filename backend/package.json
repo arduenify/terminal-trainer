@@ -1,0 +1,36 @@
+{
+    "name": "terminal-trainer-backend",
+    "version": "1.0.0",
+    "description": "The backend for Terminal Trainer",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "sequelize db:migrate && nodemon app.js",
+        "start": "npm run build && node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/AdamScoggins/terminal-trainer/backend"
+    },
+    "author": "Adam Scoggins",
+    "license": "ISC",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "morgan": "^1.10.0",
+        "node-pty": "^0.10.1",
+        "nodejs": "^0.0.0",
+        "passport": "^0.6.0",
+        "passport-local": "^1.0.0",
+        "pg": "^8.10.0",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.31.0",
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.22",
+        "sequelize-cli": "^6.6.0",
+        "sqlite3": "^5.1.6"
+    }
+}
