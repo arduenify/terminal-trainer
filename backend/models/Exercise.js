@@ -2,7 +2,7 @@
 
 const { Model, Op } = require('sequelize');
 
-const Category = require('./category');
+const Category = require('./Category');
 
 module.exports = (sequelize, DataTypes) => {
     class Exercise extends Model {

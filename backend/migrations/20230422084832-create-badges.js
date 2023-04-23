@@ -2,45 +2,28 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Users', {
+        await queryInterface.createTable('Badges', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            username: {
+            name: {
+                type: Sequelize.STRING,
                 allowNull: false,
-                unique: true,
-                type: Sequelize.STRING,
             },
-            email: {
+            description: {
+                type: Sequelize.TEXT,
                 allowNull: false,
-                unique: true,
-                type: Sequelize.STRING,
             },
-            password: {
+            icon: {
+                type: Sequelize.STRING,
                 allowNull: false,
-                type: Sequelize.STRING,
             },
-            firstName: {
+            criteria: {
+                type: Sequelize.JSON,
                 allowNull: false,
-                type: Sequelize.STRING,
-            },
-            lastName: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            terminalTheme: {
-                allowNull: true,
-                unique: false,
-                type: Sequelize.STRING,
-                defaultValue: 'dark',
-            },
-            role: {
-                allowNull: false,
-                type: Sequelize.STRING,
-                defaultValue: 'user',
             },
             createdAt: {
                 allowNull: false,
@@ -50,11 +33,11 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
-               defaultValue: Sequelize.NOW,
+                defaultValue: Sequelize.NOW,
             },
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Users');
+        await queryInterface.dropTable('Badges');
     },
 };
