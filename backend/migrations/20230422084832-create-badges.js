@@ -2,43 +2,28 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Exercises', {
+        await queryInterface.createTable('Badges', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            title: {
-                allowNull: false,
-                unique: true,
+            name: {
                 type: Sequelize.STRING,
+                allowNull: false,
             },
             description: {
+                type: Sequelize.TEXT,
                 allowNull: false,
-                type: Sequelize.STRING,
             },
-            difficulty: {
-                allowNull: false,
+            icon: {
                 type: Sequelize.STRING,
-            },
-            teachingText: {
                 allowNull: false,
-                type: Sequelize.STRING,
             },
-            solution: {
+            criteria: {
+                type: Sequelize.JSON,
                 allowNull: false,
-                type: Sequelize.STRING,
-            },
-            categoryId: {
-                allowNull: false,
-                type: Sequelize.INTEGER,
-                references: {
-                    model: 'Categories',
-                    key: 'id',
-                },
-                onUpdate: 'CASCADE',
-                onDelete: 'CASCADE',
             },
             createdAt: {
                 allowNull: false,
@@ -53,6 +38,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Exercises');
+        await queryInterface.dropTable('Badges');
     },
 };

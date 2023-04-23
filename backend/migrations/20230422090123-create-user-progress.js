@@ -2,43 +2,42 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Exercises', {
+        await queryInterface.createTable('UserProgress', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            title: {
-                allowNull: false,
-                unique: true,
-                type: Sequelize.STRING,
-            },
-            description: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            difficulty: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            teachingText: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            solution: {
-                allowNull: false,
-                type: Sequelize.STRING,
-            },
-            categoryId: {
-                allowNull: false,
+            userId: {
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'Categories',
+                    model: 'Users',
                     key: 'id',
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
+            },
+            exerciseId: {
+                type: Sequelize.INTEGER,
+                references: {
+                    model: 'Exercises',
+                    key: 'id',
+                },
+                onUpdate: 'CASCADE',
+                onDelete: 'CASCADE',
+            },
+            score: {
+                type: Sequelize.INTEGER,
+            },
+            hintsUsed: {
+                type: Sequelize.INTEGER,
+            },
+            timeSpent: {
+                type: Sequelize.INTEGER,
+            },
+            completed: {
+                type: Sequelize.BOOLEAN,
             },
             createdAt: {
                 allowNull: false,
@@ -52,7 +51,8 @@ module.exports = {
             },
         });
     },
+
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Exercises');
+        await queryInterface.dropTable('UserProgress');
     },
 };
