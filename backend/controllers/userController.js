@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const {
     SuccessResponse,
     CreatedResponse,
@@ -8,8 +7,8 @@ const {
     UnauthorizedResponse,
     ForbiddenResponse,
 } = require('./responseController');
+const jwt = require('jsonwebtoken');
 const { isEmail } = require('./helpers');
-
 const { User } = require('../models');
 
 const generateToken = (id) => {
@@ -58,17 +57,21 @@ async function login(req, res) {
 
     try {
         const where = {};
+
+        // The user can login with either an email or a username
         if (isEmail(usernameOrEmail)) {
             where.email = usernameOrEmail;
         } else {
             where.username = usernameOrEmail;
         }
 
+        // Default scope does not return the password hash
         const user = await User.scope('withPassword').findOne({ where });
         if (!user) {
             return new NotFoundResponse({ error: 'User not found' }, res);
         }
 
+        // Matches the hash against the plaintext password
         const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
@@ -79,7 +82,6 @@ async function login(req, res) {
         }
 
         const token = generateToken(user.id);
-
         return new SuccessResponse({ token }, res);
     } catch (err) {
         const errorMessage =
