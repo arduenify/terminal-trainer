@@ -1,1 +1,2 @@
 *.sqlite
+reset_dev_db.sh
