@@ -10,15 +10,6 @@ const passportConfig = require('./config/passport');
 function initializeApp() {
     const app = express();
 
-    const PORT = process.env.API_PORT;
-    if (!PORT) {
-        console.error(
-            'Your .env file is missing a value for the `API_PORT` variable.',
-        );
-
-        return process.exit(1);
-    }
-
     passportConfig(passport);
 
     app.use(
@@ -32,10 +23,10 @@ function initializeApp() {
 
     app.use('/api', require('./routes/index'));
 
-    app.listen(PORT, () => {
+    app.listen(3000, () => {
         if (process.env.NODE_ENV === 'development') {
             console.log(
-                `Terminal Trainer Backend Server is listening on port ${PORT}!`,
+                'Terminal Trainer Backend Server is listening on port 3000.',
             );
         }
     });
