@@ -7,5 +7,6 @@ const userBadgeRoutes = require('./userBadgeRoutes');
 
 router.use('/users', userRoutes);
 router.use('/badges', badgeRoutes);
+router.use('/user-badges', userBadgeRoutes);
 
 module.exports = router;
