@@ -1,6 +1,9 @@
 const { check } = require('express-validator');
 const { validationResult } = require('express-validator');
-const { BadRequestResponse } = require('../controllers/responseController');
+const {
+    BadRequestResponse,
+    ValidationErrorResponse,
+} = require('../controllers/responseController');
 
 // Middleware for validating user registration
 const validateUserRegistration = [
@@ -19,21 +22,31 @@ const validateUserLogin = [
     _handleValidationErrors,
 ];
 
+// Middleware for creating a user badge relationship
+const validateCreateUserBadge = [
+    check('userId').notEmpty().withMessage('User id is required'),
+    check('badgeId').notEmpty().withMessage('Badge id is required'),
+    _handleValidationErrors,
+];
+
 // If there are any validation errors, send a response with the errors,
 // otherwise, move on to the next middlware.
 async function _handleValidationErrors(req, res, next) {
     const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-        return new BadRequestResponse({
+    if (errors.isEmpty()) return next();
+
+    return new ValidationErrorResponse(
+        {
             errors: errors.array(),
-        });
-    } else {
-        next();
-    }
+        },
+        res,
+    );
 }
 
 module.exports = {
     validateUserRegistration,
     validateUserLogin,
+    validateCreateBadge,
+    validateCreateUserBadge,
 };
