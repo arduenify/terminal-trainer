@@ -22,6 +22,14 @@ const validateUserLogin = [
     _handleValidationErrors,
 ];
 
+// Middleware for validating badge creation
+const validateCreateBadge = [
+    check('title', 'Title is required').notEmpty(),
+    check('description', 'Description is required').notEmpty(),
+    check('icon', 'Icon is required').notEmpty(),
+    _handleValidationErrors,
+];
+
 // Middleware for creating a user badge relationship
 const validateCreateUserBadge = [
     check('userId').notEmpty().withMessage('User id is required'),

@@ -22,6 +22,25 @@ const getAllBadges = async (req, res) => {
     }
 };
 
+const getBadge = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const badge = await Badge.findByPk(id);
+
+        if (!badge) {
+            return new NotFoundResponse(null, res);
+        }
+
+        return new SuccessResponse(badge, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            'Internal server error when attempting to get badge by id.';
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+};
+
 const createBadge = async (req, res) => {
     const { name, description, icon, critera } = req.body;
 
@@ -84,4 +103,4 @@ const deleteBadge = async (req, res) => {
     }
 };
 
-module.exports = { getAllBadges, createBadge, updateBadge, deleteBadge };
+module.exports = { getAllBadges, createBadge, getBadge, updateBadge, deleteBadge };
