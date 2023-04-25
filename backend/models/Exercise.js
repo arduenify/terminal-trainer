@@ -24,16 +24,6 @@ module.exports = (sequelize, DataTypes) => {
             });
         }
 
-        static async getExerciseById(id) {
-            const exercise = await Exercise.findByPk(id);
-            return exercise;
-        }
-
-        static async getAllExercises() {
-            const exercises = await Exercise.findAll();
-            return exercises;
-        }
-
         static async searchExercises({ categoryId, difficulty, title }) {
             const where = {};
 
@@ -73,30 +63,6 @@ module.exports = (sequelize, DataTypes) => {
             return exercises;
         }
 
-        async updateExercise({
-            title,
-            description,
-            category,
-            difficulty,
-            solution,
-            teachingText,
-        }) {
-            if (title) this.title = title;
-            if (description) this.description = description;
-            if (category) this.category = category;
-            if (difficulty) this.difficulty = difficulty;
-            if (solution) this.solution = solution;
-            if (teachingText) this.teachingText = teachingText;
-
-            await this.save();
-
-            return this;
-        }
-
-        async deleteExercise() {
-            await this.destroy();
-        }
-
         async addHint({ title, description }) {
             const hint = this.createHint({
                 title,
@@ -104,11 +70,6 @@ module.exports = (sequelize, DataTypes) => {
             });
 
             return hint;
-        }
-
-        async getAllHints() {
-            const hints = await this.getHints();
-            return hints;
         }
     }
 
