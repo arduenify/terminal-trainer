@@ -5,20 +5,21 @@
 const express = require('express');
 const router = express.Router();
 const badgeController = require('../controllers/badgeController');
-const authenticate = require('../middlewares/isAuthenticated');
+const isAuthenticated = require('../middlewares/isAuthenticated');
 const isAdmin = require('../middlewares/isAdmin');
 const { validateCreateBadge } = require('../middlewares/validationMiddleware');
 
-router.get('/', authenticate, isAdmin, badgeController.getAllBadges);
-router.get('/:id', authenticate, isAdmin, badgeController.getBadge);
+
+router.get('/', isAuthenticated, isAdmin, badgeController.getAllBadges);
+router.get('/:id', isAuthenticated, isAdmin, badgeController.getBadge);
 router.post(
     '/',
-    authenticate,
+    isAuthenticated,
     isAdmin,
     validateCreateBadge,
     badgeController.createBadge,
 );
-router.put('/:id', authenticate, isAdmin, badgeController.updateBadge);
-router.delete('/:id', authenticate, isAdmin, badgeController.deleteBadge);
+router.put('/:id', isAuthenticated, isAdmin, badgeController.updateBadge);
+router.delete('/:id', isAuthenticated, isAdmin, badgeController.deleteBadge);
 
 module.exports = router;
