@@ -1,6 +1,5 @@
 const { check } = require('express-validator');
 const { validationResult } = require('express-validator');
-const { BadRequestResponse } = require('../controllers/responseController');
 const {
     ValidationErrorResponse,
 } = require('../controllers/responseController');
@@ -43,7 +42,7 @@ async function _handleValidationErrors(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return new BadRequestResponse({
+        return new ValidationErrorResponse({
             errors: errors.array(),
         });
     } else {
@@ -54,4 +53,6 @@ async function _handleValidationErrors(req, res, next) {
 module.exports = {
     validateUserRegistration,
     validateUserLogin,
+    validateCreateBadge,
+    validateCreateUserBadge,
 };
