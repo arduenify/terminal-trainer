@@ -1,6 +1,9 @@
 const { check } = require('express-validator');
 const { validationResult } = require('express-validator');
 const { BadRequestResponse } = require('../controllers/responseController');
+const {
+    ValidationErrorResponse,
+} = require('../controllers/responseController');
 
 // Middleware for validating user registration
 const validateUserRegistration = [
@@ -16,6 +19,21 @@ const validateUserRegistration = [
 const validateUserLogin = [
     check('usernameOrEmail', 'Username or email is required').notEmpty(),
     check('password', 'Password is required').notEmpty(),
+    _handleValidationErrors,
+];
+
+// Middleware for validating badge creation
+const validateCreateBadge = [
+    check('title', 'Title is required').notEmpty(),
+    check('description', 'Description is required').notEmpty(),
+    check('icon', 'Icon is required').notEmpty(),
+    _handleValidationErrors,
+];
+
+// Middleware for creating a user badge relationship
+const validateCreateUserBadge = [
+    check('userId').notEmpty().withMessage('User id is required'),
+    check('badgeId').notEmpty().withMessage('Badge id is required'),
     _handleValidationErrors,
 ];
 
