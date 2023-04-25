@@ -1,5 +1,7 @@
 'use strict';
 
+const { getQueryInterfaceOptions } = require('../utils/seederUtils');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
@@ -64,10 +66,18 @@ module.exports = {
             ),
         ];
 
-        await queryInterface.bulkInsert('Exercises', exercises);
+        await queryInterface.bulkInsert(
+            'Exercises',
+            exercises,
+            getQueryInterfaceOptions(),
+        );
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('Exercises', null, {});
+        await queryInterface.bulkDelete(
+            'Exercises',
+            null,
+            getQueryInterfaceOptions(),
+        );
     },
 };

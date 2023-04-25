@@ -1,5 +1,7 @@
 'use strict';
 
+const { getQueryInterfaceOptions } = require('../utils/seederUtils');
+
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         const demoUserProgress = [
@@ -35,10 +37,18 @@ module.exports = {
             },
         ];
 
-        await queryInterface.bulkInsert('UserProgress', demoUserProgress, {});
+        await queryInterface.bulkInsert(
+            'UserProgress',
+            demoUserProgress,
+            getQueryInterfaceOptions(),
+        );
     },
 
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.bulkDelete('UserProgress', null, {});
+        await queryInterface.bulkDelete(
+            'UserProgress',
+            null,
+            getQueryInterfaceOptions(),
+        );
     },
 };

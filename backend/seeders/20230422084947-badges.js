@@ -1,5 +1,7 @@
 'use strict';
 
+const { getQueryInterfaceOptions } = require('../utils/seederUtils');
+
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         await queryInterface.bulkInsert(
@@ -26,11 +28,15 @@ module.exports = {
                     updatedAt: new Date(),
                 },
             ],
-            {},
+            getQueryInterfaceOptions(),
         );
     },
 
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.bulkDelete('Badges', null, {});
+        await queryInterface.bulkDelete(
+            'Badges',
+            null,
+            getQueryInterfaceOptions(),
+        );
     },
 };

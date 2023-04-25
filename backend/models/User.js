@@ -24,6 +24,25 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'User',
+        timestamps: true,
+        sync: { alter: true },
+        defaultScope: {
+            attributes: { exclude: ['password'] },
+        },
+        scopes: {
+            withPassword: {
+                attributes: { include: ['password'] },
+            },
+        },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     User.init(
         {
             id: {
@@ -72,20 +91,7 @@ module.exports = (sequelize, DataTypes) => {
                 defaultValue: 'user',
             },
         },
-        {
-            sequelize,
-            modelName: 'User',
-            timestamps: true,
-            sync: { alter: true },
-            defaultScope: {
-                attributes: { exclude: ['password'] },
-            },
-            scopes: {
-                withPassword: {
-                    attributes: { include: ['password'] },
-                },
-            },
-        },
+        modelOptions,
     );
 
     return User;

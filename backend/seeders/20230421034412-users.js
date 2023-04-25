@@ -1,5 +1,6 @@
 'use strict';
 const bcrypt = require('bcryptjs');
+const { getQueryInterfaceOptions } = require('../utils/seederUtils');
 require('dotenv').config();
 
 const DEFAULT_SEED_PASSWORD = process.env.DEFAULT_SEED_PASSWORD;
@@ -40,10 +41,18 @@ module.exports = {
             updatedAt: new Date(),
         }));
 
-        await queryInterface.bulkInsert('Users', hashedUsers);
+        await queryInterface.bulkInsert(
+            'Users',
+            hashedUsers,
+            getQueryInterfaceOptions(),
+        );
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete('Users', null, {});
+        await queryInterface.bulkDelete(
+            'Users',
+            null,
+            getQueryInterfaceOptions(),
+        );
     },
 };
