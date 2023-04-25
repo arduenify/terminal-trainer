@@ -7,6 +7,17 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {}
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'UserBadge',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     UserBadge.init(
         {
             userId: {
@@ -20,12 +31,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-        {
-            sequelize,
-            modelName: 'UserBadge',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modelOptions,
     );
 
     return UserBadge;

@@ -12,6 +12,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modalOptions = {
+        sequelize,
+        modelName: 'Category',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     Category.init(
         {
             id: {
@@ -29,12 +40,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-        {
-            sequelize,
-            modelName: 'Category',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modalOptions,
     );
 
     return Category;

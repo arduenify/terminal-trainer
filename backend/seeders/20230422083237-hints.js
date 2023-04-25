@@ -1,5 +1,7 @@
 'use strict';
 
+const { getQueryInterfaceOptions } = require('../utils/seederUtils');
+
 const createHintObject = (exerciseId, hint) => ({
     exerciseId,
     hint,
@@ -25,10 +27,18 @@ module.exports = {
             ),
         ];
 
-        await queryInterface.bulkInsert('Hints', hints);
+        await queryInterface.bulkInsert(
+            'Hints',
+            hints,
+            getQueryInterfaceOptions(),
+        );
     },
 
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.bulkDelete('Hints', null, {});
+        await queryInterface.bulkDelete(
+            'Hints',
+            null,
+            getQueryInterfaceOptions(),
+        );
     },
 };

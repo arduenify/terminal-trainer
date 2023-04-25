@@ -13,6 +13,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'Badge',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     Badge.init(
         {
             name: {
@@ -32,12 +43,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-        {
-            sequelize,
-            modelName: 'Badge',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modelOptions,
     );
 
     return Badge;
