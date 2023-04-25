@@ -63,6 +63,12 @@ class ConflictResponse extends ResponseController {
     }
 }
 
+class ValidationErrorResponse extends ResponseController {
+    constructor(payload, res) {
+        super(422, payload, res);
+    }
+}
+
 class InternalServerErrorResponse extends ResponseController {
     constructor(payload, res) {
         super(500, payload, res);
@@ -79,5 +85,6 @@ module.exports = {
     ForbiddenResponse,
     NotFoundResponse,
     ConflictResponse,
+    ValidationErrorResponse,
     InternalServerErrorResponse,
 };
