@@ -1,7 +1,6 @@
 const { check } = require('express-validator');
 const { validationResult } = require('express-validator');
 const {
-    BadRequestResponse,
     ValidationErrorResponse,
 } = require('../controllers/responseController');
 
