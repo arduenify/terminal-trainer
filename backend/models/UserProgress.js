@@ -16,6 +16,18 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'UserProgress',
+        tableName: 'UserProgress',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     UserProgress.init(
         {
             userId: DataTypes.INTEGER,
@@ -25,13 +37,7 @@ module.exports = (sequelize, DataTypes) => {
             timeSpent: DataTypes.INTEGER,
             completed: DataTypes.BOOLEAN,
         },
-        {
-            sequelize,
-            modelName: 'UserProgress',
-            tableName: 'UserProgress',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modelOptions,
     );
 
     return UserProgress;

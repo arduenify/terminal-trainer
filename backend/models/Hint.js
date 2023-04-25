@@ -16,6 +16,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'Hint',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     Hint.init(
         {
             exerciseId: {
@@ -31,12 +42,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-        {
-            sequelize,
-            modelName: 'Hint',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modelOptions,
     );
 
     return Hint;
