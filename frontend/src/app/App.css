@@ -1,0 +1,23 @@
+body {
+    background-color: #282a36;
+    color: #f8f8f2;
+    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+}
+
+.button {
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+}
+
+.button-primary {
+    background-color: #50fa7b;
+    color: #f8f8f2;
+}
+
+.button-secondary {
+    background-color: #1c1e26;
+    color: #f8f8f2;
+}
