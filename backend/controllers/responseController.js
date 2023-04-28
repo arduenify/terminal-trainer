@@ -5,6 +5,7 @@ class ResponseController {
         this.payload = payload;
 
         if (res) {
+            console.log('sending statusCode', statusCode);
             this.sendJSON(res);
         }
     }
