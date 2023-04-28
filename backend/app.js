@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 
+const API_PORT = process.env.API_PORT;
+
 /**
  * Creates an Express application and adds some standard configuration.
  */
@@ -23,11 +25,9 @@ function initializeApp() {
 
     app.use('/api', require('./routes/index'));
 
-    app.listen(3000, () => {
+    app.listen(API_PORT, () => {
         if (process.env.NODE_ENV === 'development') {
-            console.log(
-                'Terminal Trainer Backend Server is listening on port 3000.',
-            );
+            console.log(`Listening at http://localhost:${API_PORT}/`);
         }
     });
 

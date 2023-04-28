@@ -102,7 +102,11 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
                 get() {
                     const solution = this.getDataValue('solution');
-                    return JSON.parse(solution);
+                    try {
+                        return JSON.parse(solution);
+                    } catch (error) {
+                        return solution;
+                    }
                 },
                 set(value) {
                     this.setDataValue('solution', JSON.stringify(value));

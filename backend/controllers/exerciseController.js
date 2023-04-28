@@ -1,13 +1,17 @@
-const Exercise = require('../models/Exercise');
-const Category = require('../models/Category');
-const { SuccessResponse } = require('./responseController');
-const { NotFoundResponse } = require('./responseController');
+const { Exercise } = require('../models');
+const { Category } = require('../models');
+const {
+    SuccessResponse,
+    NotFoundResponse,
+    InternalServerErrorResponse,
+} = require('./responseController');
 
 const getAllExercises = async (req, res) => {
     try {
         const exercises = await Exercise.findAll();
         return new SuccessResponse(exercises, res);
     } catch (err) {
+        console.log('ERROR: ', err);
         const errorMessage =
             err.message ||
             'Internal server error when attempting to get all exercises.';
