@@ -1,9 +1,11 @@
-import React from 'react';
-import Header from './Header';
+import React, { useEffect } from 'react';
+import Header from '../header';
 import Slogan from './Slogan';
 import Carousel from './Carousel';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllExercises } from '../../store/exerciseSlice';
 
-const exercises = [
+const demoExercises = [
     {
         title: 'Print Working Directory',
         description: 'Print the path to the current working directory.',
@@ -29,6 +31,17 @@ const exercises = [
 ];
 
 const HomePage = () => {
+    const dispatch = useDispatch();
+    const exercises = useSelector((state) => state.exercise.data);
+    const status = useSelector((state) => state.exercise.status);
+    const error = useSelector((state) => state.exercise.error);
+
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchAllExercises());
+        }
+    }, [status, dispatch]);
+
     return (
         <>
             <Header />
