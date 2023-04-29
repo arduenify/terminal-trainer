@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { api } from './api';
 import { logger } from 'redux-logger';
-import exerciseReducer from './exerciseSlice';
 
 export default configureStore({
     reducer: {
-        exercise: exerciseReducer,
+        [api.reducerPath]: api.reducer,
     },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(api.middleware, logger),
 });
