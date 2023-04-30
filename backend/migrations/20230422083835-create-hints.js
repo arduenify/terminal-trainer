@@ -16,7 +16,7 @@ module.exports = {
                     allowNull: false,
                     references: {
                         model: {
-                            tableName: 'Exercises',
+                            tableName: '"Exercises"',
                             schema: process.env.DB_SCHEMA,
                         },
                         key: 'id',

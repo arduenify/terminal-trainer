@@ -11,7 +11,7 @@ module.exports = {
                     primaryKey: true,
                     references: {
                         model: {
-                            tableName: 'User',
+                            tableName: '"Users"',
                             schema: process.env.DB_SCHEMA,
                         },
                         key: 'id',
@@ -25,7 +25,7 @@ module.exports = {
                     primaryKey: true,
                     references: {
                         model: {
-                            tableName: 'Badges',
+                            tableName: '"Badges"',
                             schema: process.env.DB_SCHEMA,
                         },
                         key: 'id',
