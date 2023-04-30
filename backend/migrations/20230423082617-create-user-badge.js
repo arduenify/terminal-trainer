@@ -10,7 +10,7 @@ module.exports = {
                     allowNull: false,
                     primaryKey: true,
                     references: {
-                        model: 'Users',
+                        model: 'User',
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',
@@ -21,7 +21,7 @@ module.exports = {
                     allowNull: false,
                     primaryKey: true,
                     references: {
-                        model: 'Badges',
+                        model: 'Badge',
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',
