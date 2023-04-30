@@ -12,7 +12,7 @@ const createHintObject = (exerciseId, hint) => ({
 module.exports = {
     up: async (queryInterface, Sequelize) => {
         const [exercises, metadata] = await queryInterface.sequelize.query(
-            'SELECT id from Exercises;',
+            'SELECT id from "Exercises";',
         );
 
         const hints = [
