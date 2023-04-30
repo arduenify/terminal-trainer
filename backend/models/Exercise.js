@@ -73,6 +73,17 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
+    const modelOptions = {
+        sequelize,
+        modelName: 'Exercise',
+        timestamps: true,
+        sync: { alter: true },
+    };
+
+    if (process.env.NODE_ENV === 'production') {
+        modelOptions.schema = process.env.DB_SCHEMA;
+    }
+
     Exercise.init(
         {
             id: {
@@ -113,12 +124,7 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
         },
-        {
-            sequelize,
-            modelName: 'Exercise',
-            timestamps: true,
-            sync: { alter: true },
-        },
+        modelOptions,
     );
 
     return Exercise;

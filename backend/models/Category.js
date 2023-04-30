@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     }
 
-    const modalOptions = {
+    const modelOptions = {
         sequelize,
         modelName: 'Category',
         timestamps: true,
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
         },
-        modalOptions,
+        modelOptions,
     );
 
     return Category;
