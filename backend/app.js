@@ -22,7 +22,7 @@ function initializeApp() {
 
     app.use(passport.initialize());
     app.use(express.json());
-
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
     app.use('/api', require('./routes/index'));
 
     app.listen(API_PORT, () => {
