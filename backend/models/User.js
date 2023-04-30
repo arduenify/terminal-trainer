@@ -39,10 +39,6 @@ module.exports = (sequelize, DataTypes) => {
         },
     };
 
-    if (process.env.NODE_ENV === 'production') {
-        modelOptions.schema = process.env.DB_SCHEMA;
-    }
-
     User.init(
         {
             id: {

@@ -80,10 +80,6 @@ module.exports = (sequelize, DataTypes) => {
         sync: { alter: true },
     };
 
-    if (process.env.NODE_ENV === 'production') {
-        modelOptions.schema = process.env.DB_SCHEMA;
-    }
-
     Exercise.init(
         {
             id: {

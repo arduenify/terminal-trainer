@@ -2,7 +2,7 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable(`${process.env.DB_SCHEMA}.Exercises`, {
+        await queryInterface.createTable('Exercises', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -34,10 +34,7 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model: {
-                        tableName: '"Categories"',
-                        schema: process.env.DB_SCHEMA,
-                    },
+                    model: 'Categories',
                     key: 'id',
                 },
                 onUpdate: 'CASCADE',
@@ -56,6 +53,6 @@ module.exports = {
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable(`${process.env.DB_SCHEMA}.Exercises`);
+        await queryInterface.dropTable('Exercises');
     },
 };

@@ -18,8 +18,8 @@ module.exports = {
                 require: true,
                 rejectUnauthorized: false,
             },
-            searchPath: process.env.DB_SCHEMA,
+            // searchPath: process.env.DB_SCHEMA,
         },
-        schema: process.env.DB_SCHEMA,
+        // schema: process.env.DB_SCHEMA,
     },
 };
