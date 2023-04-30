@@ -34,7 +34,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
                 references: {
-                    model: 'Category',
+                    model: {
+                        tableName: 'Categories',
+                        schema: process.env.DB_SCHEMA,
+                    },
                     key: 'id',
                 },
                 onUpdate: 'CASCADE',

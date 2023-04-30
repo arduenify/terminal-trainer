@@ -14,7 +14,10 @@ module.exports = {
                 userId: {
                     type: Sequelize.INTEGER,
                     references: {
-                        model: 'User',
+                        model: {
+                            tableName: 'User',
+                            schema: process.env.DB_SCHEMA,
+                        },
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',
@@ -23,7 +26,10 @@ module.exports = {
                 exerciseId: {
                     type: Sequelize.INTEGER,
                     references: {
-                        model: 'Exercise',
+                        model: {
+                            tableName: 'Exercises',
+                            schema: process.env.DB_SCHEMA,
+                        },
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',

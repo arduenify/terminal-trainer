@@ -10,7 +10,10 @@ module.exports = {
                     allowNull: false,
                     primaryKey: true,
                     references: {
-                        model: 'User',
+                        model: {
+                            tableName: 'User',
+                            schema: process.env.DB_SCHEMA,
+                        },
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',
@@ -21,7 +24,10 @@ module.exports = {
                     allowNull: false,
                     primaryKey: true,
                     references: {
-                        model: 'Badge',
+                        model: {
+                            tableName: 'Badges',
+                            schema: process.env.DB_SCHEMA,
+                        },
                         key: 'id',
                     },
                     onUpdate: 'CASCADE',

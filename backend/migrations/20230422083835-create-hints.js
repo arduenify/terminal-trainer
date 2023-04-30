@@ -15,7 +15,10 @@ module.exports = {
                     type: Sequelize.INTEGER,
                     allowNull: false,
                     references: {
-                        model: 'Exercise',
+                        model: {
+                            tableName: 'Exercises',
+                            schema: process.env.DB_SCHEMA,
+                        },
                         key: 'id',
                     },
                 },
