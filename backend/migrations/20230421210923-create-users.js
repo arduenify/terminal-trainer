@@ -2,7 +2,7 @@
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
-        await queryInterface.createTable('Users', {
+        await queryInterface.createTable(`${process.env.DB_SCHEMA}.Users`, {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -50,11 +50,11 @@ module.exports = {
             updatedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
-               defaultValue: Sequelize.NOW,
+                defaultValue: Sequelize.NOW,
             },
         });
     },
     down: async (queryInterface, Sequelize) => {
-        await queryInterface.dropTable('Users');
+        await queryInterface.dropTable(`${process.env.DB_SCHEMA}.Users`);
     },
 };

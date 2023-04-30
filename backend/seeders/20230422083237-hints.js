@@ -11,18 +11,22 @@ const createHintObject = (exerciseId, hint) => ({
 
 module.exports = {
     up: async (queryInterface, Sequelize) => {
+        const [exercises, metadata] = await queryInterface.sequelize.query(
+            'SELECT id from Exercises;',
+        );
+
         const hints = [
             createHintObject(
-                1,
+                exercises[0].id,
                 'What are the consonants in the word `list`? Hmm...',
             ),
             createHintObject(1, 'You can type `man ls` for a hint.'),
             createHintObject(
-                2,
+                exercises[1].id,
                 'If I chose one letter to represent the `long` flag, which letter would it be? Flags usually start with a dash!',
             ),
             createHintObject(
-                2,
+                exercises[1].id,
                 'Flags are like options for commands. `-la` is like saying "Hey `ls` command, give me the long output with hidden files."',
             ),
         ];
