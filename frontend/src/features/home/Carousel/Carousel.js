@@ -1,13 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo, use } from 'react';
 import ExerciseCard from '../ExerciseCard';
+import { useFetchAllExercisesQuery } from '../../../store/api';
+
 import './Carousel.css';
 
-const Carousel = ({ exercises }) => {
+const Carousel = () => {
+    const [exercises, setExercises] = useState([]);
     const [translateX, setTranslateX] = useState(0);
-    const [animationSpeedModifier, setAnimationSpeedModifier] = useState(0.025);
+    const [animationSpeedModifier, setAnimationSpeedModifier] =
+        useState(0.0225);
     const animationRef = useRef(null);
 
-    //
+    const {
+        data: fetchedExercises,
+        error,
+        isLoading,
+    } = useFetchAllExercisesQuery();
+
+    // Animate the carousel movement using a requestAnimationFrame loop and a speed modifier to make the animation smooth
     const animate = () => {
         setTranslateX((prevTranslateX) => {
             const newX = prevTranslateX - animationSpeedModifier;
@@ -22,12 +32,27 @@ const Carousel = ({ exercises }) => {
         return () => cancelAnimationFrame(animationRef.current);
     }, []);
 
-    const renderCards = () => {
-        const allCards = exercises.concat(exercises);
-        return allCards.map((exercise, index) => (
-            <ExerciseCard key={`exercise-${index}`} {...exercise} />
+    // Update the local exercise list state when exercises are fetched
+    useEffect(() => {
+        if (fetchedExercises) {
+            setExercises(fetchedExercises.concat(fetchedExercises));
+        }
+    }, [fetchedExercises]);
+
+    // The exercise list must be "doubled" so as to appear infinite and loop correctly
+    const renderedCards = useMemo(() => {
+        if (isLoading || !exercises) {
+            return null;
+        }
+
+        return exercises.map((exercise, index) => (
+            <ExerciseCard
+                key={`exercise-${index}`}
+                {...exercise}
+                index={index}
+            />
         ));
-    };
+    }, [isLoading, exercises]);
 
     return (
         <div className='carousel-container'>
@@ -37,7 +62,7 @@ const Carousel = ({ exercises }) => {
                     transform: `translateX(${translateX}%)`,
                 }}
             >
-                {renderCards()}
+                {renderedCards}
             </div>
         </div>
     );

@@ -3,11 +3,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
-    margin-bottom: 15rem;
 }
 
 .header-logo {
     font-size: 1.5rem;
+    cursor: pointer;
 }
 
 .header-nav {
@@ -35,5 +35,40 @@
 
 .header-buttons {
     display: flex;
+    position: relative;
     gap: 1rem;
+}
+
+.button.button-signin {
+    padding: 0;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: #f8f8f2;
+}
+
+.button-signin:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -0.4rem;
+    left: 0px;
+    width: 42%;
+    height: 2px;
+    background-color: #50fa7b;
+}
+
+.button-signup:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -0.4rem;
+    right: 0;
+    width: 48%;
+    height: 2px;
+    background-color: #50fa7b;
+}
+
+.button.button-signup {
+    padding: 0;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: #6272a4;
 }
