@@ -1,0 +1,30 @@
+.slogan-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    max-width: fit-content;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.slogan {
+    position: relative;
+    font-family: 'Fira Sans', 'Helvetica', 'Arial', sans-serif;
+    font-size: 4.33rem;
+    font-weight: bold;
+    text-align: right;
+    margin: 2rem 0 0 0;
+    left: -4rem;
+}
+
+.slogan.slogan-accent {
+    font-family: 'Pacifico', cursive;
+    color: #6272a4;
+    position: relative;
+    font-size: 5.2rem;
+    margin-top: 0;
+    left: 4rem;
+    /* transition: all 0.3s ease; */
+}
