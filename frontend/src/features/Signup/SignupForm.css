@@ -2,12 +2,34 @@
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+    margin-top: 5rem;
     padding: 2rem;
     box-sizing: border-box;
-    font-family: 'Fira Sans', 'Helvetica', 'Arial', sans-serif;
+    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+    background-color: #1c1e26;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.form-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #f8f8f2;
+    text-align: center;
+}
+
+.form-subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    color: #f8f8f2;
+    text-align: center;
 }
 
 .form-group {
+    position: relative;
     display: flex;
     flex-direction: column;
     margin-bottom: 1.5rem;
@@ -16,16 +38,20 @@
 .form-control {
     padding: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 2px solid #44475a;
     border-radius: 4px;
     outline: none;
+    background-color: #282a36;
+    color: #f8f8f2;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .form-control:focus {
     border-color: #6272a4;
+    box-shadow: 0 0 0 2px rgba(98, 114, 164, 0.3);
 }
 
-.form-control:invalid {
+.input-invalid {
     border-color: #ff5555;
 }
 
@@ -40,22 +66,78 @@
     margin-top: 0.5rem;
 }
 
-.submit-btn {
+.error-message.visible {
+    display: block;
+}
+
+ul.error-message.visible {
+    padding-left: 15px;
+}
+
+.button {
     padding: 0.5rem 1rem;
     font-size: 1rem;
-    background-color: #6272a4;
-    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.submit-btn:hover {
+.button-primary {
+    background-color: #1c1e26;
+    color: #f8f8f2;
+}
+
+.button-primary:hover {
     background-color: #414863;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.submit-btn:disabled {
-    background-color: #ccc;
+.button-primary:disabled {
+    background-color: #44475a;
     cursor: not-allowed;
+    box-shadow: none;
+}
+
+.input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6272a4;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease-out forwards;
+}
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
