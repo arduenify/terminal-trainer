@@ -41,11 +41,15 @@ module.exports = {
             updatedAt: new Date(),
         }));
 
-        await queryInterface.bulkInsert(
-            'Users',
-            hashedUsers,
-            getQueryInterfaceOptions(),
-        );
+        try {
+            await queryInterface.bulkInsert(
+                'Users',
+                hashedUsers,
+                getQueryInterfaceOptions(),
+            );
+        } catch (error) {
+            console.warn('Unable to seed users');
+        }
     },
 
     async down(queryInterface, Sequelize) {
