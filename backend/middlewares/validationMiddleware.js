@@ -42,9 +42,7 @@ async function _handleValidationErrors(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return new ValidationErrorResponse({
-            errors: errors.array(),
-        });
+        return new ValidationErrorResponse([...errors.array()], res);
     } else {
         next();
     }

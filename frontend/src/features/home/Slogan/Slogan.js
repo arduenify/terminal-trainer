@@ -42,11 +42,11 @@ const Slogan = () => {
 
         // Cleanup event listeners
         return () => {
-            containerRef.current.removeEventListener(
+            containerRef?.current?.removeEventListener(
                 'mousemove',
                 handleMouseMove,
             );
-            containerRef.current.removeEventListener(
+            containerRef?.current?.removeEventListener(
                 'mouseleave',
                 handleMouseLeave,
             );
