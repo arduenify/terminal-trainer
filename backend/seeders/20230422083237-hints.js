@@ -31,11 +31,15 @@ module.exports = {
             ),
         ];
 
-        await queryInterface.bulkInsert(
-            'Hints',
-            hints,
-            getQueryInterfaceOptions(),
-        );
+        try {
+            await queryInterface.bulkInsert(
+                'Hints',
+                hints,
+                getQueryInterfaceOptions(),
+            );
+        } catch (error) {
+            console.warn('Unable to seed hints.');
+        }
     },
 
     down: async (queryInterface, Sequelize) => {

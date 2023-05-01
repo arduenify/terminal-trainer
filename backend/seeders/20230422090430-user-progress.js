@@ -37,11 +37,15 @@ module.exports = {
             },
         ];
 
-        await queryInterface.bulkInsert(
-            'UserProgress',
-            demoUserProgress,
-            getQueryInterfaceOptions(),
-        );
+        try {
+            await queryInterface.bulkInsert(
+                'UserProgress',
+                demoUserProgress,
+                getQueryInterfaceOptions(),
+            );
+        } catch (error) {
+            console.warn('Unable to seed user progress');
+        }
     },
 
     down: async (queryInterface, Sequelize) => {
