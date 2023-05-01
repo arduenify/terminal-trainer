@@ -1,133 +1,186 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSignupUserMutation } from '../../store/api';
 import './SignupForm.css';
+import Step1 from './steps/Step1';
+import Step2 from './steps/Step2';
+import Step3 from './steps/Step3';
+import Step4 from './steps/Step4';
 
 const SignupForm = () => {
     // Local state
+    const [currentStep, setCurrentStep] = useState(1);
     const [username, setUsername] = useState('');
-    const [email, setEmailOrUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [lastName, setLastName] = useState('');
     const [firstName, setFirstName] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [showErrors, setShowErrors] = useState(false);
+    const [serverErrors, setServerErrors] = useState([]);
 
     // Hooks
-    const [signupUser, { isLoading, error }] = useSignupUserMutation();
+    const [signupUser] = useSignupUserMutation();
 
     // Callbacks
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // Validate form fields
+    const handleSignup = async () => {
+        // validation
+        if (
+            currentStep !== 4 ||
+            !username ||
+            !email ||
+            !firstName ||
+            !lastName ||
+            !password ||
+            !passwordConfirmation ||
+            !passwordsMatch
+        ) {
+            setShowErrors(true);
+            return;
+        }
 
-            const userData = {
-                username,
-                email,
-                password,
-                firstName,
-                lastName,
-            };
+        const userData = {
+            username,
+            email,
+            password,
+            firstName,
+            lastName,
+        };
 
-            console.log('User Data:', userData);
-            // await signupUser({ email, password }).unwrap();
-        } catch (err) {
-            console.log('Error caught!', err);
+        // dispatch request
+        const resultAction = await signupUser(userData);
+
+        // handle response
+        if (resultAction.error) {
+            // Handle server errors
+            const resultErrors = resultAction.error.data;
+            if (resultErrors) {
+                setServerErrors(resultErrors);
+                setShowErrors(true);
+            } else {
+                setServerErrors([]);
+                setShowErrors(true);
+            }
+        } else {
+            // Redirect to dashboard TODO
         }
     };
 
+    const handleNext = () => {
+        let stepValid = false;
+
+        switch (currentStep) {
+            case 1:
+                stepValid = firstName && lastName;
+                break;
+            case 2:
+                stepValid = username;
+                break;
+            case 3:
+                stepValid = email && isValidEmail(email);
+                break;
+            case 4:
+                stepValid = password && passwordConfirmation && passwordsMatch;
+                break;
+            default:
+                stepValid = true;
+                break;
+        }
+
+        if (currentStep === 4 && stepValid) {
+            return handleSignup();
+        }
+
+        if (stepValid) {
+            setShowErrors(false);
+            setCurrentStep((currentStep) => currentStep + 1);
+        } else {
+            setShowErrors(true);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentStep > 1) setCurrentStep((currentStep) => currentStep - 1);
+    };
+
     const passwordsMatch = password === passwordConfirmation;
+    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+
+    // Render helpers for progressive signup form
+    const renderStep = () => {
+        switch (currentStep) {
+            case 1:
+                return (
+                    <Step1
+                        firstName={firstName}
+                        setFirstName={setFirstName}
+                        lastName={lastName}
+                        setLastName={setLastName}
+                        showErrors={showErrors}
+                    />
+                );
+            case 2:
+                return (
+                    <Step2
+                        username={username}
+                        setUsername={setUsername}
+                        showErrors={showErrors}
+                    />
+                );
+            case 3:
+                return (
+                    <Step3
+                        email={email}
+                        setEmail={setEmail}
+                        showErrors={showErrors}
+                        isValidEmail={isValidEmail}
+                    />
+                );
+            case 4:
+                return (
+                    <Step4
+                        password={password}
+                        setPassword={setPassword}
+                        passwordConfirmation={passwordConfirmation}
+                        setPasswordConfirmation={setPasswordConfirmation}
+                        passwordsMatch={passwordsMatch}
+                        showErrors={showErrors}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
 
     return (
-        <form onSubmit={handleSubmit} className='signup-form' noValidate>
-            <div className='form-group'>
-                <input
-                    type='text'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder='Username'
-                    required
-                    minLength={1}
-                    className='form-control'
-                />
-                <div className='error-message'>Username must not be empty.</div>
+        <form className='signup-form fade-in' noValidate>
+            <h2 className='form-title'>Become a Terminal Pro</h2>
+            {renderStep()}
+            <div className='form-navigation'>
+                <button
+                    type='button'
+                    onClick={handlePrevious}
+                    className='button button-primary'
+                    disabled={currentStep === 1}
+                >
+                    Previous
+                </button>
+                <button
+                    type='button'
+                    onClick={handleNext}
+                    className='button button-primary'
+                >
+                    Next
+                </button>
             </div>
-            <div className='form-group'>
-                <input
-                    type='email'
-                    value={email}
-                    onChange={(e) => setEmailOrUsername(e.target.value)}
-                    placeholder='Email'
-                    required
-                    pattern='[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-                    className='form-control'
-                />
-                <div className='error-message'>Please enter a valid email.</div>
-            </div>
-            <div className='form-group'>
-                <input
-                    type='text'
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder='First Name'
-                    required
-                    className='form-control'
-                />
-                <div className='error-message'>
-                    Please enter your first name.
-                </div>
-            </div>
-            <div className='form-group'>
-                <input
-                    type='text'
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder='Last Name'
-                    required
-                    className='form-control'
-                />
-                <div className='error-message'>
-                    Please enter your last name.
-                </div>
-            </div>
-            <div className='form-group'>
-                <input
-                    type='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder='Password'
-                    required
-                    className='form-control'
-                />
-                <div className='error-message'>Please enter a password.</div>
-            </div>
-            <div className='form-group'>
-                <input
-                    type='password'
-                    value={passwordConfirmation}
-                    onChange={(e) => setPasswordConfirmation(e.target.value)}
-                    placeholder='Confirm Password'
-                    required
-                    minLength='8'
-                    className={`form-control ${
-                        passwordConfirmation && !passwordsMatch
-                            ? 'is-invalid'
-                            : ''
-                    }`}
-                />
-                <div className='error-message'>
-                    {passwordsMatch
-                        ? 'Please confirm your password.'
-                        : 'Passwords do not match.'}
-                </div>
-            </div>
-            <button
-                type='submit'
-                disabled={isLoading || !passwordsMatch}
-                className='submit-btn'
-            >
-                Sign Up
-            </button>
-            {error && <div>Error: {error.message}</div>}
+            {serverErrors && (
+                <ul className='error-message visible'>
+                    {serverErrors.map((error, i) => {
+                        const { msg, path, type, value } = error;
+
+                        return <li key={i}>{error.msg}</li>;
+                    })}
+                </ul>
+            )}
         </form>
     );
 };
