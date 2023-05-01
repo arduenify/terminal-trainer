@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
-
+const path = require('path');
 const API_PORT = process.env.API_PORT;
 
 /**
@@ -22,7 +22,7 @@ function initializeApp() {
 
     app.use(passport.initialize());
     app.use(express.json());
-    app.use(express.static(path.join(__dirname, '../frontend/build')))
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
     app.use('/api', require('./routes/index'));
 
     app.listen(API_PORT, () => {
