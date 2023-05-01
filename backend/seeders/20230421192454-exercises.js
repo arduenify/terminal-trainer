@@ -66,11 +66,15 @@ module.exports = {
             ),
         ];
 
-        await queryInterface.bulkInsert(
-            'Exercises',
-            exercises,
-            getQueryInterfaceOptions(),
-        );
+        try {
+            await queryInterface.bulkInsert(
+                'Exercises',
+                exercises,
+                getQueryInterfaceOptions(),
+            );
+        } catch (error) {
+            console.warn('Unable to seed exercises');
+        }
     },
 
     async down(queryInterface, Sequelize) {
