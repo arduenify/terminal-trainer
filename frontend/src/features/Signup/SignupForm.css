@@ -35,8 +35,23 @@
     margin-bottom: 1.5rem;
 }
 
+.input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    right: 10px;
+    color: #6272a4;
+    pointer-events: none;
+}
+
 .form-control {
     padding: 0.5rem;
+    width: 100%;
+    padding-right: 2.5rem;
     font-size: 1rem;
     border: 2px solid #44475a;
     border-radius: 4px;
@@ -58,6 +73,16 @@
 .form-control:invalid+.error-message {
     display: block;
 }
+
+.form-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.form-navigation>#prev-button {}
+
+.form-navigation>#next-button {}
 
 .error-message {
     display: none;
@@ -100,14 +125,6 @@ ul.error-message.visible {
     box-shadow: none;
 }
 
-.input-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #6272a4;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -134,10 +151,4 @@ ul.error-message.visible {
 
 .fade-out {
     animation: fadeOut 0.3s ease-out forwards;
-}
-
-.form-navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1rem;
 }

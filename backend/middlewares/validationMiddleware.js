@@ -7,7 +7,7 @@ const {
 // Middleware for validating user registration
 const validateUserRegistration = [
     check('username', 'Username is required').notEmpty(),
-    check('email', 'Email is required').isEmail(),
+    check('email', 'A valid Email is required').isEmail(),
     check('password', 'Password is required').notEmpty(),
     check('firstName', 'First name is required').notEmpty(),
     check('lastName', 'Last name is required').notEmpty(),
