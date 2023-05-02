@@ -21,9 +21,9 @@
 }
 
 .form-subtitle {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 1rem;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 2rem;
     color: #f8f8f2;
     text-align: center;
 }
@@ -32,7 +32,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .input-container {
@@ -80,14 +80,11 @@
     margin-top: 1rem;
 }
 
-.form-navigation>#prev-button {}
-
-.form-navigation>#next-button {}
-
 .error-message {
     display: none;
     color: #ff5555;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: 600;
     margin-top: 0.5rem;
 }
 

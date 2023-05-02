@@ -71,6 +71,12 @@ const SignupForm = () => {
                     ? resultAction.error.data
                     : [resultAction.error.data.error],
             );
+
+            hideLoader();
+            showNotification({
+                title: 'Signup failed',
+                text: 'Please check the form for errors.',
+            });
         } else {
             setServerErrors([]);
 
@@ -80,8 +86,8 @@ const SignupForm = () => {
             };
 
             showNotification({
-                title: 'Success',
-                text: `Your account has been created!`,
+                title: 'You earned it',
+                text: `Welcome aboard, ${firstName}! You've earned your first badge!`,
                 dismissCallback: handleNotificationDismiss,
             });
         }
@@ -142,6 +148,7 @@ const SignupForm = () => {
                         username={username}
                         setUsername={setUsername}
                         showErrors={showErrors}
+                        firstName={firstName}
                     />
                 );
             case 3:

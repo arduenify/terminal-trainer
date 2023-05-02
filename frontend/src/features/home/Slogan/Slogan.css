@@ -28,3 +28,31 @@
     left: 4rem;
     /* transition: all 0.3s ease; */
 }
+
+@media screen and (width < 800px) {
+    .slogan {
+        font-size: 3rem;
+        margin: 2rem 0 0 0;
+        left: -3rem;
+    }
+
+    .slogan.slogan-accent {
+        font-size: 3.8rem;
+        margin-top: 0;
+        left: 3rem;
+    }
+}
+
+@media screen and (width < 500px) {
+    .slogan {
+        font-size: 2.2rem;
+        margin: 2rem 0 0 0;
+        left: -2rem;
+    }
+
+    .slogan.slogan-accent {
+        font-size: 3rem;
+        margin-top: 0;
+        left: 2rem;
+    }
+}

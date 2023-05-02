@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const Step2 = ({ username, setUsername, showErrors, removeUsernameError }) => {
+const Step2 = ({ username, setUsername, showErrors, firstName }) => {
     const usernameRef = useRef(null);
 
     // set the username input as active upon render
@@ -12,7 +12,10 @@ const Step2 = ({ username, setUsername, showErrors, removeUsernameError }) => {
 
     return (
         <div className='fade-in'>
-            <h3 className='form-subtitle'>Step 2: Choose a Username</h3>
+            <h3 className='form-subtitle'>
+                Hi{firstName ? `, ${firstName}` : ``}! Decide on a username to
+                be displayed around the website.{' '}
+            </h3>
 
             <div className='form-group'>
                 <div className='input-container'>

@@ -2,13 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const Step3 = ({
-    email,
-    setEmail,
-    showErrors,
-    isValidEmail,
-    removeEmailError,
-}) => {
+const Step3 = ({ email, setEmail, showErrors, isValidEmail }) => {
     const emailRef = useRef(null);
 
     // set the email input as active upon render
@@ -18,7 +12,9 @@ const Step3 = ({
 
     return (
         <div className='fade-in'>
-            <h3 className='form-subtitle'>Step 3: Enter your Email</h3>
+            <h3 className='form-subtitle'>
+                Perfect! <br></br>What's your email address?
+            </h3>
             <div className='form-group'>
                 <div className='input-container'>
                     <input

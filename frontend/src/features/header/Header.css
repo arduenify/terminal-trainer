@@ -72,3 +72,21 @@
     background-color: transparent;
     color: #6272a4;
 }
+
+@media screen and (width < 840px) {
+
+    .header {
+        flex-direction: column;
+    }
+
+    .header,
+    .header-nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .header {}
+}
