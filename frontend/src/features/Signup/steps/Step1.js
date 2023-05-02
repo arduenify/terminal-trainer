@@ -25,7 +25,9 @@ const Step1 = ({
                         type='text'
                         value={firstName}
                         ref={firstNameRef}
-                        onChange={(e) => setFirstName(e.target.value)}
+                        onChange={(e) => {
+                            setFirstName(e.target.value);
+                        }}
                         placeholder='First Name'
                         className={`form-control${
                             showErrors && !firstName ? ' input-invalid' : ''
