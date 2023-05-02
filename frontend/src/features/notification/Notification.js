@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useContext } from 'react';
+import NotificationContext from './context/NotificationContext';
 import './Notification.css';
 
-const Notification = ({ title, text, duration = 3000, onDismiss }) => {
-    // const [timer, setTimer] = useState(null);
+const Notification = ({ title, text, duration = 3000 }) => {
+    const { dismissNotification } = useContext(NotificationContext);
 
-    // the callback allows for manual clearing of the timer
     const clearTimer = useCallback((timerId) => {
         if (timerId) {
             clearTimeout(timerId);
@@ -13,17 +13,17 @@ const Notification = ({ title, text, duration = 3000, onDismiss }) => {
 
     useEffect(() => {
         const newTimer = setTimeout(() => {
-            onDismiss();
+            dismissNotification();
         }, duration);
 
         return () => clearTimer(newTimer);
-    }, [duration, onDismiss, clearTimer]);
+    }, [duration, dismissNotification, clearTimer]);
 
     return (
         <div
             className='notification-container'
             onClick={() => {
-                onDismiss();
+                dismissNotification();
                 clearTimer();
             }}
         >
