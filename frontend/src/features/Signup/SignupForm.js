@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '../../store/api';
-import isEmail from 'validator/lib/isEmail';
+import Notification from '../notification';
+import { Step1, Step2, Step3, Step4 } from './steps';
+import { useHandleServerError } from './hooks/useHandleServerError';
+import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
+import { isValidEmail } from './utils';
+import FormNavigation from './FormNavigation';
 import './SignupForm.css';
-import Step1 from './steps/Step1';
-import Step2 from './steps/Step2';
-import Step3 from './steps/Step3';
-import Step4 from './steps/Step4';
 
 const SignupForm = () => {
     // Local state
@@ -18,47 +20,33 @@ const SignupForm = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [showErrors, setShowErrors] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
-    const [errorMessages, setErrorMessages] = useState([]);
+    const [showSuccessNotification, setShowSuccessNotification] =
+        useState(false);
 
-    // Hooks
+    // Hooks and variables
+    const passwordsMatch = password === passwordConfirmation;
     const [signupUser] = useSignupUserMutation();
+    const navigate = useNavigate();
+    const errorMessages = useHandleServerError(
+        serverErrors,
+        currentStep,
+        setCurrentStep,
+    );
+    useRemoveErrorByPath(
+        {
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+            passwordConfirmation,
+        },
+        setServerErrors,
+    );
 
-    useEffect(() => {
-        /*
-            This has to be done this way to ensure error messages render correctly.
-            
-            Previously, error messages would not render when we automatically send the user to the step with the first error, because the error message wasn't part of our component's state yet (we were asynchronously updating it)
-        */
-        if (serverErrors && serverErrors.length > 0) {
-            const newErrorMessages = serverErrors.map((error, i) => {
-                const { msg } = error;
-                return <li key={i}>{msg}</li>;
-            });
-
-            setErrorMessages(newErrorMessages);
-
-            const firstErrorStep = getStepFromPath(serverErrors[0].path);
-            if (currentStep !== firstErrorStep) {
-                setCurrentStep(firstErrorStep);
-            }
-        } else {
-            setErrorMessages([]);
-        }
-    }, [serverErrors, currentStep, setCurrentStep]);
-
-    // Callbacks
+    // Event handlers
     const handleSignup = async () => {
-        // validation
-        if (
-            currentStep !== 4 ||
-            !username ||
-            !email ||
-            !firstName ||
-            !lastName ||
-            !password ||
-            !passwordConfirmation ||
-            !passwordsMatch
-        ) {
+        if (currentStep !== 4) {
             setShowErrors(true);
             return;
         }
@@ -71,26 +59,20 @@ const SignupForm = () => {
             lastName,
         };
 
-        // dispatch request
         const resultAction = await signupUser(userData);
 
-        // handle response
         if (resultAction.error) {
-            // Handle server errors
-            const resultErrors = resultAction.error.data;
-            if (resultErrors) {
-                setServerErrors(resultErrors);
-                setShowErrors(true);
-            } else {
-                setServerErrors([]);
-                setShowErrors(true);
-            }
+            setServerErrors(
+                Array.isArray(resultAction.error.data)
+                    ? resultAction.error.data
+                    : [resultAction.error.data.error],
+            );
         } else {
-            // Redirect to dashboard TODO
+            setServerErrors([]);
+            setShowSuccessNotification(true);
         }
     };
 
-    // 'Next' button is pressed
     const handleNext = () => {
         let stepValid = false;
 
@@ -128,10 +110,11 @@ const SignupForm = () => {
         if (currentStep > 1) setCurrentStep((currentStep) => currentStep - 1);
     };
 
-    const passwordsMatch = password === passwordConfirmation;
-    const isValidEmail = (value) => isEmail(value);
+    const handleNotificationDismiss = () => {
+        setShowSuccessNotification(false);
+        navigate('/');
+    };
 
-    // Render helpers for progressive signup form
     const renderStep = () => {
         switch (currentStep) {
             case 1:
@@ -177,35 +160,6 @@ const SignupForm = () => {
         }
     };
 
-    const getStepFromPath = (path) => {
-        let step;
-
-        switch (path) {
-            case 'firstName':
-            case 'lastName':
-                // setCurrentStep(1);
-                step = 1;
-                break;
-            case 'username':
-                // setCurrentStep(2);
-                step = 2;
-                break;
-            case 'email':
-                // setCurrentStep(3);
-                step = 3;
-                break;
-            case 'password':
-            case 'passwordConfirmation':
-                // setCurrentStep(4);
-                step = 4;
-                break;
-            default:
-                break;
-        }
-
-        return step || 4;
-    };
-
     return (
         <form
             className='signup-form fade-in'
@@ -223,27 +177,18 @@ const SignupForm = () => {
             {errorMessages.length > 0 && (
                 <ul className='error-message visible'>{errorMessages}</ul>
             )}
-            <div className='form-navigation'>
-                <button
-                    type='button'
-                    onClick={handlePrevious}
-                    id='prev-button'
-                    className='button button-primary'
-                    disabled={currentStep === 1}
-                    hidden={currentStep === 1}
-                >
-                    Previous
-                </button>
-                <button
-                    type='button'
-                    onClick={handleNext}
-                    id='next-button'
-                    className='button button-primary'
-                    style={currentStep === 1 ? { width: '100%' } : {}}
-                >
-                    Next
-                </button>
-            </div>
+            <FormNavigation
+                currentStep={currentStep}
+                handleNext={handleNext}
+                handlePrevious={handlePrevious}
+            />
+            {showSuccessNotification && (
+                <Notification
+                    title='Welcome!'
+                    text='You have successfully logged in. Redirecting you...'
+                    onDismiss={handleNotificationDismiss}
+                />
+            )}
         </form>
     );
 };

@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 
-const Step2 = ({ username, setUsername, showErrors }) => {
+const Step2 = ({ username, setUsername, showErrors, removeUsernameError }) => {
     const usernameRef = useRef(null);
 
     // set the username input as active upon render
@@ -20,7 +20,9 @@ const Step2 = ({ username, setUsername, showErrors }) => {
                         type='text'
                         ref={usernameRef}
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => {
+                            setUsername(e.target.value);
+                        }}
                         placeholder='Username'
                         className={`form-control ${
                             showErrors && !username ? 'input-invalid' : ''

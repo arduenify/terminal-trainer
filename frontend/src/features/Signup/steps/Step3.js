@@ -2,7 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const Step3 = ({ email, setEmail, showErrors, isValidEmail }) => {
+const Step3 = ({
+    email,
+    setEmail,
+    showErrors,
+    isValidEmail,
+    removeEmailError,
+}) => {
     const emailRef = useRef(null);
 
     // set the email input as active upon render
@@ -19,7 +25,9 @@ const Step3 = ({ email, setEmail, showErrors, isValidEmail }) => {
                         type='email'
                         ref={emailRef}
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
                         placeholder='Email'
                         className={`form-control ${
                             showErrors && (!email || !isValidEmail(email))
