@@ -17,7 +17,6 @@ const ExerciseCard = ({
     );
 
     useEffect(() => {
-        console.log('difficulty is:', difficulty);
         if (difficulty === 'easy') {
             setDifficultyClassName('difficulty easy');
         } else if (difficulty === 'intermediate') {

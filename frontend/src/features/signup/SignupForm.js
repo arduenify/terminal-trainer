@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '../../store/api';
+import Notification from '../notification';
+import { Step1, Step2, Step3, Step4 } from './steps';
+import { useHandleServerError } from './hooks/useHandleServerError';
+import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
+import { isValidEmail } from './utils';
+import FormNavigation from './components/FormNavigation';
+import { useLoader } from '../modernLoader/context';
+import NotificationContext from '../notification/context/NotificationContext';
+
 import './SignupForm.css';
-import Step1 from './steps/Step1';
-import Step2 from './steps/Step2';
-import Step3 from './steps/Step3';
-import Step4 from './steps/Step4';
 
 const SignupForm = () => {
     // Local state
@@ -18,22 +24,32 @@ const SignupForm = () => {
     const [showErrors, setShowErrors] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
 
-    // Hooks
+    // Hooks and variables
+    const { hideLoader, showLoader } = useLoader();
+    const { showNotification } = useContext(NotificationContext);
+    const passwordsMatch = password === passwordConfirmation;
     const [signupUser] = useSignupUserMutation();
+    const navigate = useNavigate();
+    const errorMessages = useHandleServerError(
+        serverErrors,
+        currentStep,
+        setCurrentStep,
+    );
+    useRemoveErrorByPath(
+        {
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+            passwordConfirmation,
+        },
+        setServerErrors,
+    );
 
-    // Callbacks
+    // Event handlers
     const handleSignup = async () => {
-        // validation
-        if (
-            currentStep !== 4 ||
-            !username ||
-            !email ||
-            !firstName ||
-            !lastName ||
-            !password ||
-            !passwordConfirmation ||
-            !passwordsMatch
-        ) {
+        if (currentStep !== 4) {
             setShowErrors(true);
             return;
         }
@@ -46,22 +62,28 @@ const SignupForm = () => {
             lastName,
         };
 
-        // dispatch request
+        showLoader();
         const resultAction = await signupUser(userData);
 
-        // handle response
         if (resultAction.error) {
-            // Handle server errors
-            const resultErrors = resultAction.error.data;
-            if (resultErrors) {
-                setServerErrors(resultErrors);
-                setShowErrors(true);
-            } else {
-                setServerErrors([]);
-                setShowErrors(true);
-            }
+            setServerErrors(
+                Array.isArray(resultAction.error.data)
+                    ? resultAction.error.data
+                    : [resultAction.error.data.error],
+            );
         } else {
-            // Redirect to dashboard TODO
+            setServerErrors([]);
+
+            const handleNotificationDismiss = () => {
+                navigate('/');
+                hideLoader();
+            };
+
+            showNotification({
+                title: 'Success',
+                text: `Your account has been created!`,
+                dismissCallback: handleNotificationDismiss,
+            });
         }
     };
 
@@ -102,10 +124,6 @@ const SignupForm = () => {
         if (currentStep > 1) setCurrentStep((currentStep) => currentStep - 1);
     };
 
-    const passwordsMatch = password === passwordConfirmation;
-    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-
-    // Render helpers for progressive signup form
     const renderStep = () => {
         switch (currentStep) {
             case 1:
@@ -152,35 +170,27 @@ const SignupForm = () => {
     };
 
     return (
-        <form className='signup-form fade-in' noValidate>
+        <form
+            className='signup-form fade-in'
+            noValidate
+            onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    handleNext();
+                }
+            }}
+        >
             <h2 className='form-title'>Become a Terminal Pro</h2>
             {renderStep()}
-            <div className='form-navigation'>
-                <button
-                    type='button'
-                    onClick={handlePrevious}
-                    className='button button-primary'
-                    disabled={currentStep === 1}
-                >
-                    Previous
-                </button>
-                <button
-                    type='button'
-                    onClick={handleNext}
-                    className='button button-primary'
-                >
-                    Next
-                </button>
-            </div>
-            {serverErrors && (
-                <ul className='error-message visible'>
-                    {serverErrors.map((error, i) => {
-                        const { msg, path, type, value } = error;
-
-                        return <li key={i}>{error.msg}</li>;
-                    })}
-                </ul>
+            {errorMessages.length > 0 && (
+                <ul className='error-message visible'>{errorMessages}</ul>
             )}
+            <FormNavigation
+                currentStep={currentStep}
+                handleNext={handleNext}
+                handlePrevious={handlePrevious}
+            />
         </form>
     );
 };

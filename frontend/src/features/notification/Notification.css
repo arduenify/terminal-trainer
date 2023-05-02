@@ -1,0 +1,46 @@
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    background-color: #1c1e26;
+    color: #f8f8f2;
+    padding: 1rem;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    width: fit-content;
+    height: min-content;
+    animation: slideIn 1s forwards, slideOut 1s forwards 3s;
+}
+
+.notification-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.notification-text {
+    font-size: 1rem;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(300px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(300px);
+    }
+}
