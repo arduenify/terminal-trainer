@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSignupUserMutation } from '../../store/api';
+import isEmail from 'validator/lib/isEmail';
 import './SignupForm.css';
 import Step1 from './steps/Step1';
 import Step2 from './steps/Step2';
@@ -17,9 +18,33 @@ const SignupForm = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [showErrors, setShowErrors] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
+    const [errorMessages, setErrorMessages] = useState([]);
 
     // Hooks
     const [signupUser] = useSignupUserMutation();
+
+    useEffect(() => {
+        /*
+            This has to be done this way to ensure error messages render correctly.
+            
+            Previously, error messages would not render when we automatically send the user to the step with the first error, because the error message wasn't part of our component's state yet (we were asynchronously updating it)
+        */
+        if (serverErrors && serverErrors.length > 0) {
+            const newErrorMessages = serverErrors.map((error, i) => {
+                const { msg } = error;
+                return <li key={i}>{msg}</li>;
+            });
+
+            setErrorMessages(newErrorMessages);
+
+            const firstErrorStep = getStepFromPath(serverErrors[0].path);
+            if (currentStep !== firstErrorStep) {
+                setCurrentStep(firstErrorStep);
+            }
+        } else {
+            setErrorMessages([]);
+        }
+    }, [serverErrors, currentStep, setCurrentStep]);
 
     // Callbacks
     const handleSignup = async () => {
@@ -65,6 +90,7 @@ const SignupForm = () => {
         }
     };
 
+    // 'Next' button is pressed
     const handleNext = () => {
         let stepValid = false;
 
@@ -103,7 +129,7 @@ const SignupForm = () => {
     };
 
     const passwordsMatch = password === passwordConfirmation;
-    const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    const isValidEmail = (value) => isEmail(value);
 
     // Render helpers for progressive signup form
     const renderStep = () => {
@@ -151,36 +177,73 @@ const SignupForm = () => {
         }
     };
 
+    const getStepFromPath = (path) => {
+        let step;
+
+        switch (path) {
+            case 'firstName':
+            case 'lastName':
+                // setCurrentStep(1);
+                step = 1;
+                break;
+            case 'username':
+                // setCurrentStep(2);
+                step = 2;
+                break;
+            case 'email':
+                // setCurrentStep(3);
+                step = 3;
+                break;
+            case 'password':
+            case 'passwordConfirmation':
+                // setCurrentStep(4);
+                step = 4;
+                break;
+            default:
+                break;
+        }
+
+        return step || 4;
+    };
+
     return (
-        <form className='signup-form fade-in' noValidate>
+        <form
+            className='signup-form fade-in'
+            noValidate
+            onKeyDown={(event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    handleNext();
+                }
+            }}
+        >
             <h2 className='form-title'>Become a Terminal Pro</h2>
             {renderStep()}
+            {errorMessages.length > 0 && (
+                <ul className='error-message visible'>{errorMessages}</ul>
+            )}
             <div className='form-navigation'>
                 <button
                     type='button'
                     onClick={handlePrevious}
+                    id='prev-button'
                     className='button button-primary'
                     disabled={currentStep === 1}
+                    hidden={currentStep === 1}
                 >
                     Previous
                 </button>
                 <button
                     type='button'
                     onClick={handleNext}
+                    id='next-button'
                     className='button button-primary'
+                    style={currentStep === 1 ? { width: '100%' } : {}}
                 >
                     Next
                 </button>
             </div>
-            {serverErrors && (
-                <ul className='error-message visible'>
-                    {serverErrors.map((error, i) => {
-                        const { msg, path, type, value } = error;
-
-                        return <li key={i}>{error.msg}</li>;
-                    })}
-                </ul>
-            )}
         </form>
     );
 };
