@@ -77,3 +77,31 @@
     margin-top: 0.4rem;
     margin-bottom: 1rem;
 }
+
+@media screen and (width < 800px) {
+    .exercise-card {
+        min-width: 250px;
+    }
+
+    .description {
+        font-size: 12px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .difficulty {
+        font-size: 12px;
+        padding: 6px 14px;
+    }
+
+    .exercise-card-header {
+        padding: 0.5rem 1rem;
+    }
+
+    .exercise-card-body {
+        padding: 0 0.75rem;
+    }
+
+}
