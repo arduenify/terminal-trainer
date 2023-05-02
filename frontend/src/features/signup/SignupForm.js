@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '../../store/api';
 import Notification from '../notification';
@@ -6,7 +6,10 @@ import { Step1, Step2, Step3, Step4 } from './steps';
 import { useHandleServerError } from './hooks/useHandleServerError';
 import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
 import { isValidEmail } from './utils';
-import FormNavigation from './FormNavigation';
+import FormNavigation from './components/FormNavigation';
+import { useLoader } from '../modernLoader/context';
+import NotificationContext from '../notification/context/NotificationContext';
+
 import './SignupForm.css';
 
 const SignupForm = () => {
@@ -20,10 +23,10 @@ const SignupForm = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [showErrors, setShowErrors] = useState(false);
     const [serverErrors, setServerErrors] = useState([]);
-    const [showSuccessNotification, setShowSuccessNotification] =
-        useState(false);
 
     // Hooks and variables
+    const { hideLoader, showLoader } = useLoader();
+    const { showNotification } = useContext(NotificationContext);
     const passwordsMatch = password === passwordConfirmation;
     const [signupUser] = useSignupUserMutation();
     const navigate = useNavigate();
@@ -59,6 +62,7 @@ const SignupForm = () => {
             lastName,
         };
 
+        showLoader();
         const resultAction = await signupUser(userData);
 
         if (resultAction.error) {
@@ -69,7 +73,17 @@ const SignupForm = () => {
             );
         } else {
             setServerErrors([]);
-            setShowSuccessNotification(true);
+
+            const handleNotificationDismiss = () => {
+                navigate('/');
+                hideLoader();
+            };
+
+            showNotification({
+                title: 'Success',
+                text: `Your account has been created!`,
+                dismissCallback: handleNotificationDismiss,
+            });
         }
     };
 
@@ -108,11 +122,6 @@ const SignupForm = () => {
 
     const handlePrevious = () => {
         if (currentStep > 1) setCurrentStep((currentStep) => currentStep - 1);
-    };
-
-    const handleNotificationDismiss = () => {
-        setShowSuccessNotification(false);
-        navigate('/');
     };
 
     const renderStep = () => {
@@ -182,13 +191,6 @@ const SignupForm = () => {
                 handleNext={handleNext}
                 handlePrevious={handlePrevious}
             />
-            {showSuccessNotification && (
-                <Notification
-                    title='Welcome!'
-                    text='You have successfully logged in. Redirecting you...'
-                    onDismiss={handleNotificationDismiss}
-                />
-            )}
         </form>
     );
 };
