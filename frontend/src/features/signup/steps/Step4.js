@@ -19,7 +19,9 @@ const Step4 = ({
 
     return (
         <div className='fade-in'>
-            <h3 className='form-subtitle'>Step 4: Set your Password</h3>
+            <h3 className='form-subtitle'>
+                Almost there! Come up with a good, unique password.
+            </h3>
             <div className='form-group'>
                 <div className='input-container'>
                     <input

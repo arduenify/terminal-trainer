@@ -10,5 +10,10 @@
     justify-content: flex-start;
     gap: 1rem;
     white-space: nowrap;
-    transition: 'transform 0.05s linear',
+}
+
+@media screen and (width < 800px) {
+    .carousel {
+        gap: 0.5rem;
+    }
 }

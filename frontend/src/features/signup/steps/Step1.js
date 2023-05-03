@@ -18,7 +18,9 @@ const Step1 = ({
 
     return (
         <div className='fade-in'>
-            <h3 className='form-subtitle'>Step 1: Enter your Name</h3>
+            <h3 className='form-subtitle'>
+                Let's start by getting to know you better
+            </h3>
             <div className='form-group'>
                 <div className='input-container'>
                     <input

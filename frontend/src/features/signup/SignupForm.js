@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '../../store/api';
-import Notification from '../notification';
 import { Step1, Step2, Step3, Step4 } from './steps';
 import { useHandleServerError } from './hooks/useHandleServerError';
 import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
@@ -62,7 +61,7 @@ const SignupForm = () => {
             lastName,
         };
 
-        showLoader();
+        showLoader();   
         const resultAction = await signupUser(userData);
 
         if (resultAction.error) {
@@ -71,6 +70,12 @@ const SignupForm = () => {
                     ? resultAction.error.data
                     : [resultAction.error.data.error],
             );
+
+            hideLoader();
+            showNotification({
+                title: 'Signup failed',
+                text: 'Please check the form for errors.',
+            });
         } else {
             setServerErrors([]);
 
@@ -80,8 +85,8 @@ const SignupForm = () => {
             };
 
             showNotification({
-                title: 'Success',
-                text: `Your account has been created!`,
+                title: 'You earned it',
+                text: `Welcome aboard, ${firstName}! You've earned your first badge!`,
                 dismissCallback: handleNotificationDismiss,
             });
         }
@@ -142,6 +147,7 @@ const SignupForm = () => {
                         username={username}
                         setUsername={setUsername}
                         showErrors={showErrors}
+                        firstName={firstName}
                     />
                 );
             case 3:
