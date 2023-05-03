@@ -9,6 +9,7 @@ import { LoaderProvider } from './features/modernLoader/context';
 import { NotificationProvider } from './features/notification/context/NotificationContext';
 
 import './index.css';
+import { AuthProvider } from './common/AuthContext';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement);
@@ -16,13 +17,15 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <NotificationProvider>
-                <LoaderProvider>
-                    <BrowserRouter>
-                        <App />
-                    </BrowserRouter>
-                </LoaderProvider>
-            </NotificationProvider>
+            <AuthProvider>
+                <NotificationProvider>
+                    <LoaderProvider>
+                        <BrowserRouter>
+                            <App />
+                        </BrowserRouter>
+                    </LoaderProvider>
+                </NotificationProvider>
+            </AuthProvider>
         </Provider>
     </React.StrictMode>,
 );

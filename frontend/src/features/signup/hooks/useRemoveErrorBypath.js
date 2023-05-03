@@ -10,24 +10,32 @@ export const useRemoveErrorByPath = (inputs, setServerErrors) => {
         passwordConfirmation,
     } = inputs;
 
+    // Remove a server error by its "path", aka field name
     const removeErrorByPath = (path) => {
         setServerErrors((prevErrors) =>
             prevErrors.filter((error) => {
-                if (error.path) {
-                    return (error.path || '').toLowerCase() !== path;
-                } else {
-                    return !error.toLowerCase().includes(path);
-                }
+                // This can probably be simplified elsewhere
+                return error.path
+                    ? error.path.toLowerCase() !== path
+                    : !error.toLowerCase().includes(path);
             }),
         );
     };
 
+    const inputNames = [
+        'firstName',
+        'lastName',
+        'username',
+        'email',
+        'password',
+        'passwordConfirmation',
+    ];
+
     useEffect(() => {
-        if (firstName) removeErrorByPath('firstName');
-        if (lastName) removeErrorByPath('lastName');
-        if (username) removeErrorByPath('username');
-        if (email) removeErrorByPath('email');
-        if (password) removeErrorByPath('password');
-        if (passwordConfirmation) removeErrorByPath('passwordConfirmation');
+        inputNames.forEach((inputName) => {
+            if (inputs[inputName]) {
+                removeErrorByPath(inputName);
+            }
+        });
     }, [firstName, lastName, username, email, password, passwordConfirmation]);
 };

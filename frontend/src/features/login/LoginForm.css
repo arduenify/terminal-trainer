@@ -1,4 +1,4 @@
-.signup-form {
+.login-form {
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
@@ -106,17 +106,18 @@ ul.error-message.visible {
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
-.button-primary {
+.button-primary.login {
     background-color: #1c1e26;
+    width: 100%;
     color: #f8f8f2;
 }
 
-.button-primary:hover {
+.button-primary.login:hover {
     background-color: #414863;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.button-primary:disabled {
+.button-primary.login:disabled {
     cursor: not-allowed;
     box-shadow: none;
 }

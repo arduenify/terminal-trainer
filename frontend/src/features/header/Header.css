@@ -73,6 +73,48 @@
     color: #6272a4;
 }
 
+#user-fa-icon {
+    color: #6272a4;
+    transition: all 0.3s ease;
+    top: 0;
+}
+
+#user-fa-icon:hover,
+#user-fa-icon.bounce {
+    animation: bounce 1.5s ease infinite;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+.profile-menu-button {
+    font-size: 1rem;
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+}
+
+.profile-menu {
+    position: relative;
+}
+
+.profile-menu-content {
+    position: absolute;
+    top: calc(95%);
+    transform: translateX(-70%);
+    width: 8rem;
+    background-color: #475377;
+    border-radius: 0.2rem;
+}
+
+.profile-menu-item {
+    font-size: 1rem;
+    padding: 0.5rem 0.8rem;
+    cursor: pointer;
+}
+
+.profile-menu-item:hover {
+    background-color: #6272a4;
+}
+
+
 @media screen and (width < 840px) {
 
     .header {
@@ -87,6 +129,23 @@
         padding-bottom: 0;
         margin-bottom: 0;
     }
+}
 
-    .header {}
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-15px);
+    }
+
+    60% {
+        transform: translateY(-7px);
+    }
 }

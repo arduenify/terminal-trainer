@@ -154,7 +154,18 @@ const buildCategoryEndpoints = (builder) => ({
 // Combine all the endpoints into a single API slice
 export const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: 'api' }),
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'api',
+        prepareHeaders: (headers, { getState }) => {
+            const token = localStorage.getItem('token');
+
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+
+            return headers;
+        },
+    }),
     endpoints: (builder) => ({
         ...buildExerciseEndpoints(builder),
         ...buildUserEndpoints(builder),

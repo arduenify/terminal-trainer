@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '../../store/api';
-import Notification from '../notification';
 import { Step1, Step2, Step3, Step4 } from './steps';
 import { useHandleServerError } from './hooks/useHandleServerError';
 import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
@@ -62,7 +61,7 @@ const SignupForm = () => {
             lastName,
         };
 
-        showLoader();
+        showLoader();   
         const resultAction = await signupUser(userData);
 
         if (resultAction.error) {
