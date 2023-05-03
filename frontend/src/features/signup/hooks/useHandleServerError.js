@@ -11,23 +11,17 @@ export const useHandleServerError = (
     useEffect(() => {
         if (serverErrors && serverErrors.length > 0) {
             const newErrorMessages = serverErrors.map((error, i) => {
-                let msg = error;
-
-                if (error.msg) {
-                    msg = error.msg;
-                }
-
-                return <li key={i}>{msg}</li>;
+                const message = error.msg || error;
+                return <li key={i}>{message}</li>;
             });
 
             setErrorMessages(newErrorMessages);
 
-            let path = serverErrors[0].path;
-            if (!path) {
-                const firstWord = serverErrors[0].split(' ')[0].toLowerCase();
-                path = firstWord;
-            }
+            const path =
+                serverErrors[0].path ||
+                serverErrors[0].split(' ')[0].toLowerCase();
             const firstErrorStep = getStepFromPath(path);
+
             if (currentStep !== firstErrorStep) {
                 setCurrentStep(firstErrorStep);
             }
