@@ -1,6 +1,27 @@
+:root {
+    --color-background: #282a36;
+    --color-background-2: #1c1e26;
+    --color-background-3: #222430;
+    --color-text: #f8f8f2;
+    --color-secondary: #6272a4;
+    --color-secondary-2: #566eb6;
+    --color-accent: #50fa7b;
+    --color-accent-2: #ff5555;
+    --color-accent-3: #f1fa8c;
+}
+
+.page-wrapper {
+    position: relative;
+    min-height: 100vh;
+}
+
+.body-no-scroll {
+    overflow: hidden;
+}
+
 body {
-    background-color: #282a36;
-    color: #f8f8f2;
+    background-color: var(--color-background);
+    color: var(--color-text);
     font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
     margin: 0 auto;
 }
@@ -15,33 +36,33 @@ body {
 }
 
 .button-primary {
-    background-color: #1c1e26;
-    color: #f8f8f2;
+    background-color: var(--color-background-2);
+    color: var(--color-text);
 }
 
 .button-secondary {
     background-color: #44475a;
-    color: #f8f8f2;
+    color: var(--color-text);
 }
 
 .button-accent {
-    background-color: #6272a4;
-    color: #f8f8f2;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
 }
 
 .button-confirm {
-    background-color: #50fa7b;
-    color: #282a36;
+    background-color: var(--color-accent);
+    color: var(--color-background);
 }
 
 .button-danger {
-    background-color: #ff5555;
-    color: #f8f8f2;
+    background-color: var(--color-accent-2);
+    color: var(--color-text);
 }
 
 .button-warning {
     background-color: #f1fa8c;
-    color: #282a36;
+    color: var(--color-background);
 }
 
 code,

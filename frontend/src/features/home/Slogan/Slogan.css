@@ -21,7 +21,7 @@
 
 .slogan.slogan-accent {
     font-family: 'Pacifico', cursive;
-    color: #6272a4;
+    color: var(--color-secondary);
     position: relative;
     font-size: 5.2rem;
     margin-top: 0;

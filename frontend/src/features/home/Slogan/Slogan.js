@@ -21,7 +21,7 @@ const Slogan = () => {
             const yOffset = (yPosition - yCenter) / 20;
 
             // Dynamic text shadow offset and transform to create the effect
-            const textShadow = `${xOffset}px ${yOffset}px 5px #1c1e26`;
+            const textShadow = `${xOffset}px ${yOffset}px 5px var(--color-background-2)`;
             const transform = `translate(${xOffset * 0.2}px, ${
                 yOffset * 0.2
             }px)`;
