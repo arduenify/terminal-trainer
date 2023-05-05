@@ -30,7 +30,7 @@ class CreatedResponse extends ResponseController {
 
 class NoContentResponse extends ResponseController {
     constructor(res) {
-        super(204, res);
+        super(204, {}, res);
     }
 }
 

@@ -1,9 +1,9 @@
 const { Exercise } = require('../models');
-const { Category } = require('../models');
 const {
     SuccessResponse,
     NotFoundResponse,
     InternalServerErrorResponse,
+    NoContentResponse,
 } = require('./responseController');
 
 const getAllExercises = async (req, res) => {
@@ -53,13 +53,16 @@ const createExercise = async (req, res) => {
             teachingText,
             difficulty,
             solution,
+            categoryId,
         });
 
-        const category = await Category.findByPk(categoryId);
-        await exercise.setCategory(category);
-
         return new SuccessResponse(exercise, res);
-    } catch (err) {}
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            'Internal server error when attempting to create exercise.';
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
 };
 
 const updateExercise = async (req, res) => {
@@ -86,11 +89,9 @@ const updateExercise = async (req, res) => {
             description,
             teachingText,
             difficulty,
+            categoryId,
             solution,
         });
-
-        const category = await Category.findByPk(categoryId);
-        await exercise.setCategory(category);
 
         return new SuccessResponse(undefined, res);
     } catch (err) {
@@ -113,7 +114,7 @@ const deleteExercise = async (req, res) => {
 
         await exercise.destroy();
 
-        return new NoContentResponse(undefined, res);
+        return new NoContentResponse(res);
     } catch (err) {
         const errorMessage =
             err.message ||
