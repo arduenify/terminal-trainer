@@ -74,3 +74,30 @@
 .exercises-difficulty.hard {
     border-color: var(--color-accent-2);
 }
+
+.exercises-page .admin-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.exercises-page .admin-actions button {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--color-secondary);
+    border-radius: 5px;
+    background-color: transparent;
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.exercises-page .admin-actions button:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-background);
+}
+
+.exercises-page .admin-actions button:last-child {
+    margin-left: 1rem;
+}

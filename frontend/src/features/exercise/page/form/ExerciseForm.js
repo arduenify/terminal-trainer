@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useFetchAllCategoriesQuery } from '../../../../store/api';
-import './ExerciseForm.css';
 import { useLoader } from '../../../modernLoader/context/LoaderContext';
+import './ExerciseForm.css';
 
 const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const [title, setTitle] = useState(exercise.title || '');
@@ -10,7 +10,7 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const [teachingText, setTeachingText] = useState(
         exercise.teachingText || '',
     );
-    const [category, setCategory] = useState(exercise.category || '');
+    const [categoryId, setCategoryId] = useState(exercise.categoryId || 1);
     const [allCategories, setAllCategories] = useState([]);
     const [solution, setSolution] = useState(
         exercise.solution
@@ -30,7 +30,21 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onSubmit({ title, description, difficulty });
+
+        const newExercise = {
+            title,
+            description,
+            difficulty,
+            teachingText,
+            categoryId,
+            solution,
+        };
+
+        onSubmit(newExercise);
+    };
+
+    const handleCategorySelected = (event) => {
+        setCategoryId(event.target.value);
     };
 
     useEffect(() => {
@@ -44,7 +58,6 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     useEffect(() => {
         if (!isLoading && !isFetching && isSuccess)
             setAllCategories(categories);
-        console.log('Setting categories to...', allCategories);
     }, [categories, isLoading, isFetching, isSuccess]);
 
     return (
@@ -77,13 +90,13 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
             <label htmlFor='category'>Category</label>
             <select
                 id='category'
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                value={categoryId}
+                onChange={handleCategorySelected}
             >
                 {allCategories?.length &&
                     allCategories.map((category) => {
                         return (
-                            <option key={category.id}>
+                            <option key={category.id} value={category.id}>
                                 {category.key} ({category.name})
                             </option>
                         );

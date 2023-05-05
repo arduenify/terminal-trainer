@@ -1,45 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ExerciseForm from '../form';
 import './AdminPanel.css';
 
-const AdminPanel = () => {
-    const [isAddModalOpen, setAddModalOpen] = useState(false);
-    const [isEditModalOpen, setEditModalOpen] = useState(false);
-    const [selectedExercise, setSelectedExercise] = useState(null);
-
-    const openAddModal = () => setAddModalOpen(true);
-    const closeAddModal = () => setAddModalOpen(false);
-
-    const openEditModal = (exercise) => {
-        setSelectedExercise(exercise);
-        setEditModalOpen(true);
-    };
-    const closeEditModal = () => setEditModalOpen(false);
-
-    const handleAddExercise = (exercise) => {
-        // Call the API to add the exercise
-        // ...
-        closeAddModal();
-    };
-
-    const handleUpdateExercise = (exercise) => {
-        // Call the API to update the exercise
-        // ...
-        closeEditModal();
-    };
-
-    useEffect(() => {
-        if (isAddModalOpen || isEditModalOpen) {
-            document.body.classList.add('body-no-scroll');
-        } else {
-            document.body.classList.remove('body-no-scroll');
-        }
-
-        return () => {
-            document.body.classList.remove('body-no-scroll');
-        };
-    }, [isAddModalOpen, isEditModalOpen]);
-
+const AdminPanel = ({
+    openAddModal,
+    closeAddModal,
+    closeEditModal,
+    selectedExercise,
+    handleAddExercise,
+    handleUpdateExercise,
+    handleDeleteExercise,
+    isAddModalOpen,
+    isEditModalOpen,
+    isDeleteModalOpen,
+    closeDeleteModal,
+}) => {
     return (
         <div className='admin-panel'>
             <button onClick={openAddModal}>Add Exercise</button>
@@ -67,7 +42,18 @@ const AdminPanel = () => {
                 </div>
             )}
 
-            {/* Delete Exercise confirmation modal */}
+            {isDeleteModalOpen && (
+                <div className='modal'>
+                    <div className='modal-content'>
+                        <h2>Delete Exercise</h2>
+                        <p>Are you sure you want to delete this exercise?</p>
+                        <button onClick={handleDeleteExercise}>Delete</button>
+                        <button onClick={() => closeDeleteModal()}>
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
