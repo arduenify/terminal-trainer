@@ -5,8 +5,7 @@
     margin-top: 5rem;
     padding: 2rem;
     box-sizing: border-box;
-    font-family: 'Montserrat', 'Helvetica', 'Arial', sans-serif;
-    background-color: #1c1e26;
+    background-color: var(--color-background-2);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
@@ -16,7 +15,7 @@
     font-size: 32px;
     font-weight: 600;
     margin-bottom: 1.5rem;
-    color: #f8f8f2;
+    color: var(--color-text);
     text-align: center;
 }
 
@@ -24,7 +23,7 @@
     font-size: 22px;
     font-weight: 400;
     margin-bottom: 2rem;
-    color: #f8f8f2;
+    color: var(--color-text);
     text-align: center;
 }
 
@@ -44,7 +43,7 @@
 .input-icon {
     position: absolute;
     right: 10px;
-    color: #6272a4;
+    color: var(--color-secondary);
     pointer-events: none;
 }
 
@@ -56,18 +55,18 @@
     border: 2px solid #44475a;
     border-radius: 4px;
     outline: none;
-    background-color: #282a36;
-    color: #f8f8f2;
+    background-color: var(--color-background);
+    color: var(--color-text);
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .form-control:focus {
-    border-color: #6272a4;
+    border-color: var(--color-secondary);
     box-shadow: 0 0 0 2px rgba(98, 114, 164, 0.3);
 }
 
 .input-invalid {
-    border-color: #ff5555;
+    border-color: var(--color-accent-2);
 }
 
 .form-control:invalid+.error-message {
@@ -82,7 +81,7 @@
 
 .error-message {
     display: none;
-    color: #ff5555;
+    color: var(--color-accent-2);
     font-size: 1rem;
     font-weight: 600;
     margin-top: 0.5rem;
@@ -107,9 +106,9 @@ ul.error-message.visible {
 }
 
 .button-primary.login {
-    background-color: #1c1e26;
+    background-color: var(--color-background-2);
     width: 100%;
-    color: #f8f8f2;
+    color: var(--color-text);
 }
 
 .button-primary.login:hover {
