@@ -11,7 +11,6 @@ const getAllExercises = async (req, res) => {
         const exercises = await Exercise.findAll();
         return new SuccessResponse(exercises, res);
     } catch (err) {
-        console.log('ERROR: ', err);
         const errorMessage =
             err.message ||
             'Internal server error when attempting to get all exercises.';
@@ -21,6 +20,7 @@ const getAllExercises = async (req, res) => {
 
 const getExerciseById = async (req, res) => {
     try {
+        const { id } = req.params;
         const exercise = await Exercise.findByPk(id);
 
         if (!exercise) {
