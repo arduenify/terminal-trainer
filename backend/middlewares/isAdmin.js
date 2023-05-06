@@ -1,11 +1,15 @@
-const { ForbiddenResponse } = require('../controllers/responseController');
-const { User } = require('../models');
+const {
+    ForbiddenResponse,
+    InternalServerErrorResponse,
+} = require('../controllers/responseController');
 
 const isAdmin = async (req, res, next) => {
     try {
-        const user = await User.findByPk(req.user.id);
+        const user = req.user;
 
-        if (user && user.isAdmin) {
+        console.log('Passport User Requesting Admin privileges:', user);
+
+        if (user && user.role === 'admin') {
             return next();
         } else {
             return new ForbiddenResponse(

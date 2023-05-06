@@ -1,5 +1,5 @@
 .exercise-card {
-    background-color: #222430;
+    background-color: var(--color-background-3);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     min-width: 325px;
@@ -31,13 +31,13 @@
     font-size: 14px;
     font-weight: 700;
     text-transform: uppercase;
-    border: 1px solid #6272a4;
+    border: 1px solid var(--color-secondary);
     padding: 8px 24px;
     border-radius: 35px;
 }
 
 .difficulty.easy {
-    border-color: #50fa7b;
+    border-color: var(--color-accent);
 }
 
 .difficulty.medium {
@@ -45,7 +45,7 @@
 }
 
 .difficulty.hard {
-    border-color: #ff5555;
+    border-color: var(--color-accent-2);
 }
 
 .exercise-card-body {
@@ -60,7 +60,7 @@
     font-size: 24px;
     font-weight: 600;
     margin: 0 0 8px;
-    color: #f8f8f2;
+    color: var(--color-text);
     white-space: pre-wrap;
     word-wrap: break-word;
     text-align: center;
@@ -70,7 +70,7 @@
 .description {
     font-size: 14px;
     font-weight: 400;
-    color: #6272a4;
+    color: var(--color-secondary);
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;

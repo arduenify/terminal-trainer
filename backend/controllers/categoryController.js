@@ -10,7 +10,7 @@ const {
 
 const getAllCategories = async (req, res) => {
     try {
-        const categories = Category.findAll();
+        const categories = await Category.findAll();
 
         return new SuccessResponse(categories, res);
     } catch (err) {
@@ -26,7 +26,7 @@ const getCategoryById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const category = Category.findByPk(id);
+        const category = await Category.findByPk(id);
 
         if (!category) {
             return new NotFoundResponse(undefined, res);
@@ -46,13 +46,13 @@ const getAllExercisesByCategoryId = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const category = Category.findByPk(id);
+        const category = await Category.findByPk(id);
 
         if (!category) {
             return new NotFoundResponse(undefined, res);
         }
 
-        const exercises = category.getExercises();
+        const exercises = await category.getExercises();
 
         return new SuccessResponse(exercises, res);
     } catch (err) {
@@ -68,7 +68,7 @@ const addCategory = async (req, res) => {
     try {
         const { name, description } = req.body;
 
-        const category = Category.create({
+        const category = await Category.create({
             name,
             description,
         });
@@ -88,7 +88,7 @@ const updateCategory = async (req, res) => {
         const { name, description } = req.body;
         const { id } = req.params;
 
-        const category = Category.findByPk(id);
+        const category = await Category.findByPk(id);
 
         if (!category) {
             return new NotFoundResponse(undefined, res);
@@ -113,7 +113,7 @@ const deleteCategory = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const category = Category.findByPk(id);
+        const category = await Category.findByPk(id);
 
         if (!category) {
             return new NotFoundResponse(undefined, res);

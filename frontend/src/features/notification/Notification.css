@@ -3,8 +3,8 @@
     top: 20px;
     right: 20px;
     z-index: 9999;
-    background-color: #1c1e26;
-    color: #f8f8f2;
+    background-color: var(--color-background-2);
+    color: var(--color-text);
     padding: 1rem;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);

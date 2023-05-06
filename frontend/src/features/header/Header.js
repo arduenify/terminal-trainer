@@ -35,6 +35,10 @@ const Header = () => {
         navigate('/');
     };
 
+    const navigateToExercises = () => {
+        navigate('/exercises');
+    };
+
     const logoutUser = () => {
         setMenuOpen(false);
         showLoader();
@@ -59,7 +63,9 @@ const Header = () => {
                 Terminal Trainer
             </div>
             <nav className='header-nav'>
-                <div className='header-nav-item'>Exercises</div>
+                <div className='header-nav-item' onClick={navigateToExercises}>
+                    Exercises
+                </div>
                 <div className='header-nav-item'>Badges</div>
                 <div className='header-nav-item'>Progress</div>
                 {isAuthenticated && (
