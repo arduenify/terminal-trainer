@@ -9,6 +9,7 @@ import NotificationContext from '../features/notification/context/NotificationCo
 import Notification from '../features/notification';
 import LoginForm from '../features/login';
 import ExercisesPage from '../features/exercise/page';
+import Exercise from '../features/exercise/Exercise';
 import './App.css';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                 <Route path='/signup' element={<SignupForm />} />
                 <Route path='/login' element={<LoginForm />} />
                 <Route path='/exercises' element={<ExercisesPage />} />
+                <Route path='/exercises/:id' element={<Exercise />} />
             </Routes>
             <ModernLoader show={loading} />
             {notification && (
