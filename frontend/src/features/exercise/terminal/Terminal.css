@@ -1,8 +1,5 @@
 .terminal-container {
     height: 100%;
-    width: 100vw !important;
-    width: 100vdw !important;
-    overflow-x: hidden !important;
 }
 
 .xterm-screen {

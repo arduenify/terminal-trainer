@@ -17,7 +17,7 @@ const Terminal = ({ onCommand }) => {
     const customTheme = useMemo(
         () => ({
             background: '#0e0e0e',
-            foreground: 'green',
+            foreground: '#DAE6E8',
             cursor: '#ffffff',
             selection: 'rgba(255, 255, 255, 0.3)',
             textSize: '25px',
@@ -30,7 +30,7 @@ const Terminal = ({ onCommand }) => {
     };
 
     const updatePrompt = () => {
-        const currentDirectory = '/home/demo';
+        const currentDirectory = '➜ /home/demo';
         xtermRef.current.write(`\x1B[32m${currentDirectory}\x1B[m $ `);
     };
 
@@ -41,7 +41,7 @@ const Terminal = ({ onCommand }) => {
         xtermRef.current.loadAddon(webLinksAddon);
         xtermRef.current.open(terminalRef.current);
 
-        writeToTerminal('\x1B[31mWelcome to Terminal Trainer!\x1B[m\r\n');
+        // writeToTerminal('\x1B[31mWelcome to Terminal Trainer!\x1B[m\r\n');
         updatePrompt();
 
         xtermRef.current.onKey(({ key, domEvent }) => {

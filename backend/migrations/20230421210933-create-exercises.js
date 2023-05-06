@@ -28,7 +28,7 @@ module.exports = {
             },
             solution: {
                 allowNull: false,
-                type: Sequelize.STRING,
+                type: Sequelize.JSON,
             },
             categoryId: {
                 allowNull: false,
