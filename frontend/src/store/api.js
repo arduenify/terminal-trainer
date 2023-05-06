@@ -155,7 +155,7 @@ const buildCategoryEndpoints = (builder) => ({
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'api',
+        baseUrl: '/api',
         prepareHeaders: (headers, { getState }) => {
             const token = localStorage.getItem('token');
 
