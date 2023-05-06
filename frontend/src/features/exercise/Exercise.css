@@ -1,4 +1,27 @@
 .exercise-container {
-    height: 90vh;
-    width: 90vw;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 1.5rem;
+    justify-content: center;
+}
+
+.exercise-info {
+    max-width: 800px;
+    margin: 2rem auto;
+    line-height: 1.5;
+    border-radius: 5px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--color-background-2);
+}
+
+.exercise-info h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.exercise-info p {
+    font-size: 1.1rem;
 }

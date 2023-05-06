@@ -14,7 +14,6 @@
         "react-scripts": "5.0.1",
         "redux-logger": "^3.0.6",
         "validator": "^13.9.0",
-        "xterm": "^5.1.0",
         "xterm-addon-fit": "^0.7.0",
         "xterm-addon-search": "^0.11.0",
         "xterm-addon-web-links": "^0.8.0"
@@ -43,5 +42,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://localhost:5000/"
+    "proxy": "http://localhost:5000"
 }

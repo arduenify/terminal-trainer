@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     useDeleteExerciseByIdMutation,
     useFetchAllExercisesQuery,
@@ -21,6 +22,7 @@ const ExercisePage = () => {
         isLoading,
     } = useFetchAllExercisesQuery();
 
+    const navigate = useNavigate();
     const { isAdmin } = useContext(AuthContext);
     const { showLoader, hideLoader } = useLoader();
     const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -52,10 +54,17 @@ const ExercisePage = () => {
     }, [isFetching, isLoading, showLoader, hideLoader]);
 
     // Callbacks
+    const openExercise = (exercise) => {
+        const url = `/exercises/${exercise.id}`;
+
+        navigate(url);
+    };
+
     const openEditModal = (exercise) => {
         setSelectedExercise(exercise);
         setEditModalOpen(true);
     };
+
     const openDeleteModal = (exercise) => {
         setSelectedExercise(exercise);
         setDeleteModalOpen(true);
@@ -114,7 +123,10 @@ const ExercisePage = () => {
                                 >
                                     {exercise.difficulty}
                                 </span>
-                                <button className='button button-primary'>
+                                <button
+                                    className='button button-primary'
+                                    onClick={() => openExercise(exercise)}
+                                >
                                     Try it out
                                 </button>
                             </div>
