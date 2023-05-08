@@ -131,19 +131,26 @@ const ExercisePage = () => {
                                 </button>
                             </div>
                             {isAdmin && (
-                                <div className='admin-actions'>
-                                    <button
-                                        onClick={() => openEditModal(exercise)}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() =>
-                                            openDeleteModal(exercise)
-                                        }
-                                    >
-                                        Delete
-                                    </button>
+                                <div className='admin-actions-container'>
+                                    <h3>Administrator Panel</h3>
+                                    <div className='admin-actions'>
+                                        <button
+                                            className='edit-button'
+                                            onClick={() =>
+                                                openEditModal(exercise)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className='delete-button'
+                                            onClick={() =>
+                                                openDeleteModal(exercise)
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             )}
                         </div>

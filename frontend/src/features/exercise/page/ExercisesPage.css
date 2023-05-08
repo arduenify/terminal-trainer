@@ -77,29 +77,61 @@
 
 .exercises-page .admin-actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+}
+
+.exercises-page .admin-actions-container {
+    border-top: 1px solid var(--color-secondary);
     margin-top: 1rem;
+    padding-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.exercises-page .admin-actions-container>h3 {
+    font-size: 16px;
+    font-weight: 300;
+    font-style: italic;
+    font-family: sans-serif;
+    margin: 0 0 8px;
+    color: var(--color-text);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: center;
+    width: 100%;
 }
 
 .exercises-page .admin-actions button {
     padding: 0.5rem 1rem;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 15px;
     cursor: pointer;
-    border: 2px solid var(--color-secondary);
-    border-radius: 5px;
+    width: 48%;
+    border-radius: 10px;
     background-color: transparent;
     color: var(--color-text);
     transition: background-color 0.3s, color 0.3s;
 }
 
-.exercises-page .admin-actions button:hover {
-    background-color: var(--color-secondary);
+.exercises-page .admin-actions .edit-button {
+    border: 1px solid var(--color-accent-3);
+    color: var(--color-accent-3);
+}
+
+.exercises-page .admin-actions .edit-button:hover {
+    background-color: var(--color-accent-3);
+    color: var(--color-background);
+}
+
+.exercises-page .admin-actions .delete-button {
+    border: 1px solid var(--color-accent-2);
+    color: var(--color-accent-2);
+}
+
+.exercises-page .admin-actions .delete-button:hover {
+    background-color: var(--color-accent-2);
     color: var(--color-background);
 }
 
 .exercises-page .admin-actions button:last-child {
     margin-left: 1rem;
 }
-
-
