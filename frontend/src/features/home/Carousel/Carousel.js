@@ -3,6 +3,7 @@ import ExerciseCard from '../ExerciseCard';
 import { useFetchAllExercisesQuery } from '../../../store/api';
 
 import './Carousel.css';
+import { useNavigate } from 'react-router-dom';
 
 const Carousel = () => {
     const [exercises, setExercises] = useState([]);
@@ -16,6 +17,8 @@ const Carousel = () => {
         error,
         isLoading,
     } = useFetchAllExercisesQuery();
+
+    const navigate = useNavigate();
 
     // Animate the carousel movement using a requestAnimationFrame loop and a speed modifier to make the animation smooth
     const animate = () => {
@@ -45,11 +48,17 @@ const Carousel = () => {
             return null;
         }
 
+        const openExercise = (exerciseId) => {
+            const url = `/exercises/${exerciseId}`;
+            navigate(url);
+        };
+
         return exercises.map((exercise, index) => (
             <ExerciseCard
                 key={`exercise-${index}`}
                 {...exercise}
                 index={index}
+                openExercise={openExercise}
             />
         ));
     }, [isLoading, exercises]);

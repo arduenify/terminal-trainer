@@ -6,7 +6,9 @@ const ExerciseCard = ({
     description,
     difficulty,
     teachingText,
+    openExercise,
     index,
+    id,
 }) => {
     const shortenedDescription =
         description.length > 100
@@ -29,6 +31,7 @@ const ExerciseCard = ({
     return (
         <div
             className={index % 2 === 0 ? 'exercise-card' : 'exercise-card odd'}
+            onClick={() => openExercise(id)}
         >
             <div className='exercise-card-header'>
                 <p className={difficultyClassName}>{difficulty}</p>
