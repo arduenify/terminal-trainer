@@ -12,13 +12,8 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     );
     const [categoryId, setCategoryId] = useState(exercise.categoryId || 1);
     const [allCategories, setAllCategories] = useState([]);
-    const [solution, setSolution] = useState(
-        exercise.solution
-            ? Array.isArray(exercise.solution)
-                ? exercise.solution.join(', ')
-                : exercise.solution
-            : '',
-    );
+    const [solution, setSolution] = useState(exercise.solution || []);
+
     const { showLoader, hideLoader } = useLoader();
 
     const {
@@ -27,6 +22,28 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
         isLoading,
         isSuccess,
     } = useFetchAllCategoriesQuery();
+
+    const addCommand = () => {
+        setSolution((prev) => [...prev, { command: '', output: '' }]);
+    };
+
+    const removeCommand = (index) => {
+        setSolution((prev) => [
+            ...prev.slice(0, index),
+            ...prev.slice(index + 1),
+        ]);
+    };
+
+    const handleCommandChange = (index, field, value) => {
+        setSolution((prev) => {
+            const updatedStep = { ...prev[index], [field]: value };
+            return [
+                ...prev.slice(0, index),
+                updatedStep,
+                ...prev.slice(index + 1),
+            ];
+        });
+    };
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -114,16 +131,55 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
                 <option>Hard</option>
             </select>
 
-            <label htmlFor='solution'>
+            <label htmlFor='solution' className='solution-label'>
                 Solution (Each command is comma separated)
             </label>
-            <textarea
-                id='solution'
-                value={solution}
-                onChange={(e) => setSolution(e.target.value)}
-                required
-            />
+            <div className='command-output-header'>
+                <span>Commands</span>
+                <span>Output</span>
+            </div>
+            {solution.map((step, index) => (
+                <div key={index} className='command-output-pair'>
+                    <input
+                        type='text'
+                        id={`command-${index}`}
+                        value={step.command}
+                        onChange={(e) =>
+                            handleCommandChange(
+                                index,
+                                'command',
+                                e.target.value,
+                            )
+                        }
+                        required
+                    />
 
+                    <input
+                        type='text'
+                        id={`output-${index}`}
+                        value={step.output}
+                        onChange={(e) =>
+                            handleCommandChange(index, 'output', e.target.value)
+                        }
+                        required
+                    />
+
+                    <button
+                        type='button'
+                        className='remove-command-button'
+                        onClick={() => removeCommand(index)}
+                    >
+                        x
+                    </button>
+                </div>
+            ))}
+            <button
+                type='button'
+                className='add-command-button'
+                onClick={addCommand}
+            >
+                Add Command
+            </button>
             <button type='submit'>
                 {isEditMode ? 'Update Exercise' : 'Add Exercise'}
             </button>
