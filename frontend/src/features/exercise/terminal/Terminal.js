@@ -17,9 +17,9 @@ const Terminal = ({ onCommand }) => {
     const customTheme = useMemo(
         () => ({
             background: '#0e0e0e',
-            foreground: '#DAE6E8',
-            cursor: '#ffffff',
-            selection: 'rgba(255, 255, 255, 0.3)',
+            foreground: '#ffffff',
+            select: '#DAE6E8',
+            cursorion: 'rgba(255, 255, 255, 0.3)',
             textSize: '25px',
         }),
         [],
@@ -49,6 +49,11 @@ const Terminal = ({ onCommand }) => {
                 // Enter key
                 const output = onCommand(inputBuffer.current);
                 writeToTerminal('', true);
+
+                if (!output || !output.length) {
+                    return updatePrompt();
+                }
+
                 writeToTerminal(output, true);
                 commandHistory.current = [
                     ...commandHistory.current,

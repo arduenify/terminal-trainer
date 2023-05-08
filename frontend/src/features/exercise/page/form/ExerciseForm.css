@@ -48,3 +48,53 @@
     background-color: #414863;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.solution-label {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    gap: 0.5rem;
+}
+
+.command-output-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    border-top: 1px solid var(--color-background);
+    padding-top: 1rem;
+}
+
+.command-output-pair {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.command-output-pair label {
+    margin-right: 0.5rem;
+}
+
+.command-output-pair input {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+.add-command-button,
+.remove-command-button {
+    background-color: var(--color-background-2) !important;
+    font: 1em sans-serif;
+}
+
+.remove-command-button {
+    color: red !important;
+    width: 15px;
+    font-size: 1.25rem !important;
+    font-weight: 100 !important;
+    padding: 0 !important;
+}
+
+.add-command-button:hover {
+    background-color: #414863 !important;
+}
