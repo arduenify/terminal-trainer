@@ -4,6 +4,28 @@
     margin-bottom: 1rem;
 }
 
+.admin-panel .add-exercise-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-panel .add-exercise-container>button {
+    width: 100%;
+    font-family: sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--color-text);
+    background-color: var(--color-background-2);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 1rem;
+
+}
+
 .modal {
     position: fixed;
     z-index: 1;
@@ -15,6 +37,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.modal.delete button.delete {
+    background-color: var(--color-accent-2);
+}
+
+.modal.delete button {
+    width: 50%;
+}
+
+.modal.delete>.modal-content {
+    height: auto;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.modal.delete .modal-content-delete-buttons {
+    display: flex;
 }
 
 .modal-content {

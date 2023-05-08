@@ -110,6 +110,23 @@ const ExercisePage = () => {
 
     return (
         <div className='exercises-page-container'>
+            {isAdmin && (
+                <AdminPanel
+                    openAddModal={openAddModal}
+                    closeAddModel={closeAddModal}
+                    openEditModal={openEditModal}
+                    closeEditModal={closeEditModal}
+                    selectedExercise={selectedExercise}
+                    handleAddExercise={handleAddExercise}
+                    handleUpdateExercise={handleUpdateExercise}
+                    handleDeleteExercise={handleDeleteExercise}
+                    isAddModalOpen={isAddModalOpen}
+                    isEditModalOpen={isEditModalOpen}
+                    isDeleteModalOpen={isDeleteModalOpen}
+                    closeDeleteModal={closeDeleteModal}
+                />
+            )}
+
             <h1>Exercises</h1>
             <div className='exercises-page'>
                 {exercises &&
@@ -156,22 +173,6 @@ const ExercisePage = () => {
                         </div>
                     ))}
             </div>
-            {isAdmin && (
-                <AdminPanel
-                    openAddModal={openAddModal}
-                    closeAddModel={closeAddModal}
-                    openEditModal={openEditModal}
-                    closeEditModal={closeEditModal}
-                    selectedExercise={selectedExercise}
-                    handleAddExercise={handleAddExercise}
-                    handleUpdateExercise={handleUpdateExercise}
-                    handleDeleteExercise={handleDeleteExercise}
-                    isAddModalOpen={isAddModalOpen}
-                    isEditModalOpen={isEditModalOpen}
-                    isDeleteModalOpen={isDeleteModalOpen}
-                    closeDeleteModal={closeDeleteModal}
-                />
-            )}
         </div>
     );
 };
