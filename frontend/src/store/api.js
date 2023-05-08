@@ -4,6 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const buildExerciseEndpoints = (builder) => ({
     fetchAllExercises: builder.query({
         query: () => 'exercises',
+        providesTags: ['Exercises'],
     }),
     fetchExerciseById: builder.query({
         query: (id) => `exercises/${id}`,
@@ -17,12 +18,14 @@ const buildExerciseEndpoints = (builder) => ({
             method: 'PUT',
             body: exercise,
         }),
+        invalidatesTags: ['Exercises'],
     }),
     deleteExerciseById: builder.mutation({
         query: (id) => ({
             url: `exercises/${id}`,
             method: 'DELETE',
         }),
+        invalidatesTags: ['Exercises'],
     }),
     createExercise: builder.mutation({
         query: (exerciseData) => ({
@@ -30,6 +33,7 @@ const buildExerciseEndpoints = (builder) => ({
             method: 'POST',
             body: exerciseData,
         }),
+        invalidatesTags: ['Exercises'],
     }),
 });
 

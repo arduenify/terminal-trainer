@@ -17,16 +17,20 @@ const AdminPanel = ({
 }) => {
     return (
         <div className='admin-panel'>
-            <button onClick={openAddModal}>Add Exercise</button>
-            {isAddModalOpen && (
-                <div className='modal'>
-                    <div className='modal-content'>
-                        <h2>Add Exercise</h2>
-                        <ExerciseForm onSubmit={handleAddExercise} />
-                        <button onClick={closeAddModal}>Cancel</button>
+            <div className='add-exercise-container'>
+                <p>As an Administrator, you can add a new exercise below.</p>
+
+                <button onClick={openAddModal}>Add Exercise</button>
+                {isAddModalOpen && (
+                    <div className='modal'>
+                        <div className='modal-content'>
+                            <h2>Add Exercise</h2>
+                            <ExerciseForm onSubmit={handleAddExercise} />
+                            <button onClick={closeAddModal}>Cancel</button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             {isEditModalOpen && (
                 <div className='modal'>
@@ -43,14 +47,21 @@ const AdminPanel = ({
             )}
 
             {isDeleteModalOpen && (
-                <div className='modal'>
+                <div className='modal delete'>
                     <div className='modal-content'>
                         <h2>Delete Exercise</h2>
                         <p>Are you sure you want to delete this exercise?</p>
-                        <button onClick={handleDeleteExercise}>Delete</button>
-                        <button onClick={() => closeDeleteModal()}>
-                            Cancel
-                        </button>
+                        <div className='modal-content-delete-buttons'>
+                            <button
+                                className='button delete'
+                                onClick={handleDeleteExercise}
+                            >
+                                Delete
+                            </button>
+                            <button onClick={() => closeDeleteModal()}>
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
