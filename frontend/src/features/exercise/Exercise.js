@@ -86,12 +86,15 @@ const Exercise = () => {
 
     useEffect(() => {
         if (exercise) {
-            const commands = new Set(
-                exercise.solution.map((step) => step.command),
-            );
+            const solution =
+                typeof exercise.solution === 'string'
+                    ? JSON.parse(exercise.solution)
+                    : exercise.solution;
+
+            const commands = new Set(solution.map((step) => step.command));
 
             const map = {};
-            exercise.solution.forEach((step) => {
+            solution.forEach((step) => {
                 map[step.command] = step.output;
             });
 
