@@ -1,0 +1,124 @@
+.badge-page-container {
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.badge-page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge-page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.badge-page-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.badge-page-header p {
+    font-size: 1.2rem;
+}
+
+.badge-page-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.badge-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-background-2);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 1rem;
+    padding: 1.5rem;
+    width: 700px;
+}
+
+.badge-icon {
+    font-size: 3rem;
+    color: #4caf50;
+    margin-right: 1.5rem;
+}
+
+.badge-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.badge-details h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.badge-details p {
+    font-size: 1rem;
+}
+
+.create-badge-btn,
+.update-badge-btn,
+.delete-badge-btn {
+    padding: 0.5rem 1rem;
+    font-size: 15px;
+    cursor: pointer;
+    width: 48%;
+    border-radius: 10px;
+    background-color: transparent;
+    color: var(--color-text);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.create-badge-btn {
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+}
+
+.create-badge-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+}
+
+.update-badge-btn,
+.delete-badge-btn {
+    margin-left: 0.5rem;
+}
+
+.update-badge-btn {
+    border: 1px solid var(--color-accent-3);
+    color: var(--color-accent-3);
+}
+
+.update-badge-btn:hover {
+    background-color: var(--color-accent-3);
+    color: var(--color-background);
+}
+
+.delete-badge-btn {
+    border: 1px solid var(--color-accent-2);
+    color: var(--color-accent-2);
+}
+
+.delete-badge-btn:hover {
+    background-color: var(--color-accent-2);
+    color: var(--color-background);
+}
+
+.badge-actions {
+    display: flex;
+    margin-left: auto;
+    align-items: center;
+}
