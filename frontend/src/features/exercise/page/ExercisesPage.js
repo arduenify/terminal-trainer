@@ -17,7 +17,6 @@ const ExercisePage = () => {
     // Hooks
     const {
         data: exercises,
-        // isSuccess,
         isFetching,
         isLoading,
     } = useFetchAllExercisesQuery();
@@ -31,7 +30,7 @@ const ExercisePage = () => {
     const [selectedExercise, setSelectedExercise] = useState(null);
     const [createExercise] = useCreateExerciseMutation();
     const [updateExerciseById] = useUpdateExerciseByIdMutation();
-    const [deletExerciseById] = useDeleteExerciseByIdMutation();
+    const [deleteExerciseById] = useDeleteExerciseByIdMutation();
 
     useEffect(() => {
         if (isAddModalOpen || isEditModalOpen) {
@@ -80,7 +79,6 @@ const ExercisePage = () => {
 
         const resultAction = await createExercise(exercise);
 
-        console.log('[CREATE] Result Action:', resultAction);
         closeAddModal();
         hideLoader();
     };
@@ -93,7 +91,6 @@ const ExercisePage = () => {
             exercise,
         });
 
-        console.log('[UPDATE] Result Action:', resultAction);
         closeEditModal();
         hideLoader();
     };
@@ -101,19 +98,20 @@ const ExercisePage = () => {
     const handleDeleteExercise = async () => {
         showLoader();
 
-        const resultAction = await deletExerciseById(selectedExercise.id);
+        const resultAction = await deleteExerciseById(selectedExercise.id);
 
-        console.log('[DELETE] Result Action:', resultAction);
         setDeleteModalOpen(false);
         hideLoader();
     };
 
     return (
         <div className='exercises-page-container'>
+            <h1>Exercises</h1>
+
             {isAdmin && (
                 <AdminPanel
                     openAddModal={openAddModal}
-                    closeAddModel={closeAddModal}
+                    closeAddModal={closeAddModal}
                     openEditModal={openEditModal}
                     closeEditModal={closeEditModal}
                     selectedExercise={selectedExercise}
@@ -127,7 +125,6 @@ const ExercisePage = () => {
                 />
             )}
 
-            <h1>Exercises</h1>
             <div className='exercises-page'>
                 {exercises &&
                     exercises.map((exercise) => (
@@ -157,7 +154,7 @@ const ExercisePage = () => {
                                                 openEditModal(exercise)
                                             }
                                         >
-                                            Edit
+                                            Update
                                         </button>
                                         <button
                                             className='delete-button'

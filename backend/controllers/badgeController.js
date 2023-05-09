@@ -7,6 +7,7 @@ const {
     SuccessResponse,
     NotFoundResponse,
     NoContentResponse,
+    InternalServerErrorResponse,
 } = require('./responseController');
 
 const getAllBadges = async (req, res) => {
@@ -103,4 +104,10 @@ const deleteBadge = async (req, res) => {
     }
 };
 
-module.exports = { getAllBadges, createBadge, getBadge, updateBadge, deleteBadge };
+module.exports = {
+    getAllBadges,
+    createBadge,
+    getBadge,
+    updateBadge,
+    deleteBadge,
+};

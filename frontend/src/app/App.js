@@ -11,6 +11,7 @@ import LoginForm from '../features/login';
 import ExercisesPage from '../features/exercise/page';
 import Exercise from '../features/exercise/Exercise';
 import './App.css';
+import BadgePage from '../features/badge/page';
 
 function App() {
     const { loading } = useLoader();
@@ -26,6 +27,8 @@ function App() {
                 <Route path='/login' element={<LoginForm />} />
                 <Route path='/exercises' element={<ExercisesPage />} />
                 <Route path='/exercises/:id' element={<Exercise />} />
+                <Route path='/badges' element={<BadgePage />} />
+                <Route path='/badges/:id' element={<div>Todo</div>} />
             </Routes>
             <ModernLoader show={loading} />
             {notification && (

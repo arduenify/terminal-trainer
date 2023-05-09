@@ -39,6 +39,10 @@ const Header = () => {
         navigate('/exercises');
     };
 
+    const navigateToBadges = () => {
+        navigate('/badges');
+    };
+
     const logoutUser = () => {
         setMenuOpen(false);
         showLoader();
@@ -66,7 +70,9 @@ const Header = () => {
                 <div className='header-nav-item' onClick={navigateToExercises}>
                     Exercises
                 </div>
-                <div className='header-nav-item'>Badges</div>
+                <div className='header-nav-item' onClick={navigateToBadges}>
+                    Badges
+                </div>
                 <div className='header-nav-item'>Progress</div>
                 {isAuthenticated && (
                     <div className='header-nav-item'>Profile</div>

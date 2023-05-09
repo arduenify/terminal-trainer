@@ -22,18 +22,31 @@ const AdminPanel = ({
 
                 <button onClick={openAddModal}>Add Exercise</button>
                 {isAddModalOpen && (
-                    <div className='modal'>
+                    <div
+                        className='modal'
+                        onClick={(e) => {
+                            if (e.target.className === 'modal') {
+                                closeAddModal();
+                            }
+                        }}
+                    >
                         <div className='modal-content'>
                             <h2>Add Exercise</h2>
                             <ExerciseForm onSubmit={handleAddExercise} />
-                            <button onClick={closeAddModal}>Cancel</button>
                         </div>
                     </div>
                 )}
             </div>
 
             {isEditModalOpen && (
-                <div className='modal'>
+                <div
+                    className='modal'
+                    onClick={(e) => {
+                        if (e.target.className === 'modal') {
+                            closeEditModal();
+                        }
+                    }}
+                >
                     <div className='modal-content'>
                         <h2>Edit Exercise</h2>
                         <ExerciseForm
@@ -41,13 +54,19 @@ const AdminPanel = ({
                             exercise={selectedExercise}
                             isEditMode={true}
                         />
-                        <button onClick={closeEditModal}>Cancel</button>
                     </div>
                 </div>
             )}
 
             {isDeleteModalOpen && (
-                <div className='modal delete'>
+                <div
+                    className='modal delete'
+                    onClick={(e) => {
+                        if (e.target.className === 'modal delete') {
+                            closeDeleteModal();
+                        }
+                    }}
+                >
                     <div className='modal-content'>
                         <h2>Delete Exercise</h2>
                         <p>Are you sure you want to delete this exercise?</p>
