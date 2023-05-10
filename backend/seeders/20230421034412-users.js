@@ -32,6 +32,14 @@ module.exports = {
                 terminalTheme: 'dark',
                 role: 'user',
             },
+            {
+                username: process.env.DEMO_USERNAME,
+                email: process.env.DEMO_EMAIL,
+                firstName: 'Jake',
+                lastName: 'FromStateFarm',
+                terminalTheme: 'dark',
+                role: 'admin',
+            },
         ];
 
         const hashedUsers = users.map((user) => ({
