@@ -61,8 +61,8 @@ const Header = () => {
             };
 
             showNotification({
-                title: 'Demo login successful',
-                text: 'Welcome to Terminal Trainer!',
+                title: 'Welcome!',
+                text: 'Thank you for trying out Terminal Trainer! Redirecting you...',
                 duration: 2000,
                 dismissCallback: dismissNotificationCallback,
             });
