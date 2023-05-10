@@ -73,6 +73,23 @@
     color: var(--color-secondary);
 }
 
+.button.button-demo {
+    padding: 0;
+    font-size: 1.2rem;
+    background-color: transparent;
+    color: var(--color-accent-3);
+}
+
+.button.button-demo:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -0.4rem;
+    left: 0px;
+    width: 42%;
+    height: 2px;
+    background-color: var(--color-accent);
+}
+
 #user-fa-icon {
     color: var(--color-secondary);
     transition: all 0.3s ease;

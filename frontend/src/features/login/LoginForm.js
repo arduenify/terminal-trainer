@@ -26,6 +26,7 @@ const LoginForm = () => {
             password: password,
         };
 
+        showLoader();
         const actionResult = await loginUser(data);
 
         if (actionResult.error) {
@@ -34,9 +35,9 @@ const LoginForm = () => {
             if (errorMessage) {
                 setValidationErrors([errorMessage]);
             }
+            hideLoader();
         } else if (actionResult.data) {
             const authenticationToken = actionResult.data.token;
-            showLoader();
             localStorage.setItem('token', authenticationToken);
 
             const dismissNotificationCallback = () => {
