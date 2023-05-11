@@ -1,19 +1,31 @@
-import { useState } from 'react';
-import { useFetchAllBadgesQuery } from '../../../store/api';
+import { useContext, useState } from 'react';
+import {
+    useCreateBadgeMutation,
+    useDeleteBadgeByIdMutation,
+    useFetchAllBadgesQuery,
+    useUpdateBadgeByIdMutation,
+} from '../../../store/api';
 import { useLoader } from '../../modernLoader/context';
 import BadgeForm from './form';
+import NotificationContext from '../../notification/context/NotificationContext';
+import AuthContext from '../../../common/AuthContext';
 import './BadgePage.css';
 
 const BadgePage = () => {
     const { showLoader, hideLoader } = useLoader();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedBadge, setSelectedBadge] = useState(null);
-
+    const { isAdmin } = useContext(AuthContext);
     const {
         data: badges,
         isLoading: fetchAllBadgesLoading,
         isFetching: fetchAllBadgesFetching,
     } = useFetchAllBadgesQuery();
+
+    const [createBadge] = useCreateBadgeMutation();
+    const [updateBadgeById] = useUpdateBadgeByIdMutation();
+    const [deleteBadgeById] = useDeleteBadgeByIdMutation();
+    const { showNotification } = useContext(NotificationContext);
 
     // const {
     //     data: earnedBadges,
@@ -41,17 +53,56 @@ const BadgePage = () => {
         openModal();
     };
 
-    const onBadgeFormSubmit = (badge, prevBadgeId) => {
-        setModalOpen(false);
-        setSelectedBadge(null);
+    const handleDeleteBadgeButton = async (badgeId) => {
+        showLoader();
+        const deleteBadgeResult = await deleteBadgeById(badgeId);
+        hideLoader();
+
+        if (!deleteBadgeResult.error) {
+            showNotification({
+                title: 'Badge Deleted!',
+                message: 'See ya later, Badge...',
+            });
+        } else {
+            showNotification({
+                title: 'Something Went Wrong',
+                message:
+                    'There was an issue deleting the Badge. Please try again later.',
+            });
+        }
+    };
+
+    const onBadgeFormSubmit = async (badge, prevBadgeId) => {
+        showLoader();
+        let result;
 
         if (prevBadgeId) {
-            // update the badge
-            console.log('updating!');
+            result = await updateBadgeById({
+                id: prevBadgeId,
+                badgeData: badge,
+            });
         } else {
-            // create the badge
-            console.log('creating!');
+            result = await createBadge(badge);
         }
+
+        if (result.error) {
+            setSelectedBadge(badge);
+            setModalOpen(true);
+            showNotification({
+                title: 'Something Went Wrong',
+                message:
+                    'There was an issue updating the Badge. Please try again later.',
+            });
+        } else {
+            setModalOpen(false);
+            setSelectedBadge(null);
+            showNotification({
+                title: 'Badge Updated!',
+                message: 'Your Badge is good to go!',
+            });
+        }
+
+        hideLoader();
     };
 
     return (
@@ -66,19 +117,21 @@ const BadgePage = () => {
                         />
                     </div>
                 )}
-                <div className='page-header badge-page-header'>
-                    <h1>Badges</h1>
-                    <p>
-                        As an administrator, you can create, update, and delete
-                        badges.
-                    </p>
-                    <button
-                        className='action-button create-badge-btn'
-                        onClick={openModal}
-                    >
-                        Create Badge
-                    </button>
-                </div>
+                {isAdmin && (
+                    <div className='page-header badge-page-header'>
+                        <h1>Badges</h1>
+                        <p>
+                            As an administrator, you can create, update, and
+                            delete badges.
+                        </p>
+                        <button
+                            className='action-button create-badge-btn'
+                            onClick={openModal}
+                        >
+                            Create Badge
+                        </button>
+                    </div>
+                )}
                 <div className='page-content badge-page-content'>
                     <div className='badge-list'>
                         {badges?.length &&
@@ -96,21 +149,30 @@ const BadgePage = () => {
                                                 {badge.description}
                                             </p>
                                         </div>
-                                        <div className='badge-actions'>
-                                            <button
-                                                className='action-button update-badge-btn'
-                                                onClick={() =>
-                                                    handleUpdateBadgeButton(
-                                                        badge,
-                                                    )
-                                                }
-                                            >
-                                                Update
-                                            </button>
-                                            <button className='action-button delete-badge-btn'>
-                                                Delete
-                                            </button>
-                                        </div>
+                                        {isAdmin && (
+                                            <div className='badge-actions'>
+                                                <button
+                                                    className='action-button update-badge-btn'
+                                                    onClick={() =>
+                                                        handleUpdateBadgeButton(
+                                                            badge,
+                                                        )
+                                                    }
+                                                >
+                                                    Update
+                                                </button>
+                                                <button
+                                                    className='action-button delete-badge-btn'
+                                                    onClick={() =>
+                                                        handleDeleteBadgeButton(
+                                                            badge.id,
+                                                        )
+                                                    }
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}

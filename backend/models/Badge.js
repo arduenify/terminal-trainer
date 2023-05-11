@@ -34,10 +34,6 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            criteria: {
-                type: DataTypes.JSON,
-                allowNull: false,
-            },
         },
         modelOptions,
     );

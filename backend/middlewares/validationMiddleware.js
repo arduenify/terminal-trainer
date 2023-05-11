@@ -23,7 +23,7 @@ const validateUserLogin = [
 
 // Middleware for validating badge creation
 const validateCreateBadge = [
-    check('title', 'Title is required').notEmpty(),
+    check('name', 'Name is required').notEmpty(),
     check('description', 'Description is required').notEmpty(),
     check('icon', 'Icon is required').notEmpty(),
     _handleValidationErrors,
