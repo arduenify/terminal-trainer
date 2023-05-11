@@ -8,13 +8,14 @@ import {
 import { useLoader } from '../../modernLoader/context';
 import BadgeForm from './form';
 import NotificationContext from '../../notification/context/NotificationContext';
+import AuthContext from '../../../common/AuthContext';
 import './BadgePage.css';
 
 const BadgePage = () => {
     const { showLoader, hideLoader } = useLoader();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedBadge, setSelectedBadge] = useState(null);
-
+    const { isAdmin } = useContext(AuthContext);
     const {
         data: badges,
         isLoading: fetchAllBadgesLoading,
@@ -116,19 +117,21 @@ const BadgePage = () => {
                         />
                     </div>
                 )}
-                <div className='page-header badge-page-header'>
-                    <h1>Badges</h1>
-                    <p>
-                        As an administrator, you can create, update, and delete
-                        badges.
-                    </p>
-                    <button
-                        className='action-button create-badge-btn'
-                        onClick={openModal}
-                    >
-                        Create Badge
-                    </button>
-                </div>
+                {isAdmin && (
+                    <div className='page-header badge-page-header'>
+                        <h1>Badges</h1>
+                        <p>
+                            As an administrator, you can create, update, and
+                            delete badges.
+                        </p>
+                        <button
+                            className='action-button create-badge-btn'
+                            onClick={openModal}
+                        >
+                            Create Badge
+                        </button>
+                    </div>
+                )}
                 <div className='page-content badge-page-content'>
                     <div className='badge-list'>
                         {badges?.length &&
@@ -146,28 +149,30 @@ const BadgePage = () => {
                                                 {badge.description}
                                             </p>
                                         </div>
-                                        <div className='badge-actions'>
-                                            <button
-                                                className='action-button update-badge-btn'
-                                                onClick={() =>
-                                                    handleUpdateBadgeButton(
-                                                        badge,
-                                                    )
-                                                }
-                                            >
-                                                Update
-                                            </button>
-                                            <button
-                                                className='action-button delete-badge-btn'
-                                                onClick={() =>
-                                                    handleDeleteBadgeButton(
-                                                        badge.id,
-                                                    )
-                                                }
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
+                                        {isAdmin && (
+                                            <div className='badge-actions'>
+                                                <button
+                                                    className='action-button update-badge-btn'
+                                                    onClick={() =>
+                                                        handleUpdateBadgeButton(
+                                                            badge,
+                                                        )
+                                                    }
+                                                >
+                                                    Update
+                                                </button>
+                                                <button
+                                                    className='action-button delete-badge-btn'
+                                                    onClick={() =>
+                                                        handleDeleteBadgeButton(
+                                                            badge.id,
+                                                        )
+                                                    }
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 );
                             })}
