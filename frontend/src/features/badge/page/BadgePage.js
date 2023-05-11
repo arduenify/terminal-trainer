@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
     useCreateBadgeMutation,
+    useDeleteBadgeByIdMutation,
     useFetchAllBadgesQuery,
     useUpdateBadgeByIdMutation,
 } from '../../../store/api';
 import { useLoader } from '../../modernLoader/context';
 import BadgeForm from './form';
+import NotificationContext from '../../notification/context/NotificationContext';
 import './BadgePage.css';
 
 const BadgePage = () => {
@@ -21,6 +23,8 @@ const BadgePage = () => {
 
     const [createBadge] = useCreateBadgeMutation();
     const [updateBadgeById] = useUpdateBadgeByIdMutation();
+    const [deleteBadgeById] = useDeleteBadgeByIdMutation();
+    const { showNotification } = useContext(NotificationContext);
 
     // const {
     //     data: earnedBadges,
@@ -48,7 +52,27 @@ const BadgePage = () => {
         openModal();
     };
 
+    const handleDeleteBadgeButton = async (badgeId) => {
+        showLoader();
+        const deleteBadgeResult = await deleteBadgeById(badgeId);
+        hideLoader();
+
+        if (!deleteBadgeResult.error) {
+            showNotification({
+                title: 'Badge Deleted!',
+                message: 'See ya later, Badge...',
+            });
+        } else {
+            showNotification({
+                title: 'Something Went Wrong',
+                message:
+                    'There was an issue deleting the Badge. Please try again later.',
+            });
+        }
+    };
+
     const onBadgeFormSubmit = async (badge, prevBadgeId) => {
+        showLoader();
         let result;
 
         if (prevBadgeId) {
@@ -63,10 +87,21 @@ const BadgePage = () => {
         if (result.error) {
             setSelectedBadge(badge);
             setModalOpen(true);
+            showNotification({
+                title: 'Something Went Wrong',
+                message:
+                    'There was an issue updating the Badge. Please try again later.',
+            });
         } else {
             setModalOpen(false);
             setSelectedBadge(null);
+            showNotification({
+                title: 'Badge Updated!',
+                message: 'Your Badge is good to go!',
+            });
         }
+
+        hideLoader();
     };
 
     return (
@@ -122,7 +157,14 @@ const BadgePage = () => {
                                             >
                                                 Update
                                             </button>
-                                            <button className='action-button delete-badge-btn'>
+                                            <button
+                                                className='action-button delete-badge-btn'
+                                                onClick={() =>
+                                                    handleDeleteBadgeButton(
+                                                        badge.id,
+                                                    )
+                                                }
+                                            >
                                                 Delete
                                             </button>
                                         </div>
