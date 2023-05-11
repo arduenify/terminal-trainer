@@ -53,6 +53,12 @@ const buildUserEndpoints = (builder) => ({
             body: userData,
         }),
     }),
+    demoLogin: builder.mutation({
+        query: () => ({
+            url: 'users/demo-login',
+            method: 'POST',
+        }),
+    }),
     fetchCurrentUser: builder.query({
         query: () => 'users/me',
     }),
@@ -191,6 +197,7 @@ export const {
     // User
     useSignupUserMutation,
     useLoginUserMutation,
+    useDemoLoginMutation,
     useFetchCurrentUserQuery,
     useUpdateCurrentUserMutation,
     useDeleteCurrentUserMutation,

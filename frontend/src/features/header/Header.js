@@ -1,6 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useFetchCurrentUserQuery } from '../../store/api';
+import {
+    useDemoLoginMutation,
+    useFetchCurrentUserQuery,
+    useLoginUserMutation,
+} from '../../store/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useLoader } from '../modernLoader/context';
@@ -14,6 +18,7 @@ const Header = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const { data: user, isFetching, isSuccess } = useFetchCurrentUserQuery();
     const { hideLoader, showLoader } = useLoader();
+    const [demoLogin] = useDemoLoginMutation();
     const { showNotification } = useContext(NotificationContext);
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
 
@@ -41,6 +46,27 @@ const Header = () => {
 
     const navigateToBadges = () => {
         navigate('/badges');
+    };
+
+    const handleDemoAuthentication = async () => {
+        showLoader();
+
+        const { data } = await demoLogin();
+
+        if (data) {
+            localStorage.setItem('token', data.token);
+            const dismissNotificationCallback = () => {
+                hideLoader();
+                setIsAuthenticated(true);
+            };
+
+            showNotification({
+                title: 'Welcome!',
+                text: 'Thank you for trying out Terminal Trainer! Redirecting you...',
+                duration: 2000,
+                dismissCallback: dismissNotificationCallback,
+            });
+        }
     };
 
     const logoutUser = () => {
@@ -119,6 +145,12 @@ const Header = () => {
                         onClick={navigateToSignupForm}
                     >
                         Register
+                    </button>
+                    <button
+                        className='button button-demo'
+                        onClick={handleDemoAuthentication}
+                    >
+                        Demo
                     </button>
                 </div>
             )}
