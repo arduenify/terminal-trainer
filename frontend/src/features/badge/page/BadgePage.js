@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useFetchAllBadgesQuery } from '../../../store/api';
 import { useLoader } from '../../modernLoader/context';
-import './BadgePage.css';
 import BadgeForm from './form';
+import './BadgePage.css';
 
 const BadgePage = () => {
     const { showLoader, hideLoader } = useLoader();

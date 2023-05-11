@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import EmojiSelector from '../../../emojiSelector';
 import './BadgeForm.css';
 
 const BadgeForm = ({ isEditMode = false, onSubmit, badge = {} }) => {
@@ -36,13 +37,7 @@ const BadgeForm = ({ isEditMode = false, onSubmit, badge = {} }) => {
             ></textarea>
 
             <label htmlFor='icon'>Icon</label>
-            <input
-                type='text'
-                id='icon'
-                value={icon}
-                onChange={(e) => setIcon(e.target.value)}
-                required
-            />
+            <EmojiSelector onSelect={setIcon} />
 
             <button type='submit'>
                 {isEditMode ? 'Update Badge' : 'Add Badge'}
