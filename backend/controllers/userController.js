@@ -92,6 +92,27 @@ async function login(req, res) {
     }
 }
 
+async function demoUserLogin(req, res) {
+    try {
+        const user = await User.findOne({
+            where: { username: process.env.DEMO_USERNAME },
+        });
+
+        if (!user) {
+            return new NotFoundResponse({ error: 'User not found' }, res);
+        }
+
+        const token = generateToken(user);
+        return new SuccessResponse({ token }, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            'An internal server error occured while attempting to login.';
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
 async function getUserProfile(req, res) {
     try {
         const user = await findUserById(req.user.id);
@@ -181,4 +202,5 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     deleteUserAccount,
+    demoUserLogin,
 };
