@@ -8,6 +8,7 @@ const {
     NotFoundResponse,
     NoContentResponse,
     InternalServerErrorResponse,
+    CreatedResponse,
 } = require('./responseController');
 
 const getAllBadges = async (req, res) => {
