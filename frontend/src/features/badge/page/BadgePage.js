@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { useFetchAllBadgesQuery } from '../../../store/api';
+import {
+    useCreateBadgeMutation,
+    useFetchAllBadgesQuery,
+    useUpdateBadgeByIdMutation,
+} from '../../../store/api';
 import { useLoader } from '../../modernLoader/context';
 import BadgeForm from './form';
 import './BadgePage.css';
@@ -14,6 +18,9 @@ const BadgePage = () => {
         isLoading: fetchAllBadgesLoading,
         isFetching: fetchAllBadgesFetching,
     } = useFetchAllBadgesQuery();
+
+    const [createBadge] = useCreateBadgeMutation();
+    const [updateBadgeById] = useUpdateBadgeByIdMutation();
 
     // const {
     //     data: earnedBadges,
@@ -41,16 +48,19 @@ const BadgePage = () => {
         openModal();
     };
 
-    const onBadgeFormSubmit = (badge, prevBadgeId) => {
+    const onBadgeFormSubmit = async (badge, prevBadgeId) => {
         setModalOpen(false);
         setSelectedBadge(null);
 
         if (prevBadgeId) {
-            // update the badge
-            console.log('updating!');
+            const updateBadgeResult = await updateBadgeById({
+                id: prevBadgeId,
+                badgeData: badge,
+            });
+            console.log(updateBadgeResult);
         } else {
-            // create the badge
-            console.log('creating!');
+            const createBadgeResult = await createBadge(badge);
+            console.log(createBadgeResult);
         }
     };
 
