@@ -49,18 +49,23 @@ const BadgePage = () => {
     };
 
     const onBadgeFormSubmit = async (badge, prevBadgeId) => {
-        setModalOpen(false);
-        setSelectedBadge(null);
+        let result;
 
         if (prevBadgeId) {
-            const updateBadgeResult = await updateBadgeById({
+            result = await updateBadgeById({
                 id: prevBadgeId,
                 badgeData: badge,
             });
-            console.log(updateBadgeResult);
         } else {
-            const createBadgeResult = await createBadge(badge);
-            console.log(createBadgeResult);
+            result = await createBadge(badge);
+        }
+
+        if (result.error) {
+            setSelectedBadge(badge);
+            setModalOpen(true);
+        } else {
+            setModalOpen(false);
+            setSelectedBadge(null);
         }
     };
 
