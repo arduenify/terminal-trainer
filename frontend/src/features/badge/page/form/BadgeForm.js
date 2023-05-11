@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import './BadgeForm.css';
 
 const BadgeForm = ({ isEditMode = false, onSubmit, badge = {} }) => {
-    const [name, setName] = useState(badge.name || '');
-    const [description, setDescription] = useState(badge.description || '');
-    const [icon, setIcon] = useState(badge.icon || '');
+    const [name, setName] = useState(badge?.name || '');
+    const [description, setDescription] = useState(badge?.description || '');
+    const [icon, setIcon] = useState(badge?.icon || '');
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        onSubmit({ name, description, icon });
+        if (!name || !description || !icon) {
+            return;
+        }
+
+        onSubmit({ name, description, icon }, badge?.id);
     };
 
     return (

@@ -28,7 +28,12 @@ const BadgePage = () => {
         hideLoader();
     }
 
-    const closeModal = () => setModalOpen(false);
+    const closeModal = (event) => {
+        if (event.target.className === 'modal') {
+            setSelectedBadge(null);
+            setModalOpen(false);
+        }
+    };
     const openModal = () => setModalOpen(true);
 
     const handleUpdateBadgeButton = (badge) => {
@@ -36,12 +41,29 @@ const BadgePage = () => {
         openModal();
     };
 
+    const onBadgeFormSubmit = (badge, prevBadgeId) => {
+        setModalOpen(false);
+        setSelectedBadge(null);
+
+        if (prevBadgeId) {
+            // update the badge
+            console.log('updating!');
+        } else {
+            // create the badge
+            console.log('creating!');
+        }
+    };
+
     return (
         <div className='page-container badge-page-container'>
             <div className='badge-page'>
                 {modalOpen && (
                     <div className='modal' onClick={closeModal}>
-                        <BadgeForm badge={selectedBadge} />
+                        <BadgeForm
+                            onSubmit={onBadgeFormSubmit}
+                            badge={selectedBadge}
+                            isEditMode={!!selectedBadge}
+                        />
                     </div>
                 )}
                 <div className='page-header badge-page-header'>
