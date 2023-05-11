@@ -81,9 +81,11 @@ const buildUserEndpoints = (builder) => ({
 const buildBadgeEndpoints = (builder) => ({
     fetchAllBadges: builder.query({
         query: () => 'badges',
+        providesTags: ['Badges'],
     }),
     fetchBadgeById: builder.query({
         query: (id) => `badges/${id}`,
+        providesTags: ['Badges'],
     }),
     // Admin only
     createBadge: builder.mutation({
@@ -92,6 +94,7 @@ const buildBadgeEndpoints = (builder) => ({
             method: 'POST',
             body: badgeData,
         }),
+        invalidatesTags: ['Badges'],
     }),
     // Admin only
     updateBadgeById: builder.mutation({
@@ -100,6 +103,7 @@ const buildBadgeEndpoints = (builder) => ({
             method: 'PUT',
             body: badgeData,
         }),
+        invalidatesTags: ['Badges'],
     }),
     // Admin only
     deleteBadgeById: builder.mutation({
@@ -107,6 +111,7 @@ const buildBadgeEndpoints = (builder) => ({
             url: `badges/${id}`,
             method: 'DELETE',
         }),
+        invalidatesTags: ['Badges'],
     }),
 });
 

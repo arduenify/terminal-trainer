@@ -8,6 +8,7 @@ const {
     NotFoundResponse,
     NoContentResponse,
     InternalServerErrorResponse,
+    CreatedResponse,
 } = require('./responseController');
 
 const getAllBadges = async (req, res) => {
@@ -64,7 +65,6 @@ const updateBadge = async (req, res) => {
 
     try {
         const badge = await Badge.findByPk(id);
-
         if (!badge) {
             return new NotFoundResponse(null, res);
         }
@@ -76,6 +76,8 @@ const updateBadge = async (req, res) => {
         if (critera) fieldsToUpdate.critera = critera;
 
         await badge.update(fieldsToUpdate);
+
+        return new SuccessResponse(badge, res);
     } catch (err) {
         const errorMessage =
             err.message ||

@@ -8,8 +8,9 @@ const badgeController = require('../controllers/badgeController');
 const { validateCreateBadge } = require('../middlewares/validationMiddleware');
 const authenticateAdmin = require('../middlewares/authenticateAdmin');
 
-router.get('/', authenticateAdmin, badgeController.getAllBadges);
-router.get('/:id', authenticateAdmin, badgeController.getBadge);
+// For now, let's let the users VIEW the badges.
+router.get('/', badgeController.getAllBadges);
+router.get('/:id', badgeController.getBadge);
 router.post(
     '/',
     authenticateAdmin,
