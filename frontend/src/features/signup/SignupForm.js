@@ -9,6 +9,8 @@ import FormNavigation from './components/FormNavigation';
 import NotificationContext from '../notification/context/NotificationContext';
 
 import './SignupForm.css';
+import { setLoading } from '../../store/loadingSlice';
+import { useDispatch } from 'react-redux';
 
 const SignupForm = () => {
     // Local state
@@ -27,11 +29,13 @@ const SignupForm = () => {
     const passwordsMatch = password === passwordConfirmation;
     const [signupUser] = useSignupUserMutation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const errorMessages = useHandleServerError(
         serverErrors,
         currentStep,
         setCurrentStep,
     );
+
     useRemoveErrorByPath(
         {
             firstName,
@@ -73,10 +77,12 @@ const SignupForm = () => {
                 text: 'Please check the form for errors.',
             });
         } else {
+            dispatch(setLoading(true));
             setServerErrors([]);
 
             const handleNotificationDismiss = () => {
                 navigate('/');
+                dispatch(setLoading(false));
             };
 
             showNotification({
