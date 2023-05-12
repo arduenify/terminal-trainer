@@ -52,16 +52,34 @@ const buildUserEndpoints = (builder) => ({
             method: 'POST',
             body: userData,
         }),
+        onSuccess: (data, thunks, cache) => {
+            cache.invalidateTags([{ type: 'User', id: 'CURRENT' }]);
+        },
     }),
     demoLogin: builder.mutation({
         query: () => ({
             url: 'users/demo-login',
             method: 'POST',
         }),
+        onSuccess: (data, thunks, cache) => {
+            cache.invalidateTags([{ type: 'User', id: 'CURRENT' }]);
+        },
     }),
     fetchCurrentUser: builder.query({
         query: () => 'users/me',
+        providesTags: [{ type: 'User', id: 'CURRENT' }],
+        onError: (
+            error,
+            { dispatch },
+            { getState, extra, requestId, originalArgs, cache },
+        ) => {
+            if (error.status === 401) {
+                // Invalidate the cache for the fetchCurrentUser query
+                cache.invalidateTags([{ type: 'User', id: 'CURRENT' }]);
+            }
+        },
     }),
+
     updateCurrentUser: builder.mutation({
         query: (userData) => ({
             url: 'users/me',
