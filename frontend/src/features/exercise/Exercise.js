@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Terminal from './terminal';
 import { useParams } from 'react-router-dom';
-import { useLoader } from '../modernLoader/context';
 import { useFetchExerciseByIdQuery } from '../../store/api';
 import './Exercise.css';
 
 const Exercise = () => {
     const exerciseId = useParams().id;
-    const { showLoader, hideLoader } = useLoader();
     const {
         data: exercise,
         refetch,
@@ -102,14 +100,6 @@ const Exercise = () => {
             commandOutputMapRef.current = map;
         }
     }, [exercise]);
-
-    useEffect(() => {
-        if (isFetching) {
-            showLoader();
-        } else {
-            hideLoader();
-        }
-    }, [isFetching, showLoader, hideLoader]);
 
     useEffect(() => {
         refetch();

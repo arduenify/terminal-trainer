@@ -5,14 +5,12 @@ import {
     useFetchAllBadgesQuery,
     useUpdateBadgeByIdMutation,
 } from '../../../store/api';
-import { useLoader } from '../../modernLoader/context';
 import BadgeForm from './form';
 import NotificationContext from '../../notification/context/NotificationContext';
 import AuthContext from '../../../common/AuthContext';
 import './BadgePage.css';
 
 const BadgePage = () => {
-    const { showLoader, hideLoader } = useLoader();
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedBadge, setSelectedBadge] = useState(null);
     const { isAdmin } = useContext(AuthContext);
@@ -34,10 +32,8 @@ const BadgePage = () => {
     // } = useFetchUserBadgesQuery();
 
     if (fetchAllBadgesLoading || fetchAllBadgesFetching) {
-        showLoader();
         return null;
     } else {
-        hideLoader();
     }
 
     const closeModal = (event) => {
@@ -54,9 +50,7 @@ const BadgePage = () => {
     };
 
     const handleDeleteBadgeButton = async (badgeId) => {
-        showLoader();
         const deleteBadgeResult = await deleteBadgeById(badgeId);
-        hideLoader();
 
         if (!deleteBadgeResult.error) {
             showNotification({
@@ -73,7 +67,6 @@ const BadgePage = () => {
     };
 
     const onBadgeFormSubmit = async (badge, prevBadgeId) => {
-        showLoader();
         let result;
 
         if (prevBadgeId) {
@@ -101,8 +94,6 @@ const BadgePage = () => {
                 message: 'Your Badge is good to go!',
             });
         }
-
-        hideLoader();
     };
 
     return (

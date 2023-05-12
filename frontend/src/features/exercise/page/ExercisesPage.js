@@ -5,7 +5,6 @@ import {
     useFetchAllExercisesQuery,
 } from '../../../store/api';
 import AuthContext from '../../../common/AuthContext';
-import { useLoader } from '../../modernLoader/context/LoaderContext';
 import AdminPanel from './adminPanel';
 import {
     useCreateExerciseMutation,
@@ -23,7 +22,6 @@ const ExercisePage = () => {
 
     const navigate = useNavigate();
     const { isAdmin } = useContext(AuthContext);
-    const { showLoader, hideLoader } = useLoader();
     const [isAddModalOpen, setAddModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -43,14 +41,6 @@ const ExercisePage = () => {
             document.body.classList.remove('body-no-scroll');
         };
     }, [isAddModalOpen, isEditModalOpen]);
-
-    useEffect(() => {
-        if (isFetching || isLoading) {
-            showLoader();
-        } else {
-            hideLoader();
-        }
-    }, [isFetching, isLoading, showLoader, hideLoader]);
 
     // Callbacks
     const openExercise = (exercise) => {
@@ -75,33 +65,24 @@ const ExercisePage = () => {
     const closeDeleteModal = () => setDeleteModalOpen(false);
 
     const handleAddExercise = async (exercise) => {
-        showLoader();
-
         const resultAction = await createExercise(exercise);
 
         closeAddModal();
-        hideLoader();
     };
 
     const handleUpdateExercise = async (exercise) => {
-        showLoader();
-
         const resultAction = await updateExerciseById({
             id: selectedExercise.id,
             exercise,
         });
 
         closeEditModal();
-        hideLoader();
     };
 
     const handleDeleteExercise = async () => {
-        showLoader();
-
         const resultAction = await deleteExerciseById(selectedExercise.id);
 
         setDeleteModalOpen(false);
-        hideLoader();
     };
 
     return (

@@ -1,31 +1,27 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     useDemoLoginMutation,
     useFetchCurrentUserQuery,
-    useLoginUserMutation,
 } from '../../store/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { useLoader } from '../modernLoader/context';
 import AuthContext from '../../common/AuthContext';
 import NotificationContext from '../notification/context/NotificationContext';
+import { setLoading } from '../../store/loadingSlice';
 import './Header.css';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
     // Hooks
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
-    const { data: user, isFetching, isSuccess } = useFetchCurrentUserQuery();
-    const { hideLoader, showLoader } = useLoader();
+    const { refetch } = useFetchCurrentUserQuery();
     const [demoLogin] = useDemoLoginMutation();
     const { showNotification } = useContext(NotificationContext);
-    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
-
-    useEffect(() => {
-        const userExists = user && user.id && !isFetching && isSuccess;
-        setIsAuthenticated(userExists);
-    }, [user, isFetching, isSuccess]);
+    const { isAuthenticated, setIsAuthenticated, logout } =
+        useContext(AuthContext);
+    const dispatch = useDispatch();
 
     // Callbacks
     const navigateToSignupForm = () => {
@@ -49,16 +45,17 @@ const Header = () => {
     };
 
     const handleDemoAuthentication = async () => {
-        showLoader();
-
         const { data } = await demoLogin();
 
         if (data) {
             localStorage.setItem('token', data.token);
+            await refetch();
+            dispatch(setLoading(true));
+
             const dismissNotificationCallback = () => {
-                hideLoader();
                 setIsAuthenticated(true);
                 navigateToHome();
+                dispatch(setLoading(false));
             };
 
             showNotification({
@@ -72,12 +69,11 @@ const Header = () => {
 
     const logoutUser = () => {
         setMenuOpen(false);
-        showLoader();
-
-        localStorage.removeItem('token');
+        dispatch(setLoading(true));
+        logout();
         const dismissNotificationCallback = () => {
-            hideLoader();
-            setIsAuthenticated(false);
+            navigateToHome();
+            dispatch(setLoading(false));
         };
 
         showNotification({
@@ -94,16 +90,19 @@ const Header = () => {
                 Terminal Trainer
             </div>
             <nav className='header-nav'>
+                <div className='header-nav-item' onClick={navigateToHome}>
+                    Home
+                </div>
                 <div className='header-nav-item' onClick={navigateToExercises}>
                     Exercises
                 </div>
                 <div className='header-nav-item' onClick={navigateToBadges}>
                     Badges
                 </div>
-                <div className='header-nav-item'>Progress</div>
+                {/* <div className='header-nav-item'>Progress</div>
                 {isAuthenticated && (
                     <div className='header-nav-item'>Profile</div>
-                )}
+                )} */}
             </nav>
             {isAuthenticated ? (
                 <div className='profile-menu'>

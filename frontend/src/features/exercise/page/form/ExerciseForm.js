@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useFetchAllCategoriesQuery } from '../../../../store/api';
-import { useLoader } from '../../../modernLoader/context/LoaderContext';
 import './ExerciseForm.css';
 
 const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
@@ -13,8 +12,6 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const [categoryId, setCategoryId] = useState(exercise.categoryId || 1);
     const [allCategories, setAllCategories] = useState([]);
     const [solution, setSolution] = useState(exercise.solution || []);
-
-    const { showLoader, hideLoader } = useLoader();
 
     const {
         data: categories,
@@ -63,14 +60,6 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const handleCategorySelected = (event) => {
         setCategoryId(event.target.value);
     };
-
-    useEffect(() => {
-        if (isFetching || isLoading) {
-            showLoader();
-        } else {
-            hideLoader();
-        }
-    }, []);
 
     useEffect(() => {
         if (!isLoading && !isFetching && isSuccess)

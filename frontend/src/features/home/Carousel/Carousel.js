@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import ExerciseCard from '../ExerciseCard';
 import { useFetchAllExercisesQuery } from '../../../store/api';
 import { useNavigate } from 'react-router-dom';
-import { useLoader } from '../../modernLoader/context';
 import './Carousel.css';
 
 const Carousel = () => {
@@ -11,7 +10,6 @@ const Carousel = () => {
     const [animationSpeedModifier, setAnimationSpeedModifier] =
         useState(0.0225);
     const animationRef = useRef(null);
-    const { showLoader, hideLoader } = useLoader();
 
     const {
         data: fetchedExercises,
@@ -46,11 +44,8 @@ const Carousel = () => {
     // The exercise list must be "doubled" so as to appear infinite and loop correctly
     const renderedCards = useMemo(() => {
         if (isLoading || !exercises) {
-            showLoader();
             return null;
         }
-
-        hideLoader();
 
         const openExercise = (exerciseId) => {
             const url = `/exercises/${exerciseId}`;

@@ -1,11 +1,15 @@
 import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
-import { useLoginUserMutation } from '../../store/api';
-import { useLoader } from '../modernLoader/context';
+import {
+    useFetchCurrentUserQuery,
+    useLoginUserMutation,
+} from '../../store/api';
 import NotificationContext from '../notification/context/NotificationContext';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../common/AuthContext';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../store/loadingSlice';
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -13,10 +17,11 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [validationErrors, setValidationErrors] = useState([]);
     const [loginUser] = useLoginUserMutation();
-    const { hideLoader, showLoader } = useLoader();
     const { showNotification } = useContext(NotificationContext);
     const { setIsAuthenticated } = useContext(AuthContext);
+    const { refetch } = useFetchCurrentUserQuery();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event) => {
         event?.preventDefault();
@@ -26,7 +31,6 @@ const LoginForm = () => {
             password: password,
         };
 
-        showLoader();
         const actionResult = await loginUser(data);
 
         if (actionResult.error) {
@@ -35,15 +39,16 @@ const LoginForm = () => {
             if (errorMessage) {
                 setValidationErrors([errorMessage]);
             }
-            hideLoader();
         } else if (actionResult.data) {
             const authenticationToken = actionResult.data.token;
             localStorage.setItem('token', authenticationToken);
+            await refetch();
+            dispatch(setLoading(true));
 
             const dismissNotificationCallback = () => {
                 setIsAuthenticated(true);
                 navigate('/');
-                hideLoader();
+                dispatch(setLoading(false));
             };
 
             showNotification({
