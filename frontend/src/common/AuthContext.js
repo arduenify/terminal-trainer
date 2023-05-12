@@ -8,6 +8,12 @@ export const AuthProvider = ({ children }) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const { data: user, isFetching, isSuccess } = useFetchCurrentUserQuery();
 
+    const logout = () => {
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+        localStorage.removeItem('token');
+    };
+
     useEffect(() => {
         const userExists = user && user.id && !isFetching && isSuccess;
         setIsAuthenticated(userExists);
@@ -20,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider
-            value={{ isAuthenticated, setIsAuthenticated, isAdmin }}
+            value={{ isAuthenticated, setIsAuthenticated, isAdmin, logout }}
         >
             {children}
         </AuthContext.Provider>

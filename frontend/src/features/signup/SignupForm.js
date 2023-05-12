@@ -6,7 +6,6 @@ import { useHandleServerError } from './hooks/useHandleServerError';
 import { useRemoveErrorByPath } from './hooks/useRemoveErrorBypath';
 import { isValidEmail } from './utils';
 import FormNavigation from './components/FormNavigation';
-import { useLoader } from '../modernLoader/context';
 import NotificationContext from '../notification/context/NotificationContext';
 
 import './SignupForm.css';
@@ -24,7 +23,6 @@ const SignupForm = () => {
     const [serverErrors, setServerErrors] = useState([]);
 
     // Hooks and variables
-    const { hideLoader, showLoader } = useLoader();
     const { showNotification } = useContext(NotificationContext);
     const passwordsMatch = password === passwordConfirmation;
     const [signupUser] = useSignupUserMutation();
@@ -61,7 +59,6 @@ const SignupForm = () => {
             lastName,
         };
 
-        showLoader();   
         const resultAction = await signupUser(userData);
 
         if (resultAction.error) {
@@ -71,7 +68,6 @@ const SignupForm = () => {
                     : [resultAction.error.data.error],
             );
 
-            hideLoader();
             showNotification({
                 title: 'Signup failed',
                 text: 'Please check the form for errors.',
@@ -81,7 +77,6 @@ const SignupForm = () => {
 
             const handleNotificationDismiss = () => {
                 navigate('/');
-                hideLoader();
             };
 
             showNotification({
