@@ -12,11 +12,13 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const [categoryId, setCategoryId] = useState(exercise.categoryId || 1);
     const [allCategories, setAllCategories] = useState([]);
     const [solution, setSolution] = useState(() => {
+        let newSolution = exercise.solution || [];
+
         if (typeof exercise.solution === 'string') {
-            exercise.solution = JSON.parse(exercise.solution);
+            newSolution = JSON.parse(exercise.solution);
         }
 
-        return exercise.solution || [];
+        return newSolution;
     });
 
     const {
