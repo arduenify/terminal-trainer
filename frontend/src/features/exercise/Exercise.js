@@ -1,17 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Terminal from './terminal';
 import { useParams } from 'react-router-dom';
 import { useFetchExerciseByIdQuery } from '../../store/api';
+import NotificationContext from '../notification/context/NotificationContext';
 import './Exercise.css';
 
 const Exercise = () => {
     const exerciseId = useParams().id;
-    const {
-        data: exercise,
-        refetch,
-        isFetching,
-    } = useFetchExerciseByIdQuery(exerciseId);
-
+    const { data: exercise, refetch } = useFetchExerciseByIdQuery(exerciseId);
+    const [enabled, setEnabled] = useState(true);
+    const { showNotification } = useContext(NotificationContext);
     const platformSeparator = navigator.userAgent.includes('Windows')
         ? '\r\n'
         : '\n';
@@ -44,10 +42,20 @@ const Exercise = () => {
                 terminalInput.disabled = true;
             }
         }
+
+        setEnabled(false);
+    };
+
+    const showFinishNotification = () => {
+        showNotification({
+            title: 'Exercise complete!',
+            text: 'Well done! Congratulations on completing this exercise.',
+        });
     };
 
     const finishExercise = () => {
         disableInput();
+        showFinishNotification();
         return 'Congratulations on completing the exercise!';
     };
 
@@ -131,7 +139,7 @@ const Exercise = () => {
                 <p>{exercise.teachingText}</p>
                 <Terminal
                     onCommand={(command) => handleCommand(command)}
-                    disableInput={() => disableInput()}
+                    enabled={enabled}
                 />
             </div>
         </div>

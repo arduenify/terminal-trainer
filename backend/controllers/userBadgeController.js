@@ -1,5 +1,10 @@
 const { UserBadge, Badge } = require('../models');
-const { CreatedResponse } = require('./responseController');
+const {
+    CreatedResponse,
+    SuccessResponse,
+    InternalServerErrorResponse,
+    NotFoundResponse,
+} = require('./responseController');
 
 const getUserBadges = async (req, res) => {
     const { userId } = req.params;
@@ -29,6 +34,30 @@ const getUserBadges = async (req, res) => {
     }
 };
 
+const getCurrentUserBadges = async (req, res) => {
+    const { id: userId } = req.user;
+
+    try {
+        const userBadges = await UserBadge.findAll({
+            where: {
+                userId,
+            },
+            include: {
+                model: Badge,
+                as: 'badge',
+            },
+        });
+
+        return new SuccessResponse(userBadges, res);
+    } catch (err) {
+        console.error(err);
+        const errorMessage =
+            err.message ||
+            'Internal server error when attempting to fetch user badges.';
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+};
+
 const assignBadgeToUser = async (req, res) => {
     const { badgeId, userId } = req.body;
 
@@ -54,4 +83,5 @@ const assignBadgeToUser = async (req, res) => {
 module.exports = {
     getUserBadges,
     assignBadgeToUser,
+    getCurrentUserBadges,
 };

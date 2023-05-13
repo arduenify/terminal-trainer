@@ -6,7 +6,7 @@ import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
 import './Terminal.css';
 
-const Terminal = ({ onCommand }) => {
+const Terminal = ({ onCommand, enabled }) => {
     const terminalRef = useRef(null);
     const xtermRef = useRef(null);
     const inputBuffer = useRef('');
@@ -59,6 +59,7 @@ const Terminal = ({ onCommand }) => {
                     inputBuffer.current,
                 ];
                 inputBuffer.current = '';
+
                 updatePrompt();
             } else if (key === '\x7F') {
                 // Backspace key
@@ -96,7 +97,14 @@ const Terminal = ({ onCommand }) => {
         };
     }, [fitAddon]);
 
-    return <div className='terminal-container' ref={terminalRef} />;
+    return (
+        <div
+            className={
+                enabled ? `terminal-container` : `terminal-container disabled`
+            }
+            ref={terminalRef}
+        />
+    );
 };
 
 export default Terminal;
