@@ -14,19 +14,6 @@ const ExerciseCard = ({
         description.length > 100
             ? description.slice(0, 100) + '...'
             : description;
-    const [difficultyClassName, setDifficultyClassName] = useState(
-        'difficulty beginner',
-    );
-
-    useEffect(() => {
-        if (difficulty === 'easy') {
-            setDifficultyClassName('difficulty easy');
-        } else if (difficulty === 'intermediate') {
-            setDifficultyClassName('difficulty medium');
-        } else if (difficulty === 'advanced') {
-            setDifficultyClassName('difficulty hard');
-        }
-    }, [difficulty]);
 
     return (
         <div
@@ -34,7 +21,9 @@ const ExerciseCard = ({
             onClick={() => openExercise(id)}
         >
             <div className='exercise-card-header'>
-                <p className={difficultyClassName}>{difficulty}</p>
+                <p className={`difficulty ${difficulty.toLowerCase()}`}>
+                    {difficulty}
+                </p>
             </div>
             <div className='exercise-card-body'>
                 <h3 className='title'>{title}</h3>

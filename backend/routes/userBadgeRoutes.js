@@ -8,6 +8,7 @@ const {
 } = require('../middlewares/validationMiddleware');
 
 router.get('/:userId', authenticate, userBadgeController.getUserBadges);
+router.get('/', authenticate, userBadgeController.getCurrentUserBadges);
 router.post(
     '/',
     authenticate,

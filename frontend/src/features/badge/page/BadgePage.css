@@ -71,7 +71,8 @@
 
 .create-badge-btn,
 .update-badge-btn,
-.delete-badge-btn {
+.delete-badge-btn,
+.assign-badge-btn {
     padding: 0.5rem 1rem;
     font-size: 15px;
     cursor: pointer;
@@ -82,12 +83,14 @@
     transition: background-color 0.3s, color 0.3s;
 }
 
-.create-badge-btn {
+.create-badge-btn,
+.assign-badge-btn {
     border: 1px solid var(--color-accent);
     color: var(--color-accent);
 }
 
-.create-badge-btn:hover {
+.create-badge-btn:hover,
+.assign-badge-btn:hover {
     background-color: var(--color-accent);
     color: var(--color-background);
 }
@@ -121,4 +124,16 @@
     display: flex;
     margin-left: auto;
     align-items: center;
+}
+
+.create-assign-btn-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 3rem;
+}
+
+.no-badges-earned-msg {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 1.5rem;
 }

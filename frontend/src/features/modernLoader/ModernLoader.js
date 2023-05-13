@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import './ModernLoader.css';
 import { useSelector } from 'react-redux';
+import './ModernLoader.css';
 
 const ModernLoader = () => {
     const [loading, setLoading] = useState(false);
@@ -8,7 +8,6 @@ const ModernLoader = () => {
 
     useEffect(() => {
         setLoading(globalLoading);
-        console.log('LOADING:', loading);
     }, [globalLoading]);
 
     return (

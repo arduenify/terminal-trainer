@@ -9,7 +9,7 @@ const {
 } = require('./responseController');
 const jwt = require('jsonwebtoken');
 const { isEmail } = require('./helpers');
-const { User } = require('../models');
+const { User, Badge } = require('../models');
 
 const generateToken = (user) => {
     return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
@@ -41,6 +41,16 @@ async function register(req, res) {
             lastName,
         });
 
+        // Give the user their first badge
+        const signupBadge =
+            (await Badge.findOne({ where: { name: 'Signup' } })) ||
+            (await Badge.create({
+                name: 'Signup',
+                description: 'Earned when you create your first account',
+                icon: '🥳',
+            }));
+
+        await newUser.addBadge(signupBadge);
         const token = generateToken(newUser);
 
         return new CreatedResponse({ token }, res);

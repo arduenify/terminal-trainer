@@ -79,7 +79,6 @@ const buildUserEndpoints = (builder) => ({
             }
         },
     }),
-
     updateCurrentUser: builder.mutation({
         query: (userData) => ({
             url: 'users/me',
@@ -137,6 +136,9 @@ const buildBadgeEndpoints = (builder) => ({
 const buildUserBadgeEndpoints = (builder) => ({
     fetchUserBadges: builder.query({
         query: ({ userId }) => `user-badges/${userId}`,
+    }),
+    fetchCurrentUserBadges: builder.query({
+        query: () => `user-badges`,
     }),
     // Admin only
     assignBadgeToUser: builder.mutation({
@@ -240,4 +242,5 @@ export const {
     // User-badge
     useFetchUserBadgesQuery,
     useAssignBadgeToUserMutation,
+    useFetchCurrentUserBadgesQuery,
 } = api;

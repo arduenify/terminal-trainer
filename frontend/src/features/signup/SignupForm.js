@@ -78,6 +78,7 @@ const SignupForm = () => {
             });
         } else {
             dispatch(setLoading(true));
+
             setServerErrors([]);
 
             const handleNotificationDismiss = () => {

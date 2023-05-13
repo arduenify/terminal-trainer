@@ -7,6 +7,12 @@
     background-color: var(--color-background-3);
 }
 
+.terminal-container.disabled>* {
+    cursor: not-allowed;
+}
+
+.terminal-container.disabled {}
+
 .xterm-screen {
     padding: 0.5rem;
 }
