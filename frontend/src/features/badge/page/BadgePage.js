@@ -128,7 +128,7 @@ const BadgePage = () => {
                         {badges?.length &&
                             badges.map((badge) => {
                                 return (
-                                    <div className='badge-item'>
+                                    <div className='badge-item' key={badge.id}>
                                         <div className='badge-icon'>
                                             {badge.icon}
                                         </div>

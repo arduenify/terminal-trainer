@@ -86,74 +86,84 @@ const Header = () => {
 
     return (
         <header className='header'>
-            <div className='header-logo' onClick={navigateToHome}>
-                Terminal Trainer
+            <div className='header-section'>
+                <div className='header-logo' onClick={navigateToHome}>
+                    Terminal Trainer
+                </div>
             </div>
-            <nav className='header-nav'>
-                <div className='header-nav-item' onClick={navigateToHome}>
-                    Home
-                </div>
-                <div className='header-nav-item' onClick={navigateToExercises}>
-                    Exercises
-                </div>
-                <div className='header-nav-item' onClick={navigateToBadges}>
-                    Badges
-                </div>
-                {/* <div className='header-nav-item'>Progress</div>
+            <div className='header-section'>
+                <nav className='header-nav'>
+                    <div className='header-nav-item' onClick={navigateToHome}>
+                        Home
+                    </div>
+                    <div
+                        className='header-nav-item'
+                        onClick={navigateToExercises}
+                    >
+                        Exercises
+                    </div>
+                    <div className='header-nav-item' onClick={navigateToBadges}>
+                        Badges
+                    </div>
+                    {/* <div className='header-nav-item'>Progress</div>
                 {isAuthenticated && (
                     <div className='header-nav-item'>Profile</div>
                 )} */}
-            </nav>
-            {isAuthenticated ? (
-                <div className='profile-menu'>
-                    <div
-                        className='profile-menu-button'
-                        onClick={() => setMenuOpen((state) => !state)}
-                    >
-                        <div className='profile-menu-button-label'>
-                            <FontAwesomeIcon
-                                id='user-fa-icon'
-                                size='xl'
-                                icon={faUser}
-                                className={menuOpen ? 'bounce' : ''}
-                            />
-                        </div>
-                    </div>
-                    {menuOpen && (
-                        <div className='profile-menu-content'>
-                            {/* <div className='profile-menu-item'>Profile</div>
-                            <div className='profile-menu-item'>Settings</div> */}
-                            <div
-                                className='profile-menu-item'
-                                onClick={logoutUser}
-                            >
-                                Log out
+                </nav>
+            </div>
+
+            <div className='header-section'>
+                {isAuthenticated ? (
+                    <div className='profile-menu'>
+                        <div
+                            className='profile-menu-button'
+                            onClick={() => setMenuOpen((state) => !state)}
+                        >
+                            <div className='profile-menu-button-label'>
+                                <FontAwesomeIcon
+                                    id='user-fa-icon'
+                                    size='xl'
+                                    icon={faUser}
+                                    className={menuOpen ? 'bounce' : ''}
+                                />
                             </div>
                         </div>
-                    )}
-                </div>
-            ) : (
-                <div className='header-buttons'>
-                    <button
-                        className='button button-signin'
-                        onClick={navigateToLoginForm}
-                    >
-                        Sign In
-                    </button>
-                    <button
-                        className='button button-signup'
-                        onClick={navigateToSignupForm}
-                    >
-                        Register
-                    </button>
-                    <button
-                        className='button button-demo'
-                        onClick={handleDemoAuthentication}
-                    >
-                        Demo
-                    </button>
-                </div>
-            )}
+                        {menuOpen && (
+                            <div className='profile-menu-content'>
+                                {/* <div className='profile-menu-item'>Profile</div>
+                            <div className='profile-menu-item'>Settings</div> */}
+                                <div
+                                    className='profile-menu-item'
+                                    onClick={logoutUser}
+                                >
+                                    Log out
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <div className='header-buttons'>
+                        <button
+                            className='button button-signin'
+                            onClick={navigateToLoginForm}
+                        >
+                            Sign In
+                        </button>
+                        <button
+                            className='button button-signup'
+                            onClick={navigateToSignupForm}
+                        >
+                            Register
+                        </button>
+                        <button
+                            className='button button-demo'
+                            onClick={handleDemoAuthentication}
+                        >
+                            Demo
+                        </button>
+                    </div>
+                )}
+            </div>
         </header>
     );
 };

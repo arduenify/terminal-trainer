@@ -41,6 +41,20 @@ async function register(req, res) {
             lastName,
         });
 
+        // Give the user their first badge
+        const signupBadge = await Badge.findOne({
+            where: { name: 'Signup' },
+        });
+
+        if (!signupBadge) {
+            return new NotFoundResponse(
+                { error: 'Signup badge does not exist' },
+                res,
+            );
+        }
+
+        await newUser.addBadge(signupBadge);
+
         const token = generateToken(newUser);
 
         return new CreatedResponse({ token }, res);

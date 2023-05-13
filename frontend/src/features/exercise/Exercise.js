@@ -34,7 +34,22 @@ const Exercise = () => {
         .map(([command, { description }]) => `${command}: ${description}`)
         .join('\n');
 
-    const finishExercise = () => {};
+    const disableInput = () => {
+        const terminalInputs = document.getElementsByClassName(
+            'xterm-helper-textarea',
+        );
+
+        if (terminalInputs.length) {
+            for (const terminalInput of terminalInputs) {
+                terminalInput.disabled = true;
+            }
+        }
+    };
+
+    const finishExercise = () => {
+        disableInput();
+        return 'Congratulations on completing the exercise!';
+    };
 
     const handleCommand = (command) => {
         const trimmedCommand = command.trim();
@@ -54,7 +69,7 @@ const Exercise = () => {
                 exercise.solution[exercise.solution.length - 1].command;
 
             if (trimmedCommand === lastCommand) {
-                finishExercise();
+                return finishExercise();
             }
 
             return commandOutputMapRef.current[trimmedCommand].replace(
@@ -114,7 +129,10 @@ const Exercise = () => {
             <div className='exercise-info'>
                 <h2>{exercise.title}</h2>
                 <p>{exercise.teachingText}</p>
-                <Terminal onCommand={(command) => handleCommand(command)} />
+                <Terminal
+                    onCommand={(command) => handleCommand(command)}
+                    disableInput={() => disableInput()}
+                />
             </div>
         </div>
     );

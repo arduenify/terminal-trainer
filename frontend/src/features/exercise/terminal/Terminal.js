@@ -41,7 +41,6 @@ const Terminal = ({ onCommand }) => {
         xtermRef.current.loadAddon(webLinksAddon);
         xtermRef.current.open(terminalRef.current);
 
-        // writeToTerminal('\x1B[31mWelcome to Terminal Trainer!\x1B[m\r\n');
         updatePrompt();
 
         xtermRef.current.onKey(({ key, domEvent }) => {
