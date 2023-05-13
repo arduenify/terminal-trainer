@@ -105,24 +105,7 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false,
             },
             solution: {
-                // type: DataTypes.STRING,
-                // allowNull: false,
-                // get() {
-                //     const solution = this.getDataValue('solution');
-                //     try {
-                //         return JSON.parse(solution);
-                //     } catch (error) {
-                //         return solution;
-                //     }
-                // },
-                // set(value) {
-                //     if (typeof value === 'object') {
-                //         this.setDataValue('solution', JSON.stringify(value));
-                //     } else {
-                //         this.setDataValue('solution', value);
-                //     }
-                // },
-                type: DataTypes.JSON,
+                type: DataTypes.STRING(4096),
                 allowNull: false,
             },
         },
