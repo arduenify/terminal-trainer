@@ -11,9 +11,7 @@
     cursor: not-allowed;
 }
 
-.terminal-container.disabled {
-    opacity: 0.65;
-}
+.terminal-container.disabled {}
 
 .xterm-screen {
     padding: 0.5rem;
