@@ -22,6 +22,20 @@ module.exports = {
                         createdAt: new Date(),
                         updatedAt: new Date(),
                     },
+                    {
+                        id: 3,
+                        key: 'search-pipe',
+                        name: 'Search',
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    },
+                    {
+                        id: 4,
+                        key: 'search-find',
+                        name: 'Search',
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    },
                 ],
                 getQueryInterfaceOptions(),
             );
