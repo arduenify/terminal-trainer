@@ -105,9 +105,9 @@ const BadgePage = () => {
                         />
                     </div>
                 )}
+                <h1>Available Badges</h1>
                 {isAdmin && (
                     <div className='page-header badge-page-header'>
-                        <h1>Badges</h1>
                         <p>
                             As an administrator, you can create, update, and
                             delete badges.

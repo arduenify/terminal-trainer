@@ -5,7 +5,9 @@ import './ExerciseForm.css';
 const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     const [title, setTitle] = useState(exercise.title || '');
     const [description, setDescription] = useState(exercise.description || '');
-    const [difficulty, setDifficulty] = useState(exercise.difficulty || 'Easy');
+    const [difficulty, setDifficulty] = useState(
+        exercise.difficulty || 'beginner',
+    );
     const [teachingText, setTeachingText] = useState(
         exercise.teachingText || '',
     );
@@ -121,9 +123,9 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
                 value={difficulty}
                 onChange={(e) => setDifficulty(e.target.value)}
             >
-                <option>Easy</option>
-                <option>Medium</option>
-                <option>Hard</option>
+                <option>beginner</option>
+                <option>intermediate</option>
+                <option>advanced</option>
             </select>
 
             <label htmlFor='solution' className='solution-label'>

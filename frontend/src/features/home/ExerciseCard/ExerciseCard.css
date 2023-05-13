@@ -36,15 +36,15 @@
     border-radius: 35px;
 }
 
-.difficulty.easy {
+.difficulty.beginner {
     border-color: var(--color-accent);
 }
 
-.difficulty.medium {
+.difficulty.intermediate {
     border-color: #ffb86c;
 }
 
-.difficulty.hard {
+.difficulty.advanced {
     border-color: var(--color-accent-2);
 }
 
