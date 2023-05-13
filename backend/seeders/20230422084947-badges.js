@@ -9,6 +9,13 @@ module.exports = {
                 'Badges',
                 [
                     {
+                        name: 'Signup',
+                        description: 'Signup for Terminal Trainer.',
+                        icon: '🎉',
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                    },
+                    {
                         name: 'Beginner Navigator',
                         description:
                             'Complete all beginner navigation exercises.',

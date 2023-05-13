@@ -3,6 +3,8 @@ import {
     useCreateBadgeMutation,
     useDeleteBadgeByIdMutation,
     useFetchAllBadgesQuery,
+    useFetchCurrentUserBadgesQuery,
+    useFetchUserBadgesQuery,
     useUpdateBadgeByIdMutation,
 } from '../../../store/api';
 import BadgeForm from './form';
@@ -25,15 +27,10 @@ const BadgePage = () => {
     const [deleteBadgeById] = useDeleteBadgeByIdMutation();
     const { showNotification } = useContext(NotificationContext);
 
-    // const {
-    //     data: earnedBadges,
-    //     isLoading: fetchUserBadgesLoading,
-    //     isFetching: fetchUserBadgesFetching,
-    // } = useFetchUserBadgesQuery();
+    const { data: earnedBadges } = useFetchCurrentUserBadgesQuery();
 
     if (fetchAllBadgesLoading || fetchAllBadgesFetching) {
         return null;
-    } else {
     }
 
     const closeModal = (event) => {
@@ -125,10 +122,10 @@ const BadgePage = () => {
                 )}
                 <div className='page-content badge-page-content'>
                     <div className='badge-list'>
-                        {badges?.length &&
+                        {badges?.length > 0 &&
                             badges.map((badge) => {
                                 return (
-                                    <div className='badge-item'>
+                                    <div className='badge-item' key={badge.id}>
                                         <div className='badge-icon'>
                                             {badge.icon}
                                         </div>
@@ -168,6 +165,36 @@ const BadgePage = () => {
                                 );
                             })}
                     </div>
+                    {earnedBadges?.length > 0 ? (
+                        <div className='badge-list'>
+                            <h1 className='badge-list-title'>Your Badges</h1>
+                            {earnedBadges?.length > 0 &&
+                                earnedBadges.map((earnedBadge) => {
+                                    return (
+                                        <div
+                                            className='badge-item'
+                                            key={earnedBadge.id}
+                                        >
+                                            <div className='badge-icon'>
+                                                {earnedBadge.icon}
+                                            </div>
+                                            <div className='badge-details'>
+                                                <h1 className='badge-name'>
+                                                    {earnedBadge.name}
+                                                </h1>
+                                                <p className='badge-description'>
+                                                    {earnedBadge.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                        </div>
+                    ) : (
+                        <h1 className='no-badges-earned-msg'>
+                            You haven't earned any badges just yet.
+                        </h1>
+                    )}
                 </div>
             </div>
         </div>

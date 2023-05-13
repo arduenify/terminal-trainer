@@ -5,15 +5,31 @@
     padding: 1rem 2rem;
 }
 
+.header-section {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-section:has(.profile-menu) {
+    justify-content: flex-end;
+}
+
+.header-section:has(.header-logo) {
+    justify-content: flex-start;
+}
+
 .header-logo {
     font-size: 1.5rem;
     cursor: pointer;
+    justify-content: flex-start;
 }
 
 .header-nav {
     display: flex;
-    justify-content: space-between;
-    align-items: first-baseline;
+    justify-content: center;
+    align-items: center;
     gap: 5rem;
 }
 
@@ -37,6 +53,7 @@
     display: flex;
     position: relative;
     gap: 1rem;
+    justify-content: flex-end;
 }
 
 .button.button-signin {
@@ -143,6 +160,10 @@
         flex-direction: column;
     }
 
+    .header-section {
+        justify-content: center;
+    }
+
     .header,
     .header-nav {
         flex-wrap: wrap;
@@ -154,6 +175,7 @@
 }
 
 @keyframes bounce {
+
     0%,
     20%,
     50%,
