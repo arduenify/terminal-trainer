@@ -16,6 +16,7 @@ const Exercise = () => {
 
     const allowedCommandsRef = useRef(new Set());
     const commandOutputMapRef = useRef({});
+    const currentCommandIndexRef = useRef(0);
 
     const terminalCommands = {
         help: {
@@ -72,22 +73,24 @@ const Exercise = () => {
             return builtInCommandOutput;
         }
 
-        if (allowedCommandsRef.current.has(trimmedCommand)) {
-            const commandList = Array.from(allowedCommandsRef.current);
-            const lastCommand = commandList[commandList.length - 1];
+        const commandList = Array.from(allowedCommandsRef.current);
+        const expectedCommand = commandList[currentCommandIndexRef.current];
 
+        if (trimmedCommand === expectedCommand) {
             const output = commandOutputMapRef.current[trimmedCommand].replace(
                 /\n/g,
                 platformSeparator,
             );
 
-            if (trimmedCommand === lastCommand) {
+            if (trimmedCommand === commandList[commandList.length - 1]) {
                 const finishOutput = finishExercise();
                 return {
                     output: `${output}${platformSeparator}${platformSeparator}${finishOutput}`,
                     finished: true,
                 };
             }
+
+            currentCommandIndexRef.current += 1;
 
             return {
                 output: output,

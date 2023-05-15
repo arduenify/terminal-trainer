@@ -47,6 +47,14 @@ const Terminal = ({ onCommand, enabled }) => {
             if (key === '\r') {
                 // Enter key
                 const result = onCommand(inputBuffer.current);
+                const currentInputBuffer = inputBuffer.current;
+
+                commandHistory.current = [
+                    ...commandHistory.current,
+                    currentInputBuffer,
+                ];
+
+                inputBuffer.current = '';
                 writeToTerminal('', true);
 
                 if (!result || !result.output || !result.output.length) {
@@ -54,11 +62,6 @@ const Terminal = ({ onCommand, enabled }) => {
                 }
 
                 writeToTerminal(result.output, true);
-                commandHistory.current = [
-                    ...commandHistory.current,
-                    inputBuffer.current,
-                ];
-                inputBuffer.current = '';
 
                 if (!result.finished) {
                     updatePrompt();
