@@ -6,7 +6,7 @@ import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
 import './Terminal.css';
 
-const Terminal = ({ onCommand, enabled }) => {
+const Terminal = ({ onCommand, enabled, instruction }) => {
     const terminalRef = useRef(null);
     const xtermRef = useRef(null);
     const inputBuffer = useRef('');
@@ -41,12 +41,20 @@ const Terminal = ({ onCommand, enabled }) => {
         xtermRef.current.loadAddon(webLinksAddon);
         xtermRef.current.open(terminalRef.current);
 
-        updatePrompt();
+        // updatePrompt();
 
         xtermRef.current.onKey(({ key, domEvent }) => {
             if (key === '\r') {
                 // Enter key
                 const result = onCommand(inputBuffer.current);
+
+                if (result && result.nextInstruction) {
+                    writeToTerminal('', true);
+                    writeToTerminal(
+                        `\x1b[34m${result.nextInstruction}\x1b[0m`,
+                        false,
+                    );
+                }
                 const currentInputBuffer = inputBuffer.current;
 
                 commandHistory.current = [
@@ -101,6 +109,13 @@ const Terminal = ({ onCommand, enabled }) => {
             resizeObserver.disconnect();
         };
     }, [fitAddon]);
+
+    useEffect(() => {
+        if (instruction) {
+            writeToTerminal(`\x1b[34m${instruction}\x1b[0m`, true);
+            updatePrompt();
+        }
+    }, [instruction]);
 
     return (
         <div

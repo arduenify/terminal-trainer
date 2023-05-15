@@ -9,6 +9,8 @@ const Exercise = () => {
     const exerciseId = useParams().id;
     const { data: exercise, refetch } = useFetchExerciseByIdQuery(exerciseId);
     const [enabled, setEnabled] = useState(true);
+    const [currentInstruction, setCurrentInstruction] = useState(null);
+
     const { showNotification } = useContext(NotificationContext);
     const platformSeparator = navigator.userAgent.includes('Windows')
         ? '\r\n'
@@ -82,19 +84,28 @@ const Exercise = () => {
                 platformSeparator,
             );
 
+            currentCommandIndexRef.current += 1;
+
+            const solution =
+                typeof exercise.solution === 'string'
+                    ? JSON.parse(exercise.solution)
+                    : exercise.solution;
+
+            const nextInstruction =
+                solution[currentCommandIndexRef.current]?.instruction;
+
             if (trimmedCommand === commandList[commandList.length - 1]) {
                 const finishOutput = finishExercise();
                 return {
-                    output: `${output}${platformSeparator}${platformSeparator}${finishOutput}`,
+                    output: `${output}${platformSeparator}${finishOutput}`,
                     finished: true,
                 };
             }
 
-            currentCommandIndexRef.current += 1;
-
             return {
                 output: output,
                 finished: false,
+                nextInstruction,
             };
         } else if (trimmedCommand in terminalCommands) {
             return {
@@ -130,6 +141,9 @@ const Exercise = () => {
                     ? JSON.parse(exercise.solution)
                     : exercise.solution;
 
+            const firstInstruction = solution[0]?.instruction;
+            setCurrentInstruction(firstInstruction);
+
             const commands = new Set(solution.map((step) => step.command));
 
             const map = {};
@@ -158,6 +172,7 @@ const Exercise = () => {
                 <Terminal
                     onCommand={(command) => handleCommand(command)}
                     enabled={enabled}
+                    instruction={currentInstruction}
                 />
             </div>
         </div>
