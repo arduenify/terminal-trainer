@@ -22,10 +22,10 @@ const Exercise = () => {
             description: 'Displays a list of available commands.',
             output: 'Well, well, well.',
         },
-        clear: {
-            description: 'Clears the terminal.',
-            output: 'Clearing...',
-        },
+        // clear: {
+        //     description: 'Clears the terminal.',
+        //     output: 'Clearing...',
+        // },
     };
 
     terminalCommands.help.output = Object.entries(terminalCommands)
@@ -56,7 +56,7 @@ const Exercise = () => {
     const finishExercise = () => {
         disableInput();
         showFinishNotification();
-        return 'Congratulations on completing the exercise!';
+        return '\x1b[34mCongratulations on completing the exercise!\x1b[0m';
     };
 
     const handleCommand = (command) => {
@@ -73,22 +73,37 @@ const Exercise = () => {
         }
 
         if (allowedCommandsRef.current.has(trimmedCommand)) {
-            const lastCommand =
-                exercise.solution[exercise.solution.length - 1].command;
+            const commandList = Array.from(allowedCommandsRef.current);
+            const lastCommand = commandList[commandList.length - 1];
 
-            if (trimmedCommand === lastCommand) {
-                return finishExercise();
-            }
-
-            return commandOutputMapRef.current[trimmedCommand].replace(
+            const output = commandOutputMapRef.current[trimmedCommand].replace(
                 /\n/g,
                 platformSeparator,
             );
+
+            if (trimmedCommand === lastCommand) {
+                const finishOutput = finishExercise();
+                return {
+                    output: `${output}${platformSeparator}${platformSeparator}${finishOutput}`,
+                    finished: true,
+                };
+            }
+
+            return {
+                output: output,
+                finished: false,
+            };
         } else if (trimmedCommand in terminalCommands) {
-            return terminalCommands[trimmedCommand].output;
+            return {
+                output: terminalCommands[trimmedCommand].output,
+                finished: false,
+            };
         }
 
-        return `Unknown command: ${trimmedCommand.split(' ')[0]}`;
+        return {
+            output: `Unknown command: ${trimmedCommand.split(' ')[0]}`,
+            finished: false,
+        };
     };
 
     const handleBuiltInCommand = (command) => {

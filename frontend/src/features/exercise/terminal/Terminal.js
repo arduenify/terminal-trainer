@@ -46,21 +46,23 @@ const Terminal = ({ onCommand, enabled }) => {
         xtermRef.current.onKey(({ key, domEvent }) => {
             if (key === '\r') {
                 // Enter key
-                const output = onCommand(inputBuffer.current);
+                const result = onCommand(inputBuffer.current);
                 writeToTerminal('', true);
 
-                if (!output || !output.length) {
+                if (!result || !result.output || !result.output.length) {
                     return updatePrompt();
                 }
 
-                writeToTerminal(output, true);
+                writeToTerminal(result.output, true);
                 commandHistory.current = [
                     ...commandHistory.current,
                     inputBuffer.current,
                 ];
                 inputBuffer.current = '';
 
-                updatePrompt();
+                if (!result.finished) {
+                    updatePrompt();
+                }
             } else if (key === '\x7F') {
                 // Backspace key
                 if (inputBuffer.current.length > 0) {
