@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useFetchAllCategoriesQuery } from '../../../../store/api';
 import './ExerciseForm.css';
 
-const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
+const ExerciseForm = ({
+    onSubmit,
+    exercise = {},
+    isEditMode = false,
+    validationError,
+}) => {
     const [title, setTitle] = useState(exercise.title || '');
     const [description, setDescription] = useState(exercise.description || '');
     const [difficulty, setDifficulty] = useState(
@@ -42,6 +47,8 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
     };
 
     const handleCommandChange = (index, field, value) => {
+        value = value.replace(/\r?\n/g, '\n');
+
         setSolution((prev) => {
             const updatedStep = { ...prev[index], [field]: value };
             return [
@@ -61,7 +68,7 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
             difficulty,
             teachingText,
             categoryId,
-            solution,
+            solution: JSON.stringify(solution),
         };
 
         onSubmit(newExercise);
@@ -78,6 +85,11 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
 
     return (
         <form onSubmit={handleSubmit} className='exercise-form'>
+            {validationError?.length > 0 && (
+                <p className='error'>
+                    Error: This title is already taken. Please try another one.
+                </p>
+            )}
             <label htmlFor='title'>Title</label>
             <input
                 type='text'
@@ -131,45 +143,83 @@ const ExerciseForm = ({ onSubmit, exercise = {}, isEditMode = false }) => {
             </select>
 
             <label htmlFor='solution' className='solution-label'>
-                Solution (Each command is comma separated)
+                Solution Steps
             </label>
-            <div className='command-output-header'>
-                <span>Commands</span>
-                <span>Output</span>
-            </div>
+            <p className='solution-sublabel'>
+                Each step of the solution requires a command, an output, and an
+                instruction.
+            </p>
+            <div className='command-output-header' />
             {solution.map((step, index) => (
-                <div key={index} className='command-output-pair'>
-                    <input
-                        type='text'
-                        id={`command-${index}`}
-                        value={step.command}
-                        onChange={(e) =>
-                            handleCommandChange(
-                                index,
-                                'command',
-                                e.target.value,
-                            )
-                        }
-                        required
-                    />
-
-                    <input
-                        type='text'
-                        id={`output-${index}`}
-                        value={step.output}
-                        onChange={(e) =>
-                            handleCommandChange(index, 'output', e.target.value)
-                        }
-                        required
-                    />
-
+                <div key={index} className='command-output-section'>
+                    <div className='command-output-container'>
+                        <label htmlFor={`command-${index}`}>
+                            Command {index + 1}
+                        </label>
+                        <textarea
+                            type='text'
+                            id={`command-${index}`}
+                            value={step.command}
+                            onChange={(e) =>
+                                handleCommandChange(
+                                    index,
+                                    'command',
+                                    e.target.value,
+                                )
+                            }
+                            required
+                            rows={1}
+                            className='command-input'
+                        />
+                    </div>
+                    <div className='command-output-container'>
+                        <label htmlFor={`output-${index}`}>
+                            Output {index + 1}
+                        </label>
+                        <textarea
+                            type='text'
+                            id={`output-${index}`}
+                            value={step.output}
+                            onChange={(e) =>
+                                handleCommandChange(
+                                    index,
+                                    'output',
+                                    e.target.value,
+                                )
+                            }
+                            // required
+                            rows={1}
+                            className='command-input'
+                        />
+                    </div>
+                    <div className='command-output-container'>
+                        <label htmlFor={`instruction-${index}`}>
+                            Instruction {index + 1}
+                        </label>
+                        <textarea
+                            type='text'
+                            id={`instruction-${index}`}
+                            value={step.instruction}
+                            onChange={(e) =>
+                                handleCommandChange(
+                                    index,
+                                    'instruction',
+                                    e.target.value,
+                                )
+                            }
+                            required
+                            rows={1}
+                            className='command-input'
+                        />
+                    </div>
                     <button
                         type='button'
                         className='remove-command-button'
                         onClick={() => removeCommand(index)}
                     >
-                        x
+                        Remove Command {index + 1}
                     </button>
+                    {solution.length > 1 && <hr />}
                 </div>
             ))}
             <button

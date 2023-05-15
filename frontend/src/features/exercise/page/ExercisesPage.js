@@ -10,6 +10,7 @@ import {
     useCreateExerciseMutation,
     useUpdateExerciseByIdMutation,
 } from '../../../store/api';
+import NotificationContext from '../../notification/context/NotificationContext';
 import './ExercisesPage.css';
 
 const ExercisePage = () => {
@@ -29,6 +30,9 @@ const ExercisePage = () => {
     const [createExercise] = useCreateExerciseMutation();
     const [updateExerciseById] = useUpdateExerciseByIdMutation();
     const [deleteExerciseById] = useDeleteExerciseByIdMutation();
+    const [validationError, setValidationError] = useState('');
+    const { showNotification, dismissNotification } =
+        useContext(NotificationContext);
 
     useEffect(() => {
         if (isAddModalOpen || isEditModalOpen) {
@@ -67,6 +71,18 @@ const ExercisePage = () => {
     const handleAddExercise = async (exercise) => {
         const resultAction = await createExercise(exercise);
 
+        if (resultAction.error) {
+            showNotification({
+                title: 'Create Exercise Failed',
+                text: 'An error occurred while trying to create this exercise. Please try again.',
+            });
+        } else {
+            showNotification({
+                title: 'Exercise Created',
+                text: 'Exercise was successfully created.',
+            });
+        }
+
         closeAddModal();
     };
 
@@ -76,11 +92,38 @@ const ExercisePage = () => {
             exercise,
         });
 
-        closeEditModal();
+        if (resultAction.error) {
+            showNotification({
+                title: 'Update Exercise Failed',
+                text: 'An error occurred while trying to update this exercise. Please try again.',
+            });
+
+            if (resultAction.error.data.error === 'Validation error') {
+                setValidationError(resultAction.error.data.error);
+            }
+        } else {
+            showNotification({
+                title: 'Exercise Updated',
+                text: 'Exercise was successfully updated.',
+            });
+            closeEditModal();
+        }
     };
 
     const handleDeleteExercise = async () => {
         const resultAction = await deleteExerciseById(selectedExercise.id);
+
+        if (resultAction.error) {
+            showNotification({
+                title: 'Exercise Update Failed',
+                text: 'An error occurred while trying to delete this exercise. Please try again.',
+            });
+        } else {
+            showNotification({
+                title: 'Exercise Deleted',
+                text: 'Exercise was successfully deleted.',
+            });
+        }
 
         setDeleteModalOpen(false);
     };
@@ -103,6 +146,7 @@ const ExercisePage = () => {
                     isEditModalOpen={isEditModalOpen}
                     isDeleteModalOpen={isDeleteModalOpen}
                     closeDeleteModal={closeDeleteModal}
+                    validationError={validationError}
                 />
             )}
 

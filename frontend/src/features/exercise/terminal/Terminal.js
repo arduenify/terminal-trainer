@@ -48,13 +48,6 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
                 // Enter key
                 const result = onCommand(inputBuffer.current);
 
-                if (result && result.nextInstruction) {
-                    writeToTerminal('', true);
-                    writeToTerminal(
-                        `\x1b[34m${result.nextInstruction}\x1b[0m`,
-                        false,
-                    );
-                }
                 const currentInputBuffer = inputBuffer.current;
 
                 commandHistory.current = [
@@ -65,11 +58,19 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
                 inputBuffer.current = '';
                 writeToTerminal('', true);
 
-                if (!result || !result.output || !result.output.length) {
-                    return updatePrompt();
-                }
+                // if (!result || !result.output || !result.output.length) {
+                //     return updatePrompt();
+                // }
 
                 writeToTerminal(result.output, true);
+
+                if (result && result.nextInstruction) {
+                    writeToTerminal(
+                        `\x1b[34m${result.nextInstruction}\x1b[0m`,
+                        false,
+                    );
+                    writeToTerminal('', true);
+                }
 
                 if (!result.finished) {
                     updatePrompt();
