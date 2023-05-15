@@ -6,7 +6,7 @@ import { WebLinksAddon } from 'xterm-addon-web-links';
 import 'xterm/css/xterm.css';
 import './Terminal.css';
 
-const Terminal = ({ onCommand, enabled }) => {
+const Terminal = ({ onCommand, enabled, instruction }) => {
     const terminalRef = useRef(null);
     const xtermRef = useRef(null);
     const inputBuffer = useRef('');
@@ -41,26 +41,40 @@ const Terminal = ({ onCommand, enabled }) => {
         xtermRef.current.loadAddon(webLinksAddon);
         xtermRef.current.open(terminalRef.current);
 
-        updatePrompt();
+        // updatePrompt();
 
         xtermRef.current.onKey(({ key, domEvent }) => {
             if (key === '\r') {
                 // Enter key
-                const output = onCommand(inputBuffer.current);
-                writeToTerminal('', true);
+                const result = onCommand(inputBuffer.current);
 
-                if (!output || !output.length) {
-                    return updatePrompt();
-                }
+                const currentInputBuffer = inputBuffer.current;
 
-                writeToTerminal(output, true);
                 commandHistory.current = [
                     ...commandHistory.current,
-                    inputBuffer.current,
+                    currentInputBuffer,
                 ];
-                inputBuffer.current = '';
 
-                updatePrompt();
+                inputBuffer.current = '';
+                writeToTerminal('', true);
+
+                // if (!result || !result.output || !result.output.length) {
+                //     return updatePrompt();
+                // }
+
+                writeToTerminal(result.output, true);
+
+                if (result && result.nextInstruction) {
+                    writeToTerminal(
+                        `\x1b[34m${result.nextInstruction}\x1b[0m`,
+                        false,
+                    );
+                    writeToTerminal('', true);
+                }
+
+                if (!result.finished) {
+                    updatePrompt();
+                }
             } else if (key === '\x7F') {
                 // Backspace key
                 if (inputBuffer.current.length > 0) {
@@ -96,6 +110,13 @@ const Terminal = ({ onCommand, enabled }) => {
             resizeObserver.disconnect();
         };
     }, [fitAddon]);
+
+    useEffect(() => {
+        if (instruction) {
+            writeToTerminal(`\x1b[34m${instruction}\x1b[0m`, true);
+            updatePrompt();
+        }
+    }, [instruction]);
 
     return (
         <div

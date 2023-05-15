@@ -14,6 +14,7 @@ const AdminPanel = ({
     isEditModalOpen,
     isDeleteModalOpen,
     closeDeleteModal,
+    validationError,
 }) => {
     return (
         <div className='admin-panel'>
@@ -32,7 +33,10 @@ const AdminPanel = ({
                     >
                         <div className='modal-content'>
                             <h2>Add Exercise</h2>
-                            <ExerciseForm onSubmit={handleAddExercise} />
+                            <ExerciseForm
+                                validationError={validationError}
+                                onSubmit={handleAddExercise}
+                            />
                         </div>
                     </div>
                 )}
@@ -51,6 +55,7 @@ const AdminPanel = ({
                         <h2>Edit Exercise</h2>
                         <ExerciseForm
                             onSubmit={handleUpdateExercise}
+                            validationError={validationError}
                             exercise={selectedExercise}
                             isEditMode={true}
                         />
