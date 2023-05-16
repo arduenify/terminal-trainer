@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, {
+    useState,
+    useEffect,
+    useRef,
+    useMemo,
+    useCallback,
+} from 'react';
 import ExerciseCard from '../ExerciseCard';
 import { useFetchAllExercisesQuery } from '../../../store/api';
 import { useNavigate } from 'react-router-dom';
@@ -7,32 +13,29 @@ import './Carousel.css';
 const Carousel = () => {
     const [exercises, setExercises] = useState([]);
     const [translateX, setTranslateX] = useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [animationSpeedModifier, setAnimationSpeedModifier] =
         useState(0.0225);
     const animationRef = useRef(null);
 
-    const {
-        data: fetchedExercises,
-        error,
-        isLoading,
-    } = useFetchAllExercisesQuery();
+    const { data: fetchedExercises, isLoading } = useFetchAllExercisesQuery();
 
     const navigate = useNavigate();
 
     // Animate the carousel movement using a requestAnimationFrame loop and a speed modifier to make the animation smooth
-    const animate = () => {
+    const animate = useCallback(() => {
         setTranslateX((prevTranslateX) => {
             const newX = prevTranslateX - animationSpeedModifier;
             return newX <= -100 ? 0 : newX;
         });
         animationRef.current = requestAnimationFrame(animate);
-    };
+    }, [animationSpeedModifier]);
 
     // Setup the carousel animation
     useEffect(() => {
         animationRef.current = requestAnimationFrame(animate);
         return () => cancelAnimationFrame(animationRef.current);
-    }, []);
+    }, [animate]);
 
     // Update the local exercise list state when exercises are fetched
     useEffect(() => {
@@ -60,7 +63,7 @@ const Carousel = () => {
                 openExercise={openExercise}
             />
         ));
-    }, [isLoading, exercises]);
+    }, [isLoading, exercises, navigate]);
 
     return (
         <div className='carousel-container'>

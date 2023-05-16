@@ -36,17 +36,16 @@ const Slogan = () => {
             sloganAccentRef.current.style.textShadow = 'none';
         };
 
+        const containerElement = containerRef.current;
+
         // Event listeners
         containerRef.current.addEventListener('mousemove', handleMouseMove);
         containerRef.current.addEventListener('mouseleave', handleMouseLeave);
 
         // Cleanup event listeners
         return () => {
-            containerRef?.current?.removeEventListener(
-                'mousemove',
-                handleMouseMove,
-            );
-            containerRef?.current?.removeEventListener(
+            containerElement?.removeEventListener('mousemove', handleMouseMove);
+            containerElement?.removeEventListener(
                 'mouseleave',
                 handleMouseLeave,
             );

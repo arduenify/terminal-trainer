@@ -15,11 +15,7 @@ import './ExercisesPage.css';
 
 const ExercisePage = () => {
     // Hooks
-    const {
-        data: exercises,
-        isFetching,
-        isLoading,
-    } = useFetchAllExercisesQuery();
+    const { data: exercises } = useFetchAllExercisesQuery();
 
     const navigate = useNavigate();
     const { isAdmin } = useContext(AuthContext);
@@ -31,8 +27,7 @@ const ExercisePage = () => {
     const [updateExerciseById] = useUpdateExerciseByIdMutation();
     const [deleteExerciseById] = useDeleteExerciseByIdMutation();
     const [validationError, setValidationError] = useState('');
-    const { showNotification, dismissNotification } =
-        useContext(NotificationContext);
+    const { showNotification } = useContext(NotificationContext);
 
     useEffect(() => {
         if (isAddModalOpen || isEditModalOpen) {

@@ -55,6 +55,7 @@ const buildUserEndpoints = (builder) => ({
         onSuccess: (data, thunks, cache) => {
             cache.invalidateTags([{ type: 'User', id: 'CURRENT' }]);
         },
+        invalidateTags: ['UserBadges'],
     }),
     demoLogin: builder.mutation({
         query: () => ({
@@ -64,6 +65,7 @@ const buildUserEndpoints = (builder) => ({
         onSuccess: (data, thunks, cache) => {
             cache.invalidateTags([{ type: 'User', id: 'CURRENT' }]);
         },
+        invalidateTags: ['UserBadges'],
     }),
     fetchCurrentUser: builder.query({
         query: () => 'users/me',
@@ -98,11 +100,11 @@ const buildUserEndpoints = (builder) => ({
 const buildBadgeEndpoints = (builder) => ({
     fetchAllBadges: builder.query({
         query: () => 'badges',
-        providesTags: ['Badges'],
+        providesTags: ['Badges', 'UserBadges'],
     }),
     fetchBadgeById: builder.query({
         query: (id) => `badges/${id}`,
-        providesTags: ['Badges'],
+        providesTags: ['Badges', 'UserBadges'],
     }),
     // Admin only
     createBadge: builder.mutation({
@@ -111,7 +113,7 @@ const buildBadgeEndpoints = (builder) => ({
             method: 'POST',
             body: badgeData,
         }),
-        invalidatesTags: ['Badges'],
+        invalidatesTags: ['Badges', 'UserBadges'],
     }),
     // Admin only
     updateBadgeById: builder.mutation({
@@ -120,7 +122,7 @@ const buildBadgeEndpoints = (builder) => ({
             method: 'PUT',
             body: badgeData,
         }),
-        invalidatesTags: ['Badges'],
+        invalidatesTags: ['Badges', 'UserBadges'],
     }),
     // Admin only
     deleteBadgeById: builder.mutation({
@@ -128,7 +130,7 @@ const buildBadgeEndpoints = (builder) => ({
             url: `badges/${id}`,
             method: 'DELETE',
         }),
-        invalidatesTags: ['Badges'],
+        invalidatesTags: ['Badges', 'UserBadges'],
     }),
 });
 
@@ -139,6 +141,7 @@ const buildUserBadgeEndpoints = (builder) => ({
     }),
     fetchCurrentUserBadges: builder.query({
         query: () => `user-badges`,
+        providesTags: ['UserBadges'],
     }),
     // Admin only
     assignBadgeToUser: builder.mutation({
@@ -147,6 +150,7 @@ const buildUserBadgeEndpoints = (builder) => ({
             method: 'POST',
             body: { badgeId, userId },
         }),
+        invalidatesTags: ['UserBadges'],
     }),
 });
 
