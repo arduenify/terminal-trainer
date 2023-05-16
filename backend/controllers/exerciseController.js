@@ -118,6 +118,7 @@ const deleteExercise = async (req, res) => {
 
         return new NoContentResponse(res);
     } catch (err) {
+        console.error(err);
         const errorMessage =
             err.message ||
             'Internal server error when attempting to delete exercise.';

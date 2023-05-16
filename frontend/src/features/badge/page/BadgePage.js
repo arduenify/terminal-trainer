@@ -1,10 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
     useCreateBadgeMutation,
     useDeleteBadgeByIdMutation,
     useFetchAllBadgesQuery,
     useFetchCurrentUserBadgesQuery,
-    useFetchUserBadgesQuery,
     useUpdateBadgeByIdMutation,
 } from '../../../store/api';
 import BadgeForm from './form';
@@ -20,6 +19,7 @@ const BadgePage = () => {
         data: badges,
         isLoading: fetchAllBadgesLoading,
         isFetching: fetchAllBadgesFetching,
+        refetch: refetchBadges,
     } = useFetchAllBadgesQuery();
 
     const [createBadge] = useCreateBadgeMutation();
@@ -27,9 +27,24 @@ const BadgePage = () => {
     const [deleteBadgeById] = useDeleteBadgeByIdMutation();
     const { showNotification } = useContext(NotificationContext);
 
-    const { data: earnedBadges } = useFetchCurrentUserBadgesQuery();
+    const {
+        data: earnedBadges,
+        isLoading: fetchUserBadgesLoading,
+        isFetching: fetchUserBadgesFetching,
+        refetch: refetchEarnedBadges,
+    } = useFetchCurrentUserBadgesQuery();
 
-    if (fetchAllBadgesLoading || fetchAllBadgesFetching) {
+    useEffect(() => {
+        refetchBadges();
+        refetchEarnedBadges();
+    }, [refetchBadges, refetchEarnedBadges]);
+
+    if (
+        fetchAllBadgesLoading ||
+        fetchAllBadgesFetching ||
+        fetchUserBadgesLoading ||
+        fetchUserBadgesFetching
+    ) {
         return null;
     }
 
@@ -170,20 +185,21 @@ const BadgePage = () => {
                             <h1 className='badge-list-title'>Your Badges</h1>
                             {earnedBadges?.length > 0 &&
                                 earnedBadges.map((earnedBadge) => {
+                                    const { badge } = earnedBadge;
                                     return (
                                         <div
                                             className='badge-item'
-                                            key={earnedBadge.id}
+                                            key={badge.id}
                                         >
                                             <div className='badge-icon'>
-                                                {earnedBadge.icon}
+                                                {badge.icon}
                                             </div>
                                             <div className='badge-details'>
                                                 <h1 className='badge-name'>
-                                                    {earnedBadge.name}
+                                                    {badge.name}
                                                 </h1>
                                                 <p className='badge-description'>
-                                                    {earnedBadge.description}
+                                                    {badge.description}
                                                 </p>
                                             </div>
                                         </div>
