@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Terminal from './terminal';
 import { useParams } from 'react-router-dom';
-import { useFetchExerciseByIdQuery } from '../../store/api';
+import {
+    useCreateProgressMutation,
+    useFetchExerciseByIdQuery,
+} from '../../store/api';
 import NotificationContext from '../notification/context/NotificationContext';
 import './Exercise.css';
 
 const Exercise = () => {
     const exerciseId = useParams().id;
     const { data: exercise, refetch } = useFetchExerciseByIdQuery(exerciseId);
+    const [createProgress] = useCreateProgressMutation();
     const [enabled, setEnabled] = useState(true);
     const [currentInstruction, setCurrentInstruction] = useState(null);
 
@@ -56,9 +60,16 @@ const Exercise = () => {
         });
     };
 
-    const finishExercise = () => {
+    const finishExercise = async () => {
         disableInput();
         showFinishNotification();
+
+        console.log('complete the exercise', exerciseId);
+        await createProgress({
+            exerciseId,
+            completed: true,
+        });
+
         return '\x1b[34mCongratulations on completing the exercise!\x1b[0m';
     };
 
