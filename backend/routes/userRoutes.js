@@ -23,4 +23,23 @@ router.get('/me', isAuthenticated, getUserProfile);
 router.put('/me', isAuthenticated, updateUserProfile);
 router.delete('/me', isAuthenticated, deleteUserAccount);
 
+// Progress endpoints
+router.get('/me/progress', isAuthenticated, userController.getUserProgress);
+router.get(
+    '/me/progress/:progressId',
+    isAuthenticated,
+    userController.getUserProgressById,
+);
+router.post('/me/progress', isAuthenticated, userController.createUserProgress);
+router.put(
+    '/me/progress/:progressId',
+    isAuthenticated,
+    userController.updateUserProgress,
+);
+router.delete(
+    '/me/progress/:progressId',
+    isAuthenticated,
+    userController.deleteUserProgress,
+);
+
 module.exports = router;
