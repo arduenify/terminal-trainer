@@ -181,30 +181,32 @@ const BadgePage = () => {
                             })}
                     </div>
                     {earnedBadges?.length > 0 ? (
-                        <div className='badge-list'>
+                        <div>
                             <h1 className='badge-list-title'>Your Badges</h1>
-                            {earnedBadges?.length > 0 &&
-                                earnedBadges.map((earnedBadge) => {
-                                    const { badge } = earnedBadge;
-                                    return (
-                                        <div
-                                            className='badge-item'
-                                            key={badge.id}
-                                        >
-                                            <div className='badge-icon'>
-                                                {badge.icon}
+                            <div className='badge-list'>
+                                {earnedBadges?.length > 0 &&
+                                    earnedBadges.map((earnedBadge) => {
+                                        const { badge } = earnedBadge;
+                                        return (
+                                            <div
+                                                className='badge-item'
+                                                key={badge.id}
+                                            >
+                                                <div className='badge-icon'>
+                                                    {badge.icon}
+                                                </div>
+                                                <div className='badge-details'>
+                                                    <h1 className='badge-name'>
+                                                        {badge.name}
+                                                    </h1>
+                                                    <p className='badge-description'>
+                                                        {badge.description}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div className='badge-details'>
-                                                <h1 className='badge-name'>
-                                                    {badge.name}
-                                                </h1>
-                                                <p className='badge-description'>
-                                                    {badge.description}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    })}
+                            </div>
                         </div>
                     ) : (
                         <h1 className='no-badges-earned-msg'>
