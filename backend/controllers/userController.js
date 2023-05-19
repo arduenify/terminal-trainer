@@ -6,6 +6,7 @@ const {
     InternalServerErrorResponse,
     UnauthorizedResponse,
     ForbiddenResponse,
+    NoContentResponse,
 } = require('./responseController');
 const jwt = require('jsonwebtoken');
 const { isEmail } = require('./helpers');
@@ -206,6 +207,162 @@ async function deleteUserAccount(req, res) {
     }
 }
 
+async function getUserProgress(req, res) {
+    try {
+        const user = await findUserById(req.user.id);
+        const progress = await user.getProgress();
+
+        return new SuccessResponse(progress, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            "An internal server error occured while attempting to get the user's progress.";
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
+async function getUserProgressById(req, res) {
+    try {
+        const user = await findUserById(req.user.id);
+        const progress = await user.getProgress({
+            where: { id: req.params.progressId },
+        });
+
+        return new SuccessResponse(progress, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            "An internal server error occured while attempting to get the user's progress.";
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
+async function createUserProgress(req, res) {
+    try {
+        const { exerciseId, completed } = req.body;
+        const user = await findUserById(req.user.id);
+
+        const progress = await user.getProgress({
+            where: { exerciseId },
+        });
+
+        if (progress.length) {
+            return new ConflictResponse(
+                {
+                    error: 'Progress for this exercise already exists',
+                },
+                res,
+            );
+        }
+
+        const exercise = await Exercise.findByPk(exerciseId);
+        if (!exercise) {
+            return new NotFoundResponse(
+                { error: 'The exercise does not exist.' },
+                res,
+            );
+        }
+
+        if (completed) {
+            const badge = await exercise.getBadge();
+
+            if (!badge) {
+                return;
+            }
+
+            await user.addBadge(badge);
+        }
+
+        const userProgress = await user.createProgress({
+            exerciseId,
+            completed,
+            score: 0, // todo
+            hintsUsed: 0, // todo
+            timeSpent: 0, // todo
+        });
+
+        return new CreatedResponse(userProgress, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            'An internal server error occured while attempting to create the progress.';
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
+async function updateUserProgress(req, res) {
+    try {
+        const { score, hintsUsed, timeSpent, completed } = req.body;
+        const user = await findUserById(req.user.id);
+
+        const userProgress = await user.getProgress({
+            where: { id: req.params.progressId },
+        });
+
+        if (completed) {
+            const exercise = await Exercise.findByPk(exerciseId);
+
+            if (!exercise) {
+                return;
+            }
+
+            const badge = await exercise.getBadge();
+
+            if (!badge) {
+                return;
+            }
+
+            await user.addBadge(badge);
+        }
+
+        await userProgress.update({
+            score,
+            hintsUsed,
+            timeSpent,
+            completed,
+        });
+
+        return new SuccessResponse(userProgress, res);
+    } catch (err) {
+        const errorMessage =
+            err.message ||
+            'An internal server error occured while attempting to update the progress.';
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
+async function deleteUserProgress(req, res) {
+    try {
+        const user = await findUserById(req.user.id);
+
+        const userProgress = await user.getProgress({
+            where: { id: req.params.progressId },
+        });
+
+        if (!userProgress) {
+            return new NotFoundResponse(
+                {
+                    error: 'The progress you are trying to delete does not exist.',
+                },
+                res,
+            );
+        }
+
+        await userProgress.destroy();
+
+        return new NoContentResponse(res);
+    } catch (err) {
+        const errorMessage =
+            err.message || 'An error occured while deleting the progress.';
+
+        return new InternalServerErrorResponse({ error: errorMessage }, res);
+    }
+}
+
 module.exports = {
     register,
     login,
@@ -213,4 +370,9 @@ module.exports = {
     updateUserProfile,
     deleteUserAccount,
     demoUserLogin,
+    getUserProgress,
+    getUserProgressById,
+    createUserProgress,
+    updateUserProgress,
+    deleteUserProgress,
 };
