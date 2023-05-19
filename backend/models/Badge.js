@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'badgeId',
                 otherKey: 'userId',
             });
+
+            Badge.belongsTo(models.Exercise, {
+                foreignKey: 'exerciseId',
+                as: 'exercise',
+            });
         }
     }
 
