@@ -96,6 +96,41 @@ const buildUserEndpoints = (builder) => ({
     }),
 });
 
+// User progress endpoints
+const buildUserProgressEndpoints = (builder) => ({
+    fetchUserProgress: builder.query({
+        query: () => `users/me/progress`,
+        providesTags: ['UserProgress'],
+    }),
+    fetchUserProgressById: builder.query({
+        query: (progressId) => `users/me/progress/${progressId}`,
+        providesTags: ['UserProgress'],
+    }),
+    createProgress: builder.mutation({
+        query: (progressData) => ({
+            url: `users/me/progress`,
+            method: 'POST',
+            body: progressData,
+        }),
+        invalidatesTags: ['UserProgress'],
+    }),
+    deleteProgressById: builder.mutation({
+        query: (progressId) => ({
+            url: `users/me/progress/${progressId}`,
+            method: 'DELETE',
+        }),
+        invalidatesTags: ['UserProgress'],
+    }),
+    updateProgressById: builder.mutation({
+        query: ({ progressId, progressData }) => ({
+            url: `users/me/progress/${progressId}`,
+            method: 'PUT',
+            body: progressData,
+        }),
+        invalidatesTags: ['UserProgress'],
+    }),
+});
+
 // Badge endpoints
 const buildBadgeEndpoints = (builder) => ({
     fetchAllBadges: builder.query({
@@ -208,6 +243,7 @@ export const api = createApi({
     endpoints: (builder) => ({
         ...buildExerciseEndpoints(builder),
         ...buildUserEndpoints(builder),
+        ...buildUserProgressEndpoints(builder),
         ...buildBadgeEndpoints(builder),
         ...buildCategoryEndpoints(builder),
         ...buildUserBadgeEndpoints(builder),
@@ -230,6 +266,12 @@ export const {
     useFetchCurrentUserQuery,
     useUpdateCurrentUserMutation,
     useDeleteCurrentUserMutation,
+    // User Progress
+    useFetchUserProgressQuery,
+    useFetchUserProgressByIdQuery,
+    useCreateProgressMutation,
+    useDeleteProgressByIdMutation,
+    useUpdateProgressByIdMutation,
     // Badge
     useFetchAllBadgesQuery,
     useFetchBadgeByIdQuery,
