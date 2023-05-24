@@ -6,11 +6,11 @@ import {
 } from '../../store/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import AuthContext from '../../common/AuthContext';
 import NotificationContext from '../notification/context/NotificationContext';
 import { setLoading } from '../../store/loadingSlice';
-import './Header.css';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../../common/hooks/useAuth';
+import './Header.css';
 
 const Header = () => {
     // Hooks
@@ -20,8 +20,7 @@ const Header = () => {
     const { refetch } = useFetchCurrentUserQuery();
     const [demoLogin] = useDemoLoginMutation();
     const { showNotification } = useContext(NotificationContext);
-    const { isAuthenticated, setIsAuthenticated, logout } =
-        useContext(AuthContext);
+    const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
     const dispatch = useDispatch();
 
     const isActive = (path) => (location.pathname === path ? 'active' : '');

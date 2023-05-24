@@ -7,9 +7,9 @@ import {
 } from '../../store/api';
 import NotificationContext from '../notification/context/NotificationContext';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../../common/AuthContext';
 import { useDispatch } from 'react-redux';
 import { setLoading } from '../../store/loadingSlice';
+import { useAuth } from '../../common/hooks/useAuth';
 import './LoginForm.css';
 
 const LoginForm = () => {
@@ -18,7 +18,7 @@ const LoginForm = () => {
     const [validationErrors, setValidationErrors] = useState([]);
     const [loginUser] = useLoginUserMutation();
     const { showNotification } = useContext(NotificationContext);
-    const { setIsAuthenticated } = useContext(AuthContext);
+    const { setIsAuthenticated } = useAuth();
     const { refetch } = useFetchCurrentUserQuery();
     const navigate = useNavigate();
     const dispatch = useDispatch();

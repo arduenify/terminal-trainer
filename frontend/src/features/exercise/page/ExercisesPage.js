@@ -4,7 +4,6 @@ import {
     useDeleteExerciseByIdMutation,
     useFetchAllExercisesQuery,
 } from '../../../store/api';
-import AuthContext from '../../../common/AuthContext';
 import AdminPanel from './adminPanel';
 import {
     useCreateExerciseMutation,
@@ -12,13 +11,14 @@ import {
 } from '../../../store/api';
 import NotificationContext from '../../notification/context/NotificationContext';
 import './ExercisesPage.css';
+import { useAuth } from '../../../common/hooks/useAuth';
 
 const ExercisePage = () => {
     // Hooks
     const { data: exercises } = useFetchAllExercisesQuery();
 
     const navigate = useNavigate();
-    const { isAdmin } = useContext(AuthContext);
+    const { isAdmin } = useAuth();
     const [isAddModalOpen, setAddModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
