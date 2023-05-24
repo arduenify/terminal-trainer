@@ -45,7 +45,9 @@ const ProgressDetail = ({ progress, exercise, onDelete }) => {
             <p>Status: {progress.completed ? 'Completed' : 'Started'}</p>
 
             <Modal show={showModal} handleClose={closeModal}>
-                <p>Are you sure you want to delete your progress?</p>
+                <p className='no-before'>
+                    Are you sure you want to delete your progress?
+                </p>
                 <button
                     className='button button-danger'
                     onClick={handleDelete}

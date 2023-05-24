@@ -1,6 +1,7 @@
 .progress-detail {
     display: flex;
     flex-direction: column;
+    position: relative;
     gap: 1rem;
     border-radius: 10px;
     padding: 1rem;
@@ -35,4 +36,22 @@
 .progress-detail p::before {
     content: '• ';
     color: var(--color-secondary);
+}
+
+.progress-detail .no-before::before {
+    content: '';
+}
+
+.progress-detail .delete-button {
+    background: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0;
+    line-height: 1;
+    font-weight: bold;
 }
