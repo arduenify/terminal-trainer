@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import {
     useCreateProgressMutation,
     useFetchExerciseByIdQuery,
+    useUpdateProgressByIdMutation,
 } from '../../store/api';
 import NotificationContext from '../notification/context/NotificationContext';
 import './Exercise.css';
@@ -12,6 +13,7 @@ const Exercise = () => {
     const exerciseId = useParams().id;
     const { data: exercise, refetch } = useFetchExerciseByIdQuery(exerciseId);
     const [createProgress] = useCreateProgressMutation();
+    const [updateProgress] = useUpdateProgressByIdMutation();
     const [enabled, setEnabled] = useState(true);
     const [currentInstruction, setCurrentInstruction] = useState(null);
 
@@ -23,6 +25,15 @@ const Exercise = () => {
     const allowedCommandsRef = useRef(new Set());
     const commandOutputMapRef = useRef({});
     const currentCommandIndexRef = useRef(0);
+    const timeSpentRef = useRef(0);
+
+    const getTimeSpent = () => {
+        const now = new Date().getTime();
+        const diff = now - timeSpentRef.current;
+        const seconds = Math.floor(diff / 1000);
+        timeSpentRef.current = now;
+        return seconds;
+    };
 
     const terminalCommands = {
         help: {
@@ -60,15 +71,56 @@ const Exercise = () => {
         });
     };
 
-    const finishExercise = async () => {
+    const calculateScore = (difficulty) => {
+        let score = 0;
+
+        if (difficulty === 'beginner') {
+            score = 100;
+        } else if (difficulty === 'intermediate') {
+            score = 200;
+        } else if (difficulty === 'advanced') {
+            score = 300;
+        }
+
+        return score;
+    };
+
+    const dispatchCreateProgress = async (score, timeSpent) => {
+        const createdActionResult = await createProgress({
+            exerciseId,
+            completed: true,
+            score,
+            timeSpent,
+        });
+
+        // if 409 conflict, grab progressId from response & update progress
+        if (createdActionResult.error?.status === 409) {
+            return dispatchUpdateProgress(
+                score,
+                timeSpent,
+                createdActionResult.error?.data?.progressId,
+            );
+        }
+    };
+
+    const dispatchUpdateProgress = async (score, timeSpent, progressId) => {
+        await updateProgress({
+            progressId: progressId,
+            exerciseId,
+            completed: true,
+            score,
+            timeSpent,
+        });
+    };
+
+    const finishExercise = () => {
         disableInput();
         showFinishNotification();
 
-        console.log('complete the exercise', exerciseId);
-        await createProgress({
-            exerciseId,
-            completed: true,
-        });
+        const score = calculateScore(exercise.difficulty);
+        const timeSpent = getTimeSpent();
+
+        dispatchCreateProgress(score, timeSpent);
 
         return '\x1b[34mCongratulations on completing the exercise!\x1b[0m';
     };
@@ -144,6 +196,10 @@ const Exercise = () => {
                 return null;
         }
     };
+
+    useEffect(() => {
+        timeSpentRef.current = new Date().getTime();
+    }, [timeSpentRef]);
 
     useEffect(() => {
         if (exercise) {

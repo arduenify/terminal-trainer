@@ -1,27 +1,29 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     useDemoLoginMutation,
     useFetchCurrentUserQuery,
 } from '../../store/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import AuthContext from '../../common/AuthContext';
 import NotificationContext from '../notification/context/NotificationContext';
 import { setLoading } from '../../store/loadingSlice';
-import './Header.css';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../../common/hooks/useAuth';
+import './Header.css';
 
 const Header = () => {
     // Hooks
     const navigate = useNavigate();
+    const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
     const { refetch } = useFetchCurrentUserQuery();
     const [demoLogin] = useDemoLoginMutation();
     const { showNotification } = useContext(NotificationContext);
-    const { isAuthenticated, setIsAuthenticated, logout } =
-        useContext(AuthContext);
+    const { isAuthenticated, setIsAuthenticated, logout } = useAuth();
     const dispatch = useDispatch();
+
+    const isActive = (path) => (location.pathname === path ? 'active' : '');
 
     // Callbacks
     const navigateToSignupForm = () => {
@@ -42,6 +44,10 @@ const Header = () => {
 
     const navigateToBadges = () => {
         navigate('/badges');
+    };
+
+    const navigateToProgress = () => {
+        navigate('/progress');
     };
 
     const handleDemoAuthentication = async () => {
@@ -93,22 +99,34 @@ const Header = () => {
             </div>
             <div className='header-section'>
                 <nav className='header-nav'>
-                    <div className='header-nav-item' onClick={navigateToHome}>
+                    <div
+                        className={`header-nav-item ${isActive('/')}`}
+                        onClick={navigateToHome}
+                    >
                         Home
                     </div>
                     <div
-                        className='header-nav-item'
+                        className={`header-nav-item ${isActive('/exercises')}`}
                         onClick={navigateToExercises}
                     >
                         Exercises
                     </div>
-                    <div className='header-nav-item' onClick={navigateToBadges}>
+                    <div
+                        className={`header-nav-item ${isActive('/badges')}`}
+                        onClick={navigateToBadges}
+                    >
                         Badges
                     </div>
-                    {/* <div className='header-nav-item'>Progress</div>
-                {isAuthenticated && (
-                    <div className='header-nav-item'>Profile</div>
-                )} */}
+                    {isAuthenticated && (
+                        <div
+                            className={`header-nav-item ${isActive(
+                                '/progress',
+                            )}`}
+                            onClick={navigateToProgress}
+                        >
+                            Progress
+                        </div>
+                    )}
                 </nav>
             </div>
 

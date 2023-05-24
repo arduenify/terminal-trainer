@@ -8,13 +8,13 @@ import {
 } from '../../../store/api';
 import BadgeForm from './form';
 import NotificationContext from '../../notification/context/NotificationContext';
-import AuthContext from '../../../common/AuthContext';
 import './BadgePage.css';
+import { useAuth } from '../../../common/hooks/useAuth';
 
 const BadgePage = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedBadge, setSelectedBadge] = useState(null);
-    const { isAdmin } = useContext(AuthContext);
+    const { isAdmin } = useAuth();
     const {
         data: badges,
         isLoading: fetchAllBadgesLoading,

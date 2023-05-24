@@ -11,6 +11,7 @@ import ExercisesPage from '../features/exercise/page';
 import Exercise from '../features/exercise/Exercise';
 import './App.css';
 import BadgePage from '../features/badge/page';
+import ProgressPage from '../features/progress/page';
 
 function App() {
     const { notification, dismissNotification } =
@@ -27,6 +28,7 @@ function App() {
                 <Route path='/exercises/:id' element={<Exercise />} />
                 <Route path='/badges' element={<BadgePage />} />
                 <Route path='/badges/:id' element={<div>Todo</div>} />
+                <Route path='/progress/' element={<ProgressPage />} />
             </Routes>
             <ModernLoader />
             {notification && (
