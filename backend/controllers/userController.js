@@ -10,7 +10,7 @@ const {
 } = require('./responseController');
 const jwt = require('jsonwebtoken');
 const { isEmail } = require('./helpers');
-const { User, Badge } = require('../models');
+const { User, Badge, Exercise } = require('../models');
 
 const generateToken = (user) => {
     return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
@@ -241,7 +241,7 @@ async function getUserProgressById(req, res) {
 
 async function createUserProgress(req, res) {
     try {
-        const { exerciseId, completed } = req.body;
+        const { exerciseId, completed, score, timeSpent } = req.body;
         const user = await findUserById(req.user.id);
 
         const progress = await user.getProgress({
@@ -268,19 +268,17 @@ async function createUserProgress(req, res) {
         if (completed) {
             const badge = await exercise.getBadge();
 
-            if (!badge) {
-                return;
+            if (badge) {
+                await user.addBadge(badge);
             }
-
-            await user.addBadge(badge);
         }
 
         const userProgress = await user.createProgress({
             exerciseId,
             completed,
-            score: 0, // todo
+            timeSpent,
+            score,
             hintsUsed: 0, // todo
-            timeSpent: 0, // todo
         });
 
         return new CreatedResponse(userProgress, res);
@@ -288,6 +286,8 @@ async function createUserProgress(req, res) {
         const errorMessage =
             err.message ||
             'An internal server error occured while attempting to create the progress.';
+
+        console.error(errorMessage);
 
         return new InternalServerErrorResponse({ error: errorMessage }, res);
     }
