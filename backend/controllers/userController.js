@@ -10,7 +10,7 @@ const {
 } = require('./responseController');
 const jwt = require('jsonwebtoken');
 const { isEmail } = require('./helpers');
-const { User, Badge, Exercise } = require('../models');
+const { User, Badge, Exercise, UserProgress } = require('../models');
 
 const generateToken = (user) => {
     return jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
@@ -252,6 +252,7 @@ async function createUserProgress(req, res) {
             return new ConflictResponse(
                 {
                     error: 'Progress for this exercise already exists',
+                    progressId: progress[0].id,
                 },
                 res,
             );
@@ -296,23 +297,32 @@ async function createUserProgress(req, res) {
 async function updateUserProgress(req, res) {
     try {
         const { score, hintsUsed, timeSpent, completed } = req.body;
-        const user = await findUserById(req.user.id);
+        const { exerciseId, progressId } = req.params;
 
-        const userProgress = await user.getProgress({
-            where: { id: req.params.progressId },
+        const user = await findUserById(req.user.id);
+        const userProgress = await UserProgress.findOne({
+            where: { id: progressId, userId: req.user.id },
         });
 
         if (completed) {
             const exercise = await Exercise.findByPk(exerciseId);
 
             if (!exercise) {
-                return;
+                return new NotFoundResponse(
+                    { error: 'The exercise does not exist.' },
+                    res,
+                );
             }
 
             const badge = await exercise.getBadge();
 
             if (!badge) {
-                return;
+                return new NotFoundResponse(
+                    {
+                        error: 'A badge for this exercise does not exist.',
+                    },
+                    res,
+                );
             }
 
             await user.addBadge(badge);
@@ -330,6 +340,8 @@ async function updateUserProgress(req, res) {
         const errorMessage =
             err.message ||
             'An internal server error occured while attempting to update the progress.';
+
+        console.error(errorMessage);
 
         return new InternalServerErrorResponse({ error: errorMessage }, res);
     }

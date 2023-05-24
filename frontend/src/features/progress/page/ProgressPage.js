@@ -7,6 +7,7 @@ import ProgressDetail from './progressDetail';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../common/hooks/useAuth';
 import './ProgressPage.css';
+import { useEffect } from 'react';
 
 const ProgressPage = () => {
     const navigate = useNavigate();
@@ -14,9 +15,11 @@ const ProgressPage = () => {
     const { data: progress } = useFetchUserProgressQuery();
     const { data: exercises } = useFetchAllExercisesQuery();
 
-    if (!isAuthenticated) {
-        navigate('/');
-    }
+    useEffect(() => {
+        if (!isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated]);
 
     if (!progress || !exercises) {
         return;
