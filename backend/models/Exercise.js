@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'categoryId',
                 as: 'category',
             });
+
+            Exercise.hasOne(models.Badge, {
+                foreignKey: 'exerciseId',
+                as: 'badge',
+                onDelete: 'CASCADE',
+            });
         }
 
         static async searchExercises({ categoryId, difficulty, title }) {

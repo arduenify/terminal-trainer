@@ -49,6 +49,11 @@
     background-color: var(--color-accent);
 }
 
+.header-nav-item.active {
+    font-weight: bold;
+    color: var(--color-secondary);
+}
+
 .header-buttons {
     display: flex;
     position: relative;
