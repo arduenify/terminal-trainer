@@ -1,4 +1,5 @@
 import {
+    useDeleteProgressByIdMutation,
     useFetchAllExercisesQuery,
     useFetchUserProgressQuery,
 } from '../../../store/api';
@@ -14,6 +15,7 @@ const ProgressPage = () => {
     const { isAuthenticated } = useAuth();
     const { data: progress } = useFetchUserProgressQuery();
     const { data: exercises } = useFetchAllExercisesQuery();
+    const [deleteProgressById] = useDeleteProgressByIdMutation();
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -28,6 +30,19 @@ const ProgressPage = () => {
     const completedExercises = progress.filter(
         (exercise) => exercise.completed,
     );
+
+    const onDeleteProgress = async (progressId) => {
+        console.log('onDeleteProgress', progressId);
+
+        const deleteActionResult = await deleteProgressById(progressId);
+
+        if ('error' in deleteActionResult) {
+            console.log(deleteActionResult.error);
+            return;
+        }
+
+        console.log('onDeleteProgress', deleteActionResult.data);
+    };
 
     return (
         <div className='progress-page-container'>
@@ -57,6 +72,7 @@ const ProgressPage = () => {
                             key={progress.id}
                             progress={progress}
                             exercise={exercise}
+                            onDelete={onDeleteProgress}
                         />
                     );
                 })}
