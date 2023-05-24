@@ -8,7 +8,8 @@
 
 .progress-bar-fill {
     height: 100%;
-    background: linear-gradient(145deg, var(--color-secondary), var(--color-secondary-2));
+    background: linear-gradient(to right, var(--color-secondary), var(--color-secondary-2));
     border-radius: inherit;
-    transition: width 2s;
+    transition: width 2s ease-out;
+    box-shadow: 0 3px 3px -5px var(--color-secondary);
 }

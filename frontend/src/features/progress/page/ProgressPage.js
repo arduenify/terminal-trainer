@@ -4,14 +4,22 @@ import {
 } from '../../../store/api';
 import ProgressBar from './progressBar';
 import ProgressDetail from './progressDetail';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../common/hooks/useAuth';
 import './ProgressPage.css';
 
 const ProgressPage = () => {
+    const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
     const { data: progress } = useFetchUserProgressQuery();
     const { data: exercises } = useFetchAllExercisesQuery();
 
+    if (!isAuthenticated) {
+        navigate('/');
+    }
+
     if (!progress || !exercises) {
-        return <h1>Loading</h1>;
+        return;
     }
 
     const completedExercises = progress.filter(
