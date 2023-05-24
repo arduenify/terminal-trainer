@@ -349,10 +349,8 @@ async function updateUserProgress(req, res) {
 
 async function deleteUserProgress(req, res) {
     try {
-        const user = await findUserById(req.user.id);
-
-        const userProgress = await user.getProgress({
-            where: { id: req.params.progressId },
+        const userProgress = await UserProgress.findOne({
+            where: { id: req.params.progressId, userId: req.user.id },
         });
 
         if (!userProgress) {
@@ -370,6 +368,8 @@ async function deleteUserProgress(req, res) {
     } catch (err) {
         const errorMessage =
             err.message || 'An error occured while deleting the progress.';
+
+        console.error(err);
 
         return new InternalServerErrorResponse({ error: errorMessage }, res);
     }
