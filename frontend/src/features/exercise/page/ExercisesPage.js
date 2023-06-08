@@ -12,12 +12,20 @@ import {
 import NotificationContext from '../../notification/context/NotificationContext';
 import './ExercisesPage.css';
 import { useAuth } from '../../../common/hooks/useAuth';
+import { setLoading } from '../../../store/loadingSlice';
+import { useDispatch } from 'react-redux';
 
 const ExercisePage = () => {
     // Hooks
-    const { data: exercises } = useFetchAllExercisesQuery();
+    const {
+        data: exercises,
+        isFetching,
+        isLoading,
+        refetch: refetchExercises,
+    } = useFetchAllExercisesQuery();
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { isAdmin } = useAuth();
     const [isAddModalOpen, setAddModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -28,6 +36,16 @@ const ExercisePage = () => {
     const [deleteExerciseById] = useDeleteExerciseByIdMutation();
     const [validationError, setValidationError] = useState('');
     const { showNotification } = useContext(NotificationContext);
+
+    useEffect(() => {
+        if (!exercises?.length || isFetching || isLoading) {
+            dispatch(setLoading(true));
+        }
+    }, [isFetching, isLoading, exercises]);
+
+    useEffect(() => {
+        refetchExercises();
+    }, [refetchExercises]);
 
     useEffect(() => {
         if (isAddModalOpen || isEditModalOpen) {

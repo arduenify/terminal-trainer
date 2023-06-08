@@ -48,62 +48,72 @@ const SearchResultsPage = () => {
     const filteredExercisesLength = filteredExercises?.length > 0;
 
     return (
-        <div className='search-results-page'>
-            <h1 className='search-results-title'>Search results</h1>
-            <div className='search-term-title-row'>
-                <h2 className='search-term-title'>
-                    Your search query: {query}
-                </h2>
+        <div className='search-results-page-container'>
+            <div className='search-results-page'>
+                <h1 className='search-results-title'>Search results</h1>
+                <div className='search-term-title-row'>
+                    <h2 className='search-term-title'>
+                        Your search query: {query}
+                    </h2>
 
-                <div className='filter-section'>
-                    <label htmlFor='difficulty' className='filter-label'>
-                        Filter by difficulty:
-                    </label>
-                    <select
-                        id='difficulty'
-                        className='filter-select'
-                        value={selectedDifficulty}
-                        onChange={(e) => setSelectedDifficulty(e.target.value)}
-                    >
-                        <option value=''>All</option>
-                        <option value='beginner'>Beginner</option>
-                        <option value='intermediate'>Intermediate</option>
-                        <option value='advanced'>Advanced</option>
-                    </select>
-                </div>
-            </div>
-
-            <div
-                className={`search-results-section ${loaded ? 'loaded' : ''}`}
-                key={query}
-            >
-                {filteredExercisesLength &&
-                    filteredExercises.map((exercise, index) => (
-                        <div
-                            className='search-result-item'
-                            key={exercise.id}
-                            onClick={() => navigateToExerciseById(exercise.id)}
+                    <div className='filter-section'>
+                        <label htmlFor='difficulty' className='filter-label'>
+                            Filter by difficulty:
+                        </label>
+                        <select
+                            id='difficulty'
+                            className='filter-select'
+                            value={selectedDifficulty}
+                            onChange={(e) =>
+                                setSelectedDifficulty(e.target.value)
+                            }
                         >
-                            <h3 className='exercise-title'>{exercise.title}</h3>
-                            <p className='exercise-description'>
-                                {exercise.description}
-                            </p>
-                            <p
-                                className={`exercise-difficulty ${exercise.difficulty.toLowerCase()}`}
+                            <option value=''>All</option>
+                            <option value='beginner'>Beginner</option>
+                            <option value='intermediate'>Intermediate</option>
+                            <option value='advanced'>Advanced</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div
+                    className={`search-results-section ${
+                        loaded ? 'loaded' : ''
+                    }`}
+                    key={query}
+                >
+                    {filteredExercisesLength &&
+                        filteredExercises.map((exercise, index) => (
+                            <div
+                                className='search-result-item'
+                                key={exercise.id}
+                                onClick={() =>
+                                    navigateToExerciseById(exercise.id)
+                                }
                             >
-                                {exercise.difficulty.toUpperCase()}
-                            </p>
-                            {index < filteredExercises.length - 1 && (
-                                <hr className='result-separator' />
-                            )}
-                        </div>
-                    ))}
-                {!filteredExercisesLength && (
-                    <p className='no-results-message'>
-                        Sorry, no results were found for that query. Please try
-                        another.
-                    </p>
-                )}
+                                <h3 className='exercise-title'>
+                                    {exercise.title}
+                                </h3>
+                                <p className='exercise-description'>
+                                    {exercise.description}
+                                </p>
+                                <p
+                                    className={`exercise-difficulty ${exercise.difficulty.toLowerCase()}`}
+                                >
+                                    {exercise.difficulty.toUpperCase()}
+                                </p>
+                                {index < filteredExercises.length - 1 && (
+                                    <hr className='result-separator' />
+                                )}
+                            </div>
+                        ))}
+                    {!filteredExercisesLength && (
+                        <p className='no-results-message'>
+                            Sorry, no results were found for that query. Please
+                            try another.
+                        </p>
+                    )}
+                </div>
             </div>
         </div>
     );
