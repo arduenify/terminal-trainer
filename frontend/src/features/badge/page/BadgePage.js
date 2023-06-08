@@ -8,13 +8,16 @@ import {
 } from '../../../store/api';
 import BadgeForm from './form';
 import NotificationContext from '../../notification/context/NotificationContext';
-import './BadgePage.css';
 import { useAuth } from '../../../common/hooks/useAuth';
+import { setLoading } from '../../../store/loadingSlice';
+import { useDispatch } from 'react-redux';
+import './BadgePage.css';
 
 const BadgePage = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedBadge, setSelectedBadge] = useState(null);
     const { isAdmin } = useAuth();
+    const dispatch = useDispatch();
     const {
         data: badges,
         isLoading: fetchAllBadgesLoading,
@@ -38,15 +41,6 @@ const BadgePage = () => {
         refetchBadges();
         refetchEarnedBadges();
     }, [refetchBadges, refetchEarnedBadges]);
-
-    if (
-        fetchAllBadgesLoading ||
-        fetchAllBadgesFetching ||
-        fetchUserBadgesLoading ||
-        fetchUserBadgesFetching
-    ) {
-        return null;
-    }
 
     const closeModal = (event) => {
         if (event.target.className === 'modal') {
