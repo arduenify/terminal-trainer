@@ -38,6 +38,24 @@ const BadgePage = () => {
     } = useFetchCurrentUserBadgesQuery();
 
     useEffect(() => {
+        if (
+            !badges?.length ||
+            fetchAllBadgesLoading ||
+            fetchAllBadgesFetching ||
+            fetchUserBadgesLoading ||
+            fetchUserBadgesFetching
+        ) {
+            dispatch(setLoading(true));
+        }
+    }, [
+        fetchAllBadgesLoading,
+        fetchAllBadgesFetching,
+        badges,
+        fetchUserBadgesLoading,
+        fetchUserBadgesFetching,
+    ]);
+
+    useEffect(() => {
         refetchBadges();
         refetchEarnedBadges();
     }, [refetchBadges, refetchEarnedBadges]);
