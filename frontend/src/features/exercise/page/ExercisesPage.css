@@ -4,6 +4,7 @@
     align-items: center;
     padding: 1rem 2rem;
     margin: 0 auto;
+    animation: fadeIn 1s;
 }
 
 .exercises-page {
