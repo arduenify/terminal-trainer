@@ -1,3 +1,95 @@
 .home-page-container {
     animation: fadeIn 1s;
+    margin: 0 auto;
+}
+
+/* Progress */
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 1200px;
+    text-align: center;
+}
+
+.progress-item {
+    flex: 1;
+    margin: 0 20px;
+    font-family: Arial, sans-serif;
+    position: relative;
+    padding: 40px 0;
+}
+
+.progress-circle {
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    animation: scaleAnimation 1.5s infinite alternate;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+.users {
+    width: 130px;
+    height: 130px;
+    background: linear-gradient(45deg, #f57378 0%, #fecfef 99%, #fecfef 100%);
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 1.8em;
+}
+
+.posts {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, #81aef7 0%, #c2e9fb 100%);
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 1.6em;
+}
+
+.comments {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(45deg, #d4fc79 0%, #6fe67f 100%);
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    font-size: 1.7em;
+}
+
+.progress-number {
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-item p {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.users p {
+    color: #ff9a9e;
+}
+
+.posts p {
+    color: #a1c4fd;
+}
+
+.comments p {
+    color: #d4fc79;
 }
