@@ -225,6 +225,13 @@ const buildCategoryEndpoints = (builder) => ({
     }),
 });
 
+// Stats endpoints
+const buildStatsEndpoints = (builder) => ({
+    fetchHomepageStats: builder.query({
+        query: () => 'homepage-stats',
+    }),
+});
+
 // Combine all the endpoints into a single API slice
 export const api = createApi({
     reducerPath: 'api',
@@ -247,6 +254,7 @@ export const api = createApi({
         ...buildBadgeEndpoints(builder),
         ...buildCategoryEndpoints(builder),
         ...buildUserBadgeEndpoints(builder),
+        ...buildStatsEndpoints(builder),
     }),
 });
 
@@ -289,4 +297,6 @@ export const {
     useFetchUserBadgesQuery,
     useAssignBadgeToUserMutation,
     useFetchCurrentUserBadgesQuery,
+    // Stats
+    useFetchHomepageStatsQuery,
 } = api;
