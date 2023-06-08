@@ -8,6 +8,8 @@ import React, {
 import ExerciseCard from '../ExerciseCard';
 import { useFetchAllExercisesQuery } from '../../../store/api';
 import { useNavigate } from 'react-router-dom';
+import { setLoading } from '../../../store/loadingSlice';
+import { useDispatch } from 'react-redux';
 import './Carousel.css';
 
 const Carousel = () => {
@@ -17,9 +19,19 @@ const Carousel = () => {
     const [animationSpeedModifier, setAnimationSpeedModifier] =
         useState(0.0225);
     const animationRef = useRef(null);
+    const dispatch = useDispatch();
 
-    const { data: fetchedExercises, isLoading } = useFetchAllExercisesQuery();
+    const {
+        data: fetchedExercises,
+        isLoading,
+        isFetching,
+    } = useFetchAllExercisesQuery();
 
+    useEffect(() => {
+        if (isFetching || isLoading) {
+            dispatch(setLoading(true));
+        }
+    }, [isFetching, isLoading]);
     const navigate = useNavigate();
 
     // Animate the carousel movement using a requestAnimationFrame loop and a speed modifier to make the animation smooth

@@ -1,5 +1,9 @@
+.search-results-page-container {
+    max-width: 1200px;
+    margin: 1rem auto;
+}
+
 .search-results-page {
-    margin: 20px auto;
     font-family: Arial, sans-serif;
     padding: 1rem 2rem;
     animation: fadeIn 1s;
@@ -46,19 +50,23 @@
     transform: translate3d(0, 0, 0) scale(1.02);
 }
 
-.exercise-title {
+.search-result-item:hover .exercise-title {
+    color: var(--color-secondary-2);
+}
+
+.search-results-section .exercise-title {
     font-size: 20px;
     margin-bottom: 5px;
     color: var(--color-primary);
 }
 
-.exercise-description {
+.search-results-section .exercise-description {
     font-size: 14px;
     margin-bottom: 5px;
     color: var(--color-secondary);
 }
 
-.exercise-difficulty {
+.search-results-section .exercise-difficulty {
     font-size: 12px;
     color: var(--color-accent);
     margin-bottom: 10px;
@@ -68,17 +76,17 @@
     display: inline-block;
 }
 
-.exercise-difficulty.beginner {
+.search-results-section .exercise-difficulty.beginner {
     color: var(--color-accent);
     border-color: var(--color-accent);
 }
 
-.exercise-difficulty.intermediate {
+.search-results-section .exercise-difficulty.intermediate {
     color: #ffb86c;
     border-color: #ffb86c;
 }
 
-.exercise-difficulty.advanced {
+.search-results-section .exercise-difficulty.advanced {
     color: var(--color-accent-2);
     border-color: var(--color-accent-2);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Slogan from './Slogan';
 import Carousel from './Carousel';
+import ProgressDisplay from './progressDisplay';
 import './Home.css';
 
 const HomePage = () => {
@@ -8,7 +9,7 @@ const HomePage = () => {
         <div className='home-page-container'>
             <Slogan />
             <Carousel />
-            {/* <StatsCounter title={'Title here!'} value={69} /> */}
+            <ProgressDisplay />
         </div>
     );
 };
