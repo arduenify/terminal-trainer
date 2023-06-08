@@ -8,7 +8,7 @@
     background-color: var(--color-background-3);
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
     z-index: 50;
-    transition: transform 0.6s ease-in-out;
+    animation: growDown 0.4s ease;
 }
 
 .search-bar form {
@@ -44,4 +44,22 @@
     outline: none;
     border-color: #3182CE;
     box-shadow: 0 0 5px rgba(49, 130, 206, 0.5);
+}
+
+@keyframes growDown {
+    0% {
+        height: 0;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    1% {
+        visibility: visible;
+        opacity: 0;
+    }
+
+    100% {
+        height: auto;
+        opacity: 1;
+    }
 }

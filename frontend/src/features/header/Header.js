@@ -52,13 +52,13 @@ const Header = () => {
         navigate('/progress');
     };
 
-    const openSearchBar = () => {
+    const toggleSearchBarVisibility = () => {
         setSearchBarOpen((state) => !state);
     };
 
     const onSearchSubmitted = (searchQuery) => {
         setSearchBarOpen(false);
-        
+
         navigate(`/search-results?query=${searchQuery}`);
     };
 
@@ -105,7 +105,11 @@ const Header = () => {
     return (
         <header className='header'>
             {searchBarOpen && (
-                <SearchBar onSearchSubmitted={onSearchSubmitted} />
+                <SearchBar
+                    onSearchSubmitted={onSearchSubmitted}
+                    searchBarOpen={searchBarOpen}
+                    hideSearchBar={() => setSearchBarOpen(false)}
+                />
             )}
             <div className='header-section'>
                 <div className='header-logo' onClick={navigateToHome}>
@@ -143,8 +147,8 @@ const Header = () => {
                         </div>
                     )}
                     <div
-                        className={`header-nav-item ${isActive('/badges')}`}
-                        onClick={openSearchBar}
+                        className='header-nav-item'
+                        onClick={toggleSearchBarVisibility}
                     >
                         <FontAwesomeIcon
                             id='search-fa-icon'
