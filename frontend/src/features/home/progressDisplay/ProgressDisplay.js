@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useFetchHomepageStatsQuery } from '../../../store/api';
 
 const ProgressDisplay = () => {
     const [totalUsers, setTotalUsers] = useState(0);
     const [totalExercisesCompleted, setTotalExercisesCompleted] = useState(0);
     const [totalBadgesEarned, setTotalBadgesEarned] = useState(0);
+
+    const {
+        data: fetchedStats,
+        isLoading,
+        isFetching,
+    } = useFetchHomepageStatsQuery();
 
     const animateValue = (setter, targetValue, duration) => {
         const startTime = Date.now();
@@ -23,14 +30,18 @@ const ProgressDisplay = () => {
     };
 
     useEffect(() => {
-        const fetchedUsers = 100;
-        const fetchedExercises = 800;
-        const fetchedBadges = 2000;
+        if (isLoading || isFetching) return;
+
+        const {
+            totalUsers: fetchedUsers,
+            totalExercises: fetchedExercises,
+            totalBadges: fetchedBadges,
+        } = fetchedStats || {};
 
         animateValue(setTotalUsers, fetchedUsers, 1200);
         animateValue(setTotalExercisesCompleted, fetchedExercises, 1550);
         animateValue(setTotalBadgesEarned, fetchedBadges, 1900);
-    }, []);
+    }, [fetchedStats, isLoading, isFetching]);
 
     return (
         <div className='progress-container'>
