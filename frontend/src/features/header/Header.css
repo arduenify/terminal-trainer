@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    animation: fadeIn 0.5s;
 }
 
 .header-section {
@@ -148,6 +149,7 @@
     background-color: #475377;
     border-radius: 0.2rem;
     z-index: 1;
+    animation: fadeInFromTopAbsolute 0.3s;
 }
 
 .profile-menu-item {

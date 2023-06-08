@@ -78,3 +78,39 @@ h5,
 h6 {
     font-family: 'Fira Sans', 'Helvetica', 'Arial', sans-serif;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate3d(0, -20px, 0);
+    }
+}
+
+@keyframes fadeInFromTopAbsolute {
+    from {
+        opacity: 0;
+        transform: translate3d(-70%, -20px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(-70%, 0, 0);
+    }
+}
