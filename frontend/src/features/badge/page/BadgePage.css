@@ -1,6 +1,7 @@
 .badge-page-container {
     margin: 0 auto;
     max-width: 1200px;
+    animation: fadeIn 1s;
 }
 
 .badge-page {

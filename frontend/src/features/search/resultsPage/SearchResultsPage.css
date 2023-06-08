@@ -1,0 +1,113 @@
+.search-results-page {
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    padding: 1rem 2rem;
+    animation: fadeIn 1s;
+}
+
+.search-results-title {
+    margin-bottom: 10px;
+    font-size: 36px;
+    text-align: center;
+}
+
+.search-term-title {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.search-term-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.search-results-section {
+    margin: 0 auto;
+}
+
+.search-results-section .search-result-item {
+    transform: translate3d(0, 20px, 0) scale(1);
+    transition: transform 0.25s;
+    text-align: left;
+}
+
+.search-results-section .search-result-item:hover {
+    transform: translate3d(0, 0, 0) scale(1.02);
+    cursor: pointer;
+}
+
+.search-results-section.loaded .search-result-item {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+.search-results-section.loaded .search-result-item:hover {
+    transform: translate3d(0, 0, 0) scale(1.02);
+}
+
+.exercise-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: var(--color-primary);
+}
+
+.exercise-description {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: var(--color-secondary);
+}
+
+.exercise-difficulty {
+    font-size: 12px;
+    color: var(--color-accent);
+    margin-bottom: 10px;
+    border: 1px solid;
+    border-radius: 35px;
+    padding: 5px 15px;
+    display: inline-block;
+}
+
+.exercise-difficulty.beginner {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.exercise-difficulty.intermediate {
+    color: #ffb86c;
+    border-color: #ffb86c;
+}
+
+.exercise-difficulty.advanced {
+    color: var(--color-accent-2);
+    border-color: var(--color-accent-2);
+}
+
+.result-separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, var(--color-background), var(--color-secondary), rgba(0, 0, 0, 0));
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-label {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.filter-select {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid var(--color-secondary);
+    border-radius: 5px;
+    transition: box-shadow 0.3s;
+}
+
+.filter-select:focus {
+    box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+}

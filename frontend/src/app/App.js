@@ -12,6 +12,7 @@ import Exercise from '../features/exercise/Exercise';
 import './App.css';
 import BadgePage from '../features/badge/page';
 import ProgressPage from '../features/progress/page';
+import SearchResultsPage from '../features/search/resultsPage/SearchResultsPage';
 
 function App() {
     const { notification, dismissNotification } =
@@ -27,8 +28,8 @@ function App() {
                 <Route path='/exercises' element={<ExercisesPage />} />
                 <Route path='/exercises/:id' element={<Exercise />} />
                 <Route path='/badges' element={<BadgePage />} />
-                <Route path='/badges/:id' element={<div>Todo</div>} />
                 <Route path='/progress/' element={<ProgressPage />} />
+                <Route path='/search-results' element={<SearchResultsPage />} />
             </Routes>
             <ModernLoader />
             {notification && (

@@ -5,11 +5,12 @@ import {
     useFetchCurrentUserQuery,
 } from '../../store/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faSearch } from '@fortawesome/free-solid-svg-icons';
 import NotificationContext from '../notification/context/NotificationContext';
 import { setLoading } from '../../store/loadingSlice';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../../common/hooks/useAuth';
+import SearchBar from '../search';
 import './Header.css';
 
 const Header = () => {
@@ -17,6 +18,7 @@ const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [searchBarOpen, setSearchBarOpen] = useState(false);
     const { refetch } = useFetchCurrentUserQuery();
     const [demoLogin] = useDemoLoginMutation();
     const { showNotification } = useContext(NotificationContext);
@@ -48,6 +50,16 @@ const Header = () => {
 
     const navigateToProgress = () => {
         navigate('/progress');
+    };
+
+    const toggleSearchBarVisibility = () => {
+        setSearchBarOpen((state) => !state);
+    };
+
+    const onSearchSubmitted = (searchQuery) => {
+        setSearchBarOpen(false);
+
+        navigate(`/search-results?query=${searchQuery}`);
     };
 
     const handleDemoAuthentication = async () => {
@@ -92,6 +104,13 @@ const Header = () => {
 
     return (
         <header className='header'>
+            {searchBarOpen && (
+                <SearchBar
+                    onSearchSubmitted={onSearchSubmitted}
+                    searchBarOpen={searchBarOpen}
+                    hideSearchBar={() => setSearchBarOpen(false)}
+                />
+            )}
             <div className='header-section'>
                 <div className='header-logo' onClick={navigateToHome}>
                     Terminal Trainer
@@ -127,6 +146,17 @@ const Header = () => {
                             Progress
                         </div>
                     )}
+                    <div
+                        className='header-nav-item'
+                        onClick={toggleSearchBarVisibility}
+                    >
+                        <FontAwesomeIcon
+                            id='search-fa-icon'
+                            size='lg'
+                            icon={faSearch}
+                            className={menuOpen ? 'bounce' : ''}
+                        />
+                    </div>
                 </nav>
             </div>
 
