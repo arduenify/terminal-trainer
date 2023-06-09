@@ -7,8 +7,9 @@ import ProgressBar from './progressBar';
 import ProgressDetail from './progressDetail';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../common/hooks/useAuth';
+import { useEffect, useContext } from 'react';
+import NotificationContext from '../../notification/context/NotificationContext';
 import './ProgressPage.css';
-import { useEffect } from 'react';
 
 const ProgressPage = () => {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ const ProgressPage = () => {
     const { data: progress } = useFetchUserProgressQuery();
     const { data: exercises } = useFetchAllExercisesQuery();
     const [deleteProgressById] = useDeleteProgressByIdMutation();
+    const { showNotification } = useContext(NotificationContext);
 
     useEffect(() => {
         if (!isAuthenticated) {
@@ -32,16 +34,22 @@ const ProgressPage = () => {
     );
 
     const onDeleteProgress = async (progressId) => {
-        console.log('onDeleteProgress', progressId);
-
         const deleteActionResult = await deleteProgressById(progressId);
 
         if ('error' in deleteActionResult) {
-            console.log(deleteActionResult.error);
+            showNotification({
+                title: 'Error',
+                message:
+                    deleteActionResult.error ||
+                    'We were unable to delete your progress, for some reason... 🤔',
+            });
             return;
         }
 
-        console.log('onDeleteProgress', deleteActionResult.data);
+        showNotification({
+            title: 'Progress reversed!',
+            message: 'Your progress for this exercise has been removed.',
+        });
     };
 
     return (

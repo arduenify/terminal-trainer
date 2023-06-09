@@ -34,7 +34,10 @@ const ProgressDetail = ({ progress, exercise, onDelete }) => {
         <div className='progress-detail'>
             <h4>
                 {exercise.title}
-                <button className='delete-button' onClick={openDeleteModal}>
+                <button
+                    className='delete-button'
+                    onClick={() => openDeleteModal()}
+                >
                     X
                 </button>
             </h4>

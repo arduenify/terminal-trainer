@@ -5,7 +5,6 @@ const ExerciseCard = ({
     title,
     description,
     difficulty,
-    teachingText,
     openExercise,
     index,
     id,

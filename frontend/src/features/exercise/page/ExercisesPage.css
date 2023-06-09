@@ -17,9 +17,9 @@
 
 .exercises-page .exercises-card {
     background-color: var(--color-background-2);
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -44,14 +44,15 @@
 }
 
 .exercises-page .exercises-card p {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 400;
     color: var(--color-secondary);
     margin: 0;
     white-space: pre-wrap;
     word-wrap: break-word;
-    margin-top: 0.4rem;
-    margin-bottom: 0.4rem;
+    margin-top: 0;
+    margin-bottom: 1.75rem;
+    text-align: center;
 }
 
 .exercises-page .exercises-info {
@@ -141,4 +142,18 @@
 
 .exercises-page .admin-actions button:last-child {
     margin-left: 1rem;
+}
+
+.exercises-page .exercises-info .button.button-primary {
+    height: 36px;
+    border-radius: 35px;
+    font-size: 16px;
+    padding: 0 1rem;
+    line-height: 35px;
+    border: 1px solid var(--color-secondary);
+}
+
+.exercises-page .exercises-info .button.button-primary:hover {
+    background-color: var(--color-secondary);
+    color: var(--color-background);
 }
