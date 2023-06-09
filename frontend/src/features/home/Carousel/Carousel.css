@@ -1,5 +1,4 @@
 .carousel-container {
-    margin-top: 5rem;
     overflow: hidden;
     width: 100%;
 }
@@ -10,6 +9,7 @@
     justify-content: flex-start;
     gap: 1rem;
     white-space: nowrap;
+    margin: 2rem 0;
 }
 
 @media screen and (width < 800px) {
