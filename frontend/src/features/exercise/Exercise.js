@@ -40,10 +40,6 @@ const Exercise = () => {
             description: 'Displays a list of available commands.',
             output: 'Well, well, well.',
         },
-        // clear: {
-        //     description: 'Clears the terminal.',
-        //     output: 'Clearing...',
-        // },
     };
 
     terminalCommands.help.output = Object.entries(terminalCommands)
@@ -186,12 +182,13 @@ const Exercise = () => {
     const handleBuiltInCommand = (command) => {
         switch (command) {
             case 'help':
-                return Object.entries(terminalCommands)
+                const output = Object.entries(terminalCommands)
                     .map(
                         ([command, { description }]) =>
                             `${command}: ${description}`,
                     )
                     .join(platformSeparator);
+                return { output };
             default:
                 return null;
         }

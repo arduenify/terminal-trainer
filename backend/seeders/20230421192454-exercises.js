@@ -28,7 +28,7 @@ module.exports = {
                 'List Files in a Directory',
                 'Learn how to list files and directories in the current directory.',
                 'Use the `ls` command to list files and directories.',
-                1,
+                1, // Category ID for 'Navigation'
                 'beginner',
                 [
                     {
@@ -42,7 +42,7 @@ module.exports = {
                 'List Files in a Directory (Long Format)',
                 'List files and directories with detailed information.',
                 'Use `ls -l` for a detailed listing.',
-                1,
+                1, // Category ID for 'Navigation'
                 'beginner',
                 [
                     {
@@ -56,7 +56,7 @@ module.exports = {
                 'List Files in a Directory (All Files)',
                 'Discover how to list all files, including hidden ones.',
                 'Use `ls -a` to reveal all files.',
-                1,
+                1, // Category ID for 'Navigation'
                 'beginner',
                 [
                     {
@@ -69,43 +69,45 @@ module.exports = {
             createExerciseObject(
                 'Change Directories',
                 'Navigate between directories using the `cd` command.',
-                'Use `cd directory_name` to change directory.',
-                2,
+                "Let's go inside a directory!",
+                1, // Category ID for 'Navigation'
                 'beginner',
                 [
                     {
-                        command: 'cd my_folder',
-                        output: '/home/user/my_folder',
-                        instruction: 'Type `cd my_folder` and press enter.',
+                        command: 'cd directory1',
+                        output: '',
+                        instruction: 'Type `cd directory1` and press enter.',
                     },
                 ],
             ),
             createExerciseObject(
                 'Create and Remove Directories',
                 'Create and remove directories using `mkdir` and `rmdir` commands.',
-                'Ready to create your first directory? Create a directory with the name "my_new_folder". ',
-                2,
+                'Ready to create and delete your first directory?',
+                1, // Category ID for 'Navigation'
                 'intermediate',
                 [
                     {
                         instruction:
-                            'Create a new directory named "my_new_folder".',
-                        command: 'mkdir my_new_folder',
+                            'Create a new directory named "my_new_directory", using "mkdir".',
+                        command: 'mkdir my_new_directory',
                         output: '',
                     },
                     {
                         instruction:
                             'Verify its existence by listing the directories and files.',
                         command: 'ls',
-                        output: 'my_new_folder',
+                        output: 'my_new_directory',
                     },
                     {
-                        instruction: 'Remove the directory.',
-                        command: 'rmdir my_new_folder',
+                        instruction:
+                            'Now, remove the directory "my_new_directory", using "rmdir".',
+                        command: 'rmdir my_new_directory',
                         output: '',
                     },
                     {
-                        instruction: 'Verify that the directory was removed.',
+                        instruction:
+                            'Verify that the directory was removed by listing the directories and files.',
                         command: 'ls',
                         output: '',
                     },
@@ -114,36 +116,39 @@ module.exports = {
             createExerciseObject(
                 'Move and Rename Files',
                 'Learn how to move and rename files.',
-                'Time to shift some files around! Some useful commands (hint hint) are `touch` and `mv`.',
-                2,
+                "Let's manipulate some files!",
+                1, // Category ID for 'Navigation'
                 'intermediate',
                 [
                     {
-                        instruction: 'Create a new file named "file.txt".',
+                        instruction:
+                            'First, create a new file (using touch) named "file.txt".',
                         command: 'touch file.txt',
                         output: '',
                     },
                     {
                         instruction:
-                            'Move the file into a directory named "my_folder".',
-                        command: 'mv file.txt my_folder/',
+                            'Move the file into a directory named "directory1".',
+                        command: 'mv file.txt directory1',
                         output: '',
                     },
                     {
                         instruction:
-                            'Verify its location by listing the files in "my_folder".',
-                        command: 'ls my_folder',
+                            'Verify its location by listing the files in "directory1".',
+                        command: 'ls directory1',
                         output: 'file.txt',
                     },
                     {
-                        instruction: 'Rename the file to "new_file.txt".',
-                        command: 'mv my_folder/file.txt my_folder/new_file.txt',
+                        instruction:
+                            'Rename the file to "new_file.txt" inside "directory1".',
+                        command:
+                            'mv directory1/file.txt directory1/new_file.txt',
                         output: '',
                     },
                     {
                         instruction:
-                            'Verify the renaming by listing the files in "my_folder".',
-                        command: 'ls my_folder',
+                            'Verify the renaming by listing the files in "directory1".',
+                        command: 'ls directory1',
                         output: 'new_file.txt',
                     },
                 ],
@@ -151,19 +156,19 @@ module.exports = {
             createExerciseObject(
                 'Use Pipe and Grep to Search',
                 'Learn how to search text within files using pipe and grep.',
-                'Find all files in your current directory that contain the word "world". Don\'t forget about `cat`! 🐱',
-                3,
+                "Let's search for specific text in a file!",
+                3, // Category ID for 'Search'
                 'advanced',
                 [
                     {
                         instruction:
-                            'Create a file named dog.txt with the text "Good boy!" using a single command. (hint: if you are confused about how to create a file with text, do a quick search on "echo")',
+                            'Create a file named dog.txt with the text "Good boy!", using echo and ">".',
                         command: 'echo "Good boy!" > dog.txt',
                         output: '',
                     },
                     {
                         instruction:
-                            'Display the content of the file and search for the word "Good".',
+                            'Display the content of the file and search for the word "Good", using "cat", pipe and "grep".',
                         command: 'cat dog.txt | grep "Good"',
                         output: 'Good boy!',
                     },
@@ -172,19 +177,24 @@ module.exports = {
             createExerciseObject(
                 'Use Find to Search Files',
                 'Learn how to search for files in a directory hierarchy using `find`.',
-                'Search your current directory and all subdirectories for a file named "mischief.txt". Hint: use `find`',
-                4,
+                'Let\'s find a file named "mischief.txt" in your directories.',
+                4, // Category ID for 'Search'
                 'advanced',
                 [
                     {
+                        instruction: 'First, create a directory named "magic".',
+                        command: 'mkdir magic',
+                        output: '',
+                    },
+                    {
                         instruction:
-                            'Create a file named "mischief.txt" inside a directory named "magic".',
+                            'Now, create a file named "mischief.txt" inside the "magic" directory.',
                         command: 'touch magic/mischief.txt',
                         output: '',
                     },
                     {
                         instruction:
-                            'Find the file by searching your current directory and all subdirectories.',
+                            'Use the find command to search for "mischief.txt" in the current directory and subdirectories. Try this one on your own.',
                         command: 'find . -name mischief.txt',
                         output: './magic/mischief.txt',
                     },

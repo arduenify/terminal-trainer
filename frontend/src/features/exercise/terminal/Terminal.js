@@ -18,9 +18,6 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
         () => ({
             background: '#0e0e0e',
             foreground: '#ffffff',
-            select: '#DAE6E8',
-            cursorion: 'rgba(255, 255, 255, 0.3)',
-            textSize: '25px',
         }),
         [],
     );
@@ -36,7 +33,13 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
 
     // Initialize the terminal on component mount
     useEffect(() => {
-        xtermRef.current = new Xterm({ cursorBlink: true, theme: customTheme });
+        xtermRef.current = new Xterm({
+            cursorBlink: true,
+            theme: customTheme,
+            fontSize: 16.5,
+            fontFamily: 'monospace',
+            
+        });
         xtermRef.current.loadAddon(fitAddon);
         xtermRef.current.loadAddon(webLinksAddon);
         xtermRef.current.open(terminalRef.current);
@@ -47,7 +50,6 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
             if (key === '\r') {
                 // Enter key
                 const result = onCommand(inputBuffer.current);
-
                 const currentInputBuffer = inputBuffer.current;
 
                 commandHistory.current = [
@@ -62,7 +64,7 @@ const Terminal = ({ onCommand, enabled, instruction }) => {
                 //     return updatePrompt();
                 // }
 
-                writeToTerminal(result.output, true);
+                if (result?.output) writeToTerminal(result.output, true);
 
                 if (result && result.nextInstruction) {
                     writeToTerminal(

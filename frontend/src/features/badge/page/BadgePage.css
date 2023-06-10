@@ -13,7 +13,8 @@
     align-items: center;
 }
 
-.badge-page-header {
+.badge-page-header,
+.badge-list-title {
     text-align: center;
     margin-bottom: 2rem;
 }

@@ -7,8 +7,6 @@ const isAdmin = async (req, res, next) => {
     try {
         const user = req.user;
 
-        console.log('Passport User Requesting Admin privileges:', user);
-
         if (user && user.role === 'admin') {
             return next();
         } else {

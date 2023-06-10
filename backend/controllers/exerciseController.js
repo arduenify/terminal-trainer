@@ -58,7 +58,6 @@ const createExercise = async (req, res) => {
 
         return new SuccessResponse(exercise, res);
     } catch (err) {
-        console.log(err);
         const errorMessage =
             err.message ||
             'Internal server error when attempting to create exercise.';
@@ -96,7 +95,6 @@ const updateExercise = async (req, res) => {
 
         return new SuccessResponse(undefined, res);
     } catch (err) {
-        console.log(err);
         const errorMessage =
             err.message ||
             'Internal server error when attempting to update exercise.';
